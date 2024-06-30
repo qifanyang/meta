@@ -16,9 +16,8 @@ public class FooModel extends Model {
     /**
      * 预置源可以有多个
      */
-    private PresetMeta<List<Field>> presetMeta;
-    private PresetMeta<List<Field>> presetMeta1;
-    private PresetMeta<List<Field>> presetMeta2 = new FooClassPresetModel();
+    private FooClassPresetModel presetClassMeta = new FooClassPresetModel();
+//    private FooEnumPresetModel presetEnumMeta;
 
     /**
      * 动态源可以有多个
@@ -31,8 +30,11 @@ public class FooModel extends Model {
     @Override
     public List<Field> meta() {
         List<Field> allFields = new ArrayList<>();
-        allFields.addAll(presetMeta.meta());
-        allFields.addAll(presetMeta1.meta());
+        //静态字段定义
+        allFields.addAll(presetClassMeta.meta());
+        allFields.addAll(FooEnumPresetModel.enumMeta());
+
+        //动态字段
         allFields.addAll(dynamicMeta.meta());
         allFields.addAll(dynamicMeta1.meta());
         allFields.addAll(dynamicMeta2.meta());

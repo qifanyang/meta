@@ -2,7 +2,7 @@ package com.meta.core;
 
 import java.util.List;
 
-public class Application implements Meta<List<Module>>{
+public class Application extends AbstractMeta<List<Module>>{
 
     @Override
     public List<Module> meta() {
