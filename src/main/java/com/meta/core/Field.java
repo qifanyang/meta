@@ -4,6 +4,6 @@ public  class Field extends AbstractMeta<Field>{
 
     @Override
     public Field meta() {
-        return null;
+        return this;
     }
 }
