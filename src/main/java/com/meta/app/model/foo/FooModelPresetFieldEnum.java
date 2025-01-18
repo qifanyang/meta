@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * enum 枚举定义预置元数据
  */
-public enum FooEnumPresetModel implements PresetMeta<Field> {
+public enum FooModelPresetFieldEnum implements PresetMeta<Field> {
     NAME,
     AGE;
 
@@ -32,8 +32,8 @@ public enum FooEnumPresetModel implements PresetMeta<Field> {
     }
 
     public static void main(String[] args) {
-        Enum en = FooEnumPresetModel.AGE;
-        List<Field> list = FooEnumPresetModel.enumMeta();
+        Enum en = FooModelPresetFieldEnum.AGE;
+        List<Field> list = FooModelPresetFieldEnum.enumMeta();
         System.out.println(list);
 
     }

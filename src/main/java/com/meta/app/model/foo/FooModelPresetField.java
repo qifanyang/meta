@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * class类定义预置元数据
  */
-public class FooClassPresetModel implements PresetMeta<List<Field>> {
+public class FooModelPresetField implements PresetMeta<List<Field>> {
 
     public static final Field a = new FooAField();
     public static final Field b = new FooBField();

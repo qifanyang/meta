@@ -19,6 +19,12 @@ public abstract class AbstractMeta<T> implements Meta<T> {
 
     private List<T> children;
 
+    /**
+     * 多个便签使用冒号:分割, 单个标签内可使用小数点.隔开表示层级
+     * tab.basic.home:xx.yy.xx
+     */
+    private String tag;
+
     //tag 标签, 比如个人信息, 教育信息, 家庭信息
     //tag数据很重要 model下面管理tag
     //tab 模型下面管理tab, 用于展示详情, 虽然有tag, 但是所有信息在一个页面也不合适, 所以有tab
