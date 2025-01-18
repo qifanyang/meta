@@ -12,12 +12,13 @@ public class Field extends AbstractMeta<Field> {
     /**
      * 关联模型会执行
      */
-    private Model associatedModel;
+    private Class<? extends Model> associatedModel;
 
     public Field(){
         //TODO, 持久化
         this.setId(UUID.randomUUID().toString());
         this.setName(getClass().getName());
+        this.setCode(getClass().getName());
         this.setExpression("a+b");
     }
 
@@ -34,11 +35,11 @@ public class Field extends AbstractMeta<Field> {
         this.expression = expression;
     }
 
-    public Model getAssociatedModel() {
+    public Class<? extends Model> getAssociatedModel() {
         return associatedModel;
     }
 
-    public void setAssociatedModel(Model associatedModel) {
+    public void setAssociatedModel(Class<? extends Model> associatedModel) {
         this.associatedModel = associatedModel;
     }
 }

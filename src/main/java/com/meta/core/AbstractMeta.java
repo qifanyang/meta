@@ -9,7 +9,9 @@ public abstract class AbstractMeta<T> implements Meta<T> {
      */
     private String id;
     /**
-     * 编码, 不同实例可以有相同编码
+     * 编码,
+     * field编码代表字段变量名, 在模型内code一定唯一, 跨模型不一定唯一
+     * model编码在应用内唯一
      */
     private String code;
     /**

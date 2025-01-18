@@ -30,7 +30,7 @@ public class FooModel extends Model<FooData> {
         List<Field> allFields = new ArrayList<>();
         //静态字段定义
         allFields.addAll(presetClassMeta.meta());
-        allFields.addAll(FooModelPresetFieldEnum.enumMeta());
+//        allFields.addAll(FooModelPresetFieldEnum.enumMeta());
 
         //动态字段
 //        allFields.addAll(dynamicMeta.meta());

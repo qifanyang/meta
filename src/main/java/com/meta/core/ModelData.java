@@ -10,21 +10,34 @@ public class ModelData {
     private String id;
 
     /**
+     * 引用的model
+     */
+    private Model model;
+
+    /**
      * 模型字段+自定义等字段
      */
     private List<Field> fields = new ArrayList<>();
 
     /**
      * 模型运行时所有原始值(固定字段值+自定义字段值)
-     * key为fieldId, value为属性值
+     * key为code, value为属性值
      */
     private Map<String, Object> values = new HashMap<>();
 
     /**
      * 表格展示,excel导出等
-     * key为fieldId, value为显示值
+     * key为code, value为显示值
      */
     private Map<String, String> displays = new HashMap<>();
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
 
     public List<Field> getFields() {
         return fields;

@@ -1,21 +1,18 @@
 package com.meta.app.model.bar;
 
+import com.meta.app.model.bar.field.BarAField;
 import com.meta.core.Field;
 import com.meta.core.Model;
 
 import java.util.List;
+import java.util.Map;
 
 public class BarModel extends Model<BarData> {
 
     @Override
     public List<Field> meta() {
-        //TODO
-        return super.meta();
+        return List.of(new BarAField());
     }
 
-    public static void main(String[] args) {
-        BarModel barModel = new BarModel();
-        List<Field> meta = barModel.meta();
-        BarData run = barModel.run(null);
-    }
+
 }
