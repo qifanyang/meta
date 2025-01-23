@@ -9,7 +9,9 @@ public abstract class AbstractMeta<T> implements Meta<T> {
      */
     private String id;
     /**
-     * 编码, 不同实例可以有相同编码
+     * 编码,
+     * field编码代表字段变量名, 在模型内code一定唯一, 跨模型不一定唯一
+     * model编码在应用内唯一
      */
     private String code;
     /**
@@ -18,6 +20,12 @@ public abstract class AbstractMeta<T> implements Meta<T> {
     private String name;
 
     private List<T> children;
+
+    /**
+     * 多个便签使用冒号:分割, 单个标签内可使用小数点.隔开表示层级
+     * tab.basic.home:xx.yy.xx
+     */
+    private String tag;
 
     //tag 标签, 比如个人信息, 教育信息, 家庭信息
     //tag数据很重要 model下面管理tag

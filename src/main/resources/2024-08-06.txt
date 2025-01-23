@@ -1,0 +1,18 @@
+mendix domian model
+
+实体(entities)
+  1.对应现实世界的对象, 也就OOA的对象, 比如电商系统中的顾客, 订单
+  2.实体名字在模块内必须唯一, 不同模块可以同名
+  3.Attributes, 实体中的属性, 对象中的fields, 有值类型, 计算类型(存储表达式)
+  属性计算可以使用[micro flow]在服务端计算,不持久化, 也可以使用[nano flow]在客户端运行
+  micro flow -> backend action
+  nano flow -> front action
+
+
+  模型建立事件, [before after] | [create, commit, delete , rollback]
+
+  页面按钮  fast-fn 短时间任务, slow-fn 长时间任务, event 异步
+
+
+
+
