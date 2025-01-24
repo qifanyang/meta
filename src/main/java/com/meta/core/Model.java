@@ -89,7 +89,7 @@ public abstract class Model<T extends ModelData> extends AbstractMeta<List<Field
 
 
     public T run(Map<String, Object> params) throws Exception {
-        return (T) runModel(getClass(), null, params);
+        return runModel(getClass(), null, params);
     }
 
     /**

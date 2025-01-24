@@ -4,9 +4,10 @@ import java.util.UUID;
 
 public class Field extends AbstractMeta<Field> {
 
-    /**
-     * 表达式: 变量, 函数调用, 数学计算, 逻辑运算等
-     */
+    private FieldType fieldType;             // 字段类型
+    private Object defaultValue;             // 默认值
+    private boolean required;                // 是否必填
+    /*** 表达式: 变量, 函数调用, 数学计算, 逻辑运算等*/
     private String expression;
 
     /**
