@@ -10,4 +10,9 @@ public class SingleSelectFormControl extends AbstractFormControl {
     public FormField formField() {
         return null;
     }
+
+    @Override
+    public FormFieldType formFieldType() {
+        return null;
+    }
 }
