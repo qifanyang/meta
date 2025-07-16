@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class DynamicSchemaRegistrar {
 
-    @PostConstruct
+//    @PostConstruct
     public void init() throws Exception {
         Class<?> dynamicEntity = DynamicEntityGenerator.generateEntityClass();
 

@@ -12,12 +12,12 @@ public class ModelData {
     /**
      * 引用的model
      */
-    private Model model;
+    private transient Model model;
 
     /**
      * 模型字段+自定义等字段
      */
-    private List<Field> fields = new ArrayList<>();
+    private transient List<Field> fields = new ArrayList<>();
 
     /**
      * 模型运行时所有原始值(固定字段值+自定义字段值)
