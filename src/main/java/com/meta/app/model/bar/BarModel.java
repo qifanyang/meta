@@ -1,17 +1,17 @@
 package com.meta.app.model.bar;
 
 import com.meta.app.model.bar.field.BarAField;
-import com.meta.core.Field;
+import com.meta.core.FieldBean;
 import com.meta.core.Model;
+import com.meta.core.entity.FieldEntity;
 
 import java.util.List;
-import java.util.Map;
 
 public class BarModel extends Model<BarData> {
 
     @Override
-    public List<Field> meta() {
-        return List.of(new BarAField());
+    public List<FieldBean> meta() {
+        return List.of(new BarAField(new FieldEntity()));
     }
 
 

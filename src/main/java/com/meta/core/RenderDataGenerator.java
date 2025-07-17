@@ -25,7 +25,7 @@ public class RenderDataGenerator {
     }
 
     // 生成渲染数据的方法
-    public static Map<String, Object> generateRenderData(FieldDefinition field) {
+    public static Map<String, Object> generateRenderData(FieldDefinition11 field) {
         Map<String, Object> renderData = new HashMap<>();
         renderData.put("fieldName", field.getFieldName());
         renderData.put("label", field.getLabel());
@@ -42,9 +42,9 @@ public class RenderDataGenerator {
     }
 
     // 示例生成多个字段的渲染数据
-    public static List<Map<String, Object>> generateRenderData(List<FieldDefinition> fields) {
+    public static List<Map<String, Object>> generateRenderData(List<FieldDefinition11> fields) {
         List<Map<String, Object>> renderDataList = new ArrayList<>();
-        for (FieldDefinition field : fields) {
+        for (FieldDefinition11 field : fields) {
             renderDataList.add(generateRenderData(field));
         }
         return renderDataList;
@@ -52,10 +52,10 @@ public class RenderDataGenerator {
 
     public static void main(String[] args) {
         // 创建字段定义
-        List<FieldDefinition> fields = new ArrayList<>();
+        List<FieldDefinition11> fields = new ArrayList<>();
 
         // 示例字段：用户名
-        fields.add(new FieldDefinition(
+        fields.add(new FieldDefinition11(
                 "username",
                 Map.of("en", "User Name", "zh", "用户名"),
                 FieldType.STRING,
@@ -70,7 +70,7 @@ public class RenderDataGenerator {
         ));
 
         // 示例字段：性别选择
-        fields.add(new FieldDefinition(
+        fields.add(new FieldDefinition11(
                 "gender",
                 Map.of("en", "Gender", "zh", "性别"),
                 FieldType.STRING,

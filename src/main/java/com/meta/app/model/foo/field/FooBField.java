@@ -1,7 +1,11 @@
 package com.meta.app.model.foo.field;
 
-import com.meta.core.Field;
+import com.meta.core.FieldBean;
+import com.meta.core.entity.FieldEntity;
 
-public class FooBField extends Field {
+public class FooBField extends FieldBean {
 
+    public FooBField(FieldEntity fieldEntity) {
+        super(fieldEntity);
+    }
 }

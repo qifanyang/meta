@@ -17,7 +17,7 @@ public class ModelData {
     /**
      * 模型字段+自定义等字段
      */
-    private transient List<Field> fields = new ArrayList<>();
+    private transient List<FieldBean> fields = new ArrayList<>();
 
     /**
      * 模型运行时所有原始值(固定字段值+自定义字段值)
@@ -39,11 +39,11 @@ public class ModelData {
         this.model = model;
     }
 
-    public List<Field> getFields() {
+    public List<FieldBean> getFields() {
         return fields;
     }
 
-    public void setFields(List<Field> fields) {
+    public void setFields(List<FieldBean> fields) {
         this.fields = fields;
     }
 

@@ -1,8 +1,9 @@
 package com.meta.app.model.foo;
 
-import com.meta.core.Field;
+import com.meta.core.FieldBean;
 import com.meta.core.Meta;
 import com.meta.core.PresetMeta;
+import com.meta.core.entity.FieldEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,13 +12,13 @@ import java.util.stream.Collectors;
 /**
  * enum 枚举定义预置元数据
  */
-public enum FooModelPresetFieldEnum implements PresetMeta<Field> {
+public enum FooModelPresetFieldEnum implements PresetMeta<FieldBean> {
     NAME,
     AGE;
 
     @Override
-    public Field meta() {
-        Field field = new Field();
+    public FieldBean meta() {
+        FieldBean field = new FieldBean(new FieldEntity());
         field.setName(this.name());
         return field;
     }
@@ -27,13 +28,13 @@ public enum FooModelPresetFieldEnum implements PresetMeta<Field> {
      *
      * @return
      */
-    public static List<Field> enumMeta() {
+    public static List<FieldBean> enumMeta() {
         return Arrays.asList(values()).stream().map(Meta::meta).collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
         Enum en = FooModelPresetFieldEnum.AGE;
-        List<Field> list = FooModelPresetFieldEnum.enumMeta();
+        List<FieldBean> list = FooModelPresetFieldEnum.enumMeta();
         System.out.println(list);
 
     }

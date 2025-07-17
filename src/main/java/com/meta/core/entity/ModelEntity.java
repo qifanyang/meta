@@ -21,4 +21,9 @@ public class ModelEntity extends MetaEntity{
     public void setDataTable(String dataTable) {
         this.dataTable = dataTable;
     }
+
+    @Override
+    public Object meta() {
+        return null;
+    }
 }

@@ -1,6 +1,6 @@
 package com.meta.form;
 
-import com.meta.core.Field;
+import com.meta.core.FieldBean;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import java.util.Map;
  * @author yangqifan
  * @date 2025/1/23
  */
-public class FormField extends Field {
+public class FormField{
 
     private Map<String, String> label;       // 标签（多语言支持）
     private Map<String, Object> options;     // 静态选项（针对 ENUM 和 MULTI_SELECT）

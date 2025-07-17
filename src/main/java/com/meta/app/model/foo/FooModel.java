@@ -4,7 +4,6 @@ import com.meta.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 业务模型(静态元数据+动态元数据)
@@ -20,14 +19,14 @@ public class FooModel extends Model<FooData> {
     /**
      * 动态源可以有多个
      */
-    private DynamicMeta<List<Field>> dynamicMeta;
-    private DynamicMeta<List<Field>> dynamicMeta1;
-    private DynamicMeta<List<Field>> dynamicMeta2;
+    private DynamicMeta<List<FieldBean>> dynamicMeta;
+    private DynamicMeta<List<FieldBean>> dynamicMeta1;
+    private DynamicMeta<List<FieldBean>> dynamicMeta2;
 
 
     @Override
-    public List<Field> meta() {
-        List<Field> allFields = new ArrayList<>();
+    public List<FieldBean> meta() {
+        List<FieldBean> allFields = new ArrayList<>();
         //静态字段定义
         allFields.addAll(presetClassMeta.meta());
 //        allFields.addAll(FooModelPresetFieldEnum.enumMeta());

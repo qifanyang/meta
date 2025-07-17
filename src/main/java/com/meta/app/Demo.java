@@ -1,7 +1,7 @@
 package com.meta.app;
 
 import com.meta.app.model.foo.FooModel;
-import com.meta.core.Field;
+import com.meta.core.FieldBean;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class Demo {
         FooModel fooModel = new FooModel();
 
         //获取model字段列表
-        List<Field> meta = fooModel.meta();
+        List<FieldBean> meta = fooModel.meta();
 
         //保存model字段列表值
 

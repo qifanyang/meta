@@ -29,7 +29,7 @@ public class IterableModel extends Model{
             if (!iterator.filter(next)){
                 continue;
             }
-            List<Field> meta = meta();
+            List<FieldBean> meta = meta();
             //字段可以设置公式, 函数, 逻辑控制, 其它模型等
             //数据对象?
             //运行规则产生运行时数据, 返回?

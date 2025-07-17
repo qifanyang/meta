@@ -1,6 +1,10 @@
 package com.meta.app.model.bar.field;
 
-import com.meta.core.Field;
+import com.meta.core.FieldBean;
+import com.meta.core.entity.FieldEntity;
 
-public class BarAField extends Field {
+public class BarAField extends FieldBean {
+    public BarAField(FieldEntity fieldEntity) {
+        super(fieldEntity);
+    }
 }

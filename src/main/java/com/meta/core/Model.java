@@ -3,7 +3,6 @@ package com.meta.core;
 import com.meta.core.surpport.GroovyUtil;
 
 import javax.script.ScriptException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.Map;
  * <p>
  * 子类命名规则: 模型名+Model 或 模块名+模型名+Model, 名字区分度很高可以不加模块名
  */
-public abstract class Model<T extends ModelData> extends AbstractMeta<List<Field>> {
+public abstract class Model<T extends ModelData> extends AbstractMeta<List<FieldBean>> {
 
     private Module module;
 
@@ -50,11 +49,11 @@ public abstract class Model<T extends ModelData> extends AbstractMeta<List<Field
     }
 
     private static void doRun(Model model, ModelData modelData, Map<String, Object> params) {
-        List<Field> meta = model.meta();
+        List<FieldBean> meta = model.meta();
         if (meta == null) {
             return;
         }
-        for (Field field : meta) {
+        for (FieldBean field : meta) {
             modelData.getFields().add(field);
             Object fieldValue = null;
             if (field.getExpression() != null && !field.getExpression().isBlank()) {
@@ -119,8 +118,8 @@ public abstract class Model<T extends ModelData> extends AbstractMeta<List<Field
     }
 
     @Override
-    public List<Field> meta() {
-        return super.meta();
+    public List<FieldBean> meta() {
+        return null;
     }
 
     public Module getModule() {

@@ -2,7 +2,6 @@ package test;
 
 
 import com.meta.MetaApplication;
-import com.meta.core.Field;
 import com.meta.core.FieldType;
 import com.meta.core.dao.FieldDao;
 import com.meta.core.dao.ModelDao;
@@ -18,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -55,12 +55,17 @@ public class TestMock {
         modelEntity.setTenantId("1");
         modelDao.save(modelEntity);
 
+        String fieldId = IdGenerator.nextId();
         FieldEntity field = new FieldEntity();
         field.setTenantId("1");
         field.setModelId(modelId);
         field.setCode("name");
         field.setName("姓名");
         field.setType(FieldType.STRING.name());
+        field.setId(fieldId);
         fieldDao.save(field);
+
+        Optional<FieldEntity> byId = fieldDao.findById(fieldId);
+        System.out.println("");
     }
 }

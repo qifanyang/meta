@@ -2,80 +2,49 @@ package com.meta.core;
 
 import java.util.Map;
 
-public class FieldDefinition {
+public interface FieldDefinition extends MetaDefinition{
 
-    private String fieldName;                 // 字段名称
-    private Map<String, String> label;       // 标签（多语言支持）
-    private FieldType fieldType;             // 字段类型
-    private boolean required;                // 是否必填
-    private Object defaultValue;             // 默认值
-    private Map<String, Object> options;     // 静态选项（针对 ENUM 和 MULTI_SELECT）
-    private String optionsUrl;               // 动态选项接口
-    private Map<String, Object> validation;  // 校验规则
-    private Map<String, Object> layout;      // 布局配置
-    private Map<String, Object> interactivity;// 动态行为
-    private Map<String, Object> styles;      // 样式配置
+    public String getModelId();
 
-    // 构造方法
-    public FieldDefinition(String fieldName, Map<String, String> label, FieldType fieldType, boolean required,
-                           Object defaultValue, Map<String, Object> options, String optionsUrl,
-                           Map<String, Object> validation, Map<String, Object> layout,
-                           Map<String, Object> interactivity, Map<String, Object> styles) {
-        this.fieldName = fieldName;
-        this.label = label;
-        this.fieldType = fieldType;
-        this.required = required;
-        this.defaultValue = defaultValue;
-        this.options = options;
-        this.optionsUrl = optionsUrl;
-        this.validation = validation;
-        this.layout = layout;
-        this.interactivity = interactivity;
-        this.styles = styles;
-    }
+    public void setModelId(String modelId);
 
-    // Getters
-    public String getFieldName() {
-        return fieldName;
-    }
+    public String getType();
 
-    public Map<String, String> getLabel() {
-        return label;
-    }
+    public void setType(String type);
 
-    public FieldType getFieldType() {
-        return fieldType;
-    }
+    public Boolean getRequired();
 
-    public boolean isRequired() {
-        return required;
-    }
+    public void setRequired(Boolean required);
 
-    public Object getDefaultValue() {
-        return defaultValue;
-    }
+    public String getDefaultValue();
 
-    public Map<String, Object> getOptions() {
-        return options;
-    }
+    public void setDefaultValue(String defaultValue);
 
-    public String getOptionsUrl() {
-        return optionsUrl;
-    }
+    public String getExpression();
 
-    public Map<String, Object> getValidation() {
-        return validation;
-    }
+    public void setExpression(String expression);
 
-    public Map<String, Object> getLayout() {
-        return layout;
-    }
+    public Map<String, Object> getOptions();
 
-    public Map<String, Object> getInteractivity() {
-        return interactivity;
-    }
+    public void setOptions(Map<String, Object> options) ;
 
-    public Map<String, Object> getStyles() {
-        return styles;
-    }
+    public String getOptionsUrl();
+
+    public void setOptionsUrl(String optionsUrl) ;
+
+    public Map<String, Object> getValidation();
+
+    public void setValidation(Map<String, Object> validation);
+
+    public Map<String, Object> getInteractivity();
+
+    public void setInteractivity(Map<String, Object> interactivity);
+
+    public Map<String, Object> getLayout();
+
+    public void setLayout(Map<String, Object> layout);
+
+    public Map<String, Object> getStyles();
+
+    public void setStyles(Map<String, Object> styles) ;
 }
