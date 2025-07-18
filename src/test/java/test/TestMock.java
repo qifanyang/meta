@@ -3,9 +3,12 @@ package test;
 
 import com.meta.MetaApplication;
 import com.meta.core.FieldType;
+import com.meta.core.MailField;
 import com.meta.core.dao.FieldDao;
+import com.meta.core.dao.MailFieldDao;
 import com.meta.core.dao.ModelDao;
 import com.meta.core.entity.FieldEntity;
+import com.meta.core.entity.MailFieldEntity;
 import com.meta.core.entity.ModelEntity;
 import com.meta.util.IdGenerator;
 import org.junit.Test;
@@ -39,6 +42,9 @@ public class TestMock {
     @Autowired
     private FieldDao fieldDao;
 
+    @Autowired
+    private MailFieldDao mailFieldDao;
+
     @Test
     public void shouldReturnDefaultMessage() throws Exception {
         mockMvc.perform(get("/addModel"))
@@ -67,5 +73,19 @@ public class TestMock {
 
         Optional<FieldEntity> byId = fieldDao.findById(fieldId);
         System.out.println("");
+
+        String mailFieldId = IdGenerator.nextId();
+        MailFieldEntity mailFieldEntity = new MailFieldEntity();
+        mailFieldEntity.setTenantId("1");
+        mailFieldEntity.setModelId(modelId);
+        mailFieldEntity.setCode("name");
+        mailFieldEntity.setName("姓名");
+        mailFieldEntity.setType(FieldType.STRING.name());
+        mailFieldEntity.setId(mailFieldId);
+        mailFieldEntity.setSender("yang");
+        mailFieldEntity.setReceiver("gong");
+
+        MailField mailField = new MailField(mailFieldEntity);
+        fieldDao.save((FieldEntity)mailField._getDefinition());
     }
 }

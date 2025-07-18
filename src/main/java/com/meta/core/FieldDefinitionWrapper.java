@@ -13,6 +13,10 @@ public class FieldDefinitionWrapper implements FieldDefinition{
         this.definition = definition;
     }
 
+    public FieldDefinition getDefinition(){
+        return definition;
+    }
+
     @Override
     public String getModelId() {
         return definition.getModelId();
@@ -35,22 +39,22 @@ public class FieldDefinitionWrapper implements FieldDefinition{
 
     @Override
     public Boolean getRequired() {
-        return null;
+        return definition.getRequired();
     }
 
     @Override
     public void setRequired(Boolean required) {
-
+        definition.setRequired(required);
     }
 
     @Override
     public String getDefaultValue() {
-        return null;
+        return definition.getDefaultValue();
     }
 
     @Override
     public void setDefaultValue(String defaultValue) {
-
+        definition.setDefaultValue(defaultValue);
     }
 
     @Override
@@ -155,6 +159,26 @@ public class FieldDefinitionWrapper implements FieldDefinition{
 
     @Override
     public void setTag(String tag) {
+        definition.setTag(tag);
+    }
 
+    @Override
+    public Map getAttr() {
+        return definition.getAttr();
+    }
+
+    @Override
+    public void setAttr(Map attr) {
+        definition.setAttr(attr);
+    }
+
+    @Override
+    public void pre() {
+        definition.pre();
+    }
+
+    @Override
+    public void post() {
+        definition.post();
     }
 }

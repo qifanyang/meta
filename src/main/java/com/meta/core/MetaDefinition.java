@@ -1,5 +1,7 @@
 package com.meta.core;
 
+import java.util.Map;
+
 public interface MetaDefinition extends Meta {
 
     /**
@@ -18,6 +20,7 @@ public interface MetaDefinition extends Meta {
      * @return
      */
     String getName();
+
     void setName(String name);
 
     /**
@@ -29,7 +32,15 @@ public interface MetaDefinition extends Meta {
      * tab 模型下面管理tab, 用于展示详情, 虽然有tag, 但是所有信息在一个页面也不合适, 所以有tab
      */
     String getTag();
+
     void setTag(String tag);
 
+    Map getAttr();
+
+    void setAttr(Map attr);
+
+    void pre();
+
+    void post();
 
 }

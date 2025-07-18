@@ -1,0 +1,17 @@
+Wrapper模式, 装饰者模式（Decorator Pattern） 或 适配器模式（Adapter Pattern）
+FieldDefinitionWrapper vs FieldDefinition
+wrapper模式有两种情况
+1.增强行为(不增加行为),直接继承FieldDefinitionWrapper改变其行为, 比如ContentCachingRequestWrapper, 内容可重复读取
+2.增加行为, 比如DefaultMultipartHttpServletRequest
+    a.定义新request, 请求内容增加, 需要定义增加内容的接口 MultipartRequest
+    b.定义新request, 要继承HttpServletRequest, 扩展其能力
+
+每个模块可能有自己的Field定义, FieldDefinition为通用定义
+新模块的增加新字段,应该是新增行为, 比如Mail模块, MailFieldDefinition(sender, receiver)
+1.新建MailField,
+2.定义新增属性sender, receiver,
+3.使用IDEA重构extract interface, 创建MailFieldDefinition接口
+4.继承FieldDefinitionWrapper, 构造方法需要传入delegate
+
+问题: 如何从数据库读取和保存, 如何与预置字段兼容
+

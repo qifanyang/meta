@@ -4,47 +4,47 @@ import java.util.Map;
 
 public interface FieldDefinition extends MetaDefinition{
 
-    public String getModelId();
+    String getModelId();
 
-    public void setModelId(String modelId);
+    void setModelId(String modelId);
 
-    public String getType();
+    String getType();
 
-    public void setType(String type);
+    void setType(String type);
 
-    public Boolean getRequired();
+    Boolean getRequired();
 
-    public void setRequired(Boolean required);
+    void setRequired(Boolean required);
 
-    public String getDefaultValue();
+    String getDefaultValue();
 
-    public void setDefaultValue(String defaultValue);
+    void setDefaultValue(String defaultValue);
 
-    public String getExpression();
+    String getExpression();
 
-    public void setExpression(String expression);
+    void setExpression(String expression);
 
-    public Map<String, Object> getOptions();
+    Map<String, Object> getOptions();
 
-    public void setOptions(Map<String, Object> options) ;
+    void setOptions(Map<String, Object> options) ;
 
-    public String getOptionsUrl();
+    String getOptionsUrl();
 
-    public void setOptionsUrl(String optionsUrl) ;
+    void setOptionsUrl(String optionsUrl) ;
 
-    public Map<String, Object> getValidation();
+    Map<String, Object> getValidation();
 
-    public void setValidation(Map<String, Object> validation);
+    void setValidation(Map<String, Object> validation);
 
-    public Map<String, Object> getInteractivity();
+    Map<String, Object> getInteractivity();
 
-    public void setInteractivity(Map<String, Object> interactivity);
+    void setInteractivity(Map<String, Object> interactivity);
 
-    public Map<String, Object> getLayout();
+    Map<String, Object> getLayout();
 
-    public void setLayout(Map<String, Object> layout);
+    void setLayout(Map<String, Object> layout);
 
-    public Map<String, Object> getStyles();
+    Map<String, Object> getStyles();
 
-    public void setStyles(Map<String, Object> styles) ;
+    void setStyles(Map<String, Object> styles) ;
 }
