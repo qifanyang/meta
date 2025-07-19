@@ -5,7 +5,6 @@ import com.meta.core.FieldDefinition;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -19,8 +18,8 @@ public class FieldEntity extends MetaEntity<FieldEntity> implements FieldDefinit
     private String modelId;
 
     @Comment("字段类型")
-    @Column
-    private String type;
+    @Column(name = "field_type")
+    private String fieldType;
 
     @Column
     private Boolean required;
@@ -54,17 +53,6 @@ public class FieldEntity extends MetaEntity<FieldEntity> implements FieldDefinit
     private Map<String, String> label; //标签（多语言支持）
 
     @Override
-    public void pre() {
-        getAttr().put("sss", "sdfsfd");
-    }
-
-    @Override
-    public void post() {
-        styles = new HashMap<>();
-        styles.putAll(getAttr());
-    }
-
-    @Override
     public String getModelId() {
         return modelId;
     }
@@ -75,13 +63,13 @@ public class FieldEntity extends MetaEntity<FieldEntity> implements FieldDefinit
     }
 
     @Override
-    public String getType() {
-        return type;
+    public String getFieldType() {
+        return fieldType;
     }
 
     @Override
-    public void setType(String type) {
-        this.type = type;
+    public void setFieldType(String fieldType) {
+        this.fieldType = fieldType;
     }
 
     @Override

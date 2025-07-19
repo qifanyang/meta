@@ -1,6 +1,7 @@
 package com.meta.core.entity;
 
 import com.meta.core.MailFieldDefinition;
+import com.meta.core.dto.MyDTO;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -16,6 +17,9 @@ public class MailFieldEntity extends FieldEntity implements MailFieldDefinition 
 
     @Transient
     private String receiver;
+
+    @Transient
+    private MyDTO myDto;
 
     public String getSender() {
         return sender;
@@ -33,17 +37,11 @@ public class MailFieldEntity extends FieldEntity implements MailFieldDefinition 
         this.receiver = receiver;
     }
 
-    @Override
-    public void pre() {
-        super.pre();
-        getAttr().put("sender", getSender());
-        getAttr().put("receiver", getReceiver());
+    public MyDTO getMyDto() {
+        return myDto;
     }
 
-    @Override
-    public void post() {
-        super.post();
-        setSender(Objects.toString(getAttr().get("sender"), ""));
-        setReceiver(Objects.toString(getAttr().get("receiver"), ""));
+    public void setMyDto(MyDTO myDto) {
+        this.myDto = myDto;
     }
 }

@@ -35,12 +35,18 @@ public interface MetaDefinition extends Meta {
 
     void setTag(String tag);
 
-    Map getAttr();
+    Map getMetaAttr();
 
-    void setAttr(Map attr);
+    void setMetaAttr(Map metaAttr);
 
-    void pre();
+    /**
+     * 写入数据到metaAttr中
+     */
+    void writeMetaAttr();
 
-    void post();
+    /**
+     * 读取数据到metaAttr中
+     */
+    void readMetaAttr();
 
 }

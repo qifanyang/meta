@@ -26,4 +26,5 @@ public class ModelEntity extends MetaEntity{
     public Object meta() {
         return null;
     }
+
 }

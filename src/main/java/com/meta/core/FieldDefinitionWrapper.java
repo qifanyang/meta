@@ -28,13 +28,13 @@ public class FieldDefinitionWrapper implements FieldDefinition{
     }
 
     @Override
-    public String getType() {
-        return definition.getType();
+    public String getFieldType() {
+        return definition.getFieldType();
     }
 
     @Override
-    public void setType(String type) {
-        definition.setType(type);
+    public void setFieldType(String fieldType) {
+        definition.setFieldType(fieldType);
     }
 
     @Override
@@ -163,22 +163,22 @@ public class FieldDefinitionWrapper implements FieldDefinition{
     }
 
     @Override
-    public Map getAttr() {
-        return definition.getAttr();
+    public Map getMetaAttr() {
+        return definition.getMetaAttr();
     }
 
     @Override
-    public void setAttr(Map attr) {
-        definition.setAttr(attr);
+    public void setMetaAttr(Map metaAttr) {
+        definition.setMetaAttr(metaAttr);
     }
 
     @Override
-    public void pre() {
-        definition.pre();
+    public void writeMetaAttr() {
+        definition.writeMetaAttr();
     }
 
     @Override
-    public void post() {
-        definition.post();
+    public void readMetaAttr() {
+        definition.readMetaAttr();
     }
 }

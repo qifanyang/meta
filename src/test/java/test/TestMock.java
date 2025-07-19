@@ -7,6 +7,7 @@ import com.meta.core.MailField;
 import com.meta.core.dao.FieldDao;
 import com.meta.core.dao.MailFieldDao;
 import com.meta.core.dao.ModelDao;
+import com.meta.core.dto.MyDTO;
 import com.meta.core.entity.FieldEntity;
 import com.meta.core.entity.MailFieldEntity;
 import com.meta.core.entity.ModelEntity;
@@ -74,7 +75,7 @@ public class TestMock {
         field.setModelId(modelId);
         field.setCode("name");
         field.setName("姓名");
-        field.setType(FieldType.STRING.name());
+        field.setFieldType(FieldType.STRING.name());
         field.setId(fieldId);
         fieldDao.saveField(field);
 
@@ -87,23 +88,49 @@ public class TestMock {
         mailFieldEntity.setModelId(modelId);
         mailFieldEntity.setCode("name");
         mailFieldEntity.setName("姓名");
-        mailFieldEntity.setType(FieldType.STRING.name());
+        mailFieldEntity.setFieldType(FieldType.STRING.name());
         mailFieldEntity.setId(mailFieldId);
         mailFieldEntity.setSender("yang");
         mailFieldEntity.setReceiver("gong");
 
-        MailField mailField = new MailField(mailFieldEntity);
         mailFieldDao.saveField(mailFieldEntity);
 
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
         Pageable pageable = PageRequest.of(0, 3, sort); // 第1页，每页10条
         Page<MailFieldEntity> page = mailFieldDao.findPageByModelIdAndDeletedFalse("221962642707845120", pageable);
 
-        String sql = "select * from meta_field where id = :id";
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", mailFieldId);
-        List<FieldEntity> fieldEntities = nativeQueryUtils.queryList(sql, parameters, FieldEntity.class);
-        System.out.println();
+    }
+
+
+    @Test
+    public void testAddMailField(){
+        String modelId = "221962642707845120";
+        ModelEntity modelEntity = new ModelEntity();
+        modelEntity.setId(modelId);
+        modelEntity.setName("测试模型字段");
+        modelEntity.setTenantId("1");
+        modelDao.save(modelEntity);
+
+        String mailFieldId = IdGenerator.nextId();
+        MailFieldEntity mailFieldEntity = new MailFieldEntity();
+        mailFieldEntity.setTenantId("1");
+        mailFieldEntity.setModelId(modelId);
+        mailFieldEntity.setCode("name");
+        mailFieldEntity.setName("姓名");
+        mailFieldEntity.setFieldType(FieldType.STRING.name());
+        mailFieldEntity.setId(mailFieldId);
+        mailFieldEntity.setSender("yang");
+        mailFieldEntity.setReceiver("gong");
+        MyDTO myDTO = new MyDTO();
+        myDTO.setName("DTO");
+        mailFieldEntity.setMyDto(myDTO);
+
+        mailFieldDao.saveField(mailFieldEntity);
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
+        Pageable pageable = PageRequest.of(0, 3, sort); // 第1页，每页10条
+        Page<MailFieldEntity> page = mailFieldDao.findPageByModelIdAndDeletedFalse("221962642707845120", pageable);
+
     }
 
     @Test

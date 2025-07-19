@@ -1,5 +1,8 @@
 package com.meta.core;
 
+import jakarta.persistence.Transient;
+
+import java.lang.reflect.Field;
 import java.util.Map;
 
 public interface FieldDefinition extends MetaDefinition{
@@ -8,9 +11,9 @@ public interface FieldDefinition extends MetaDefinition{
 
     void setModelId(String modelId);
 
-    String getType();
+    String getFieldType();
 
-    void setType(String type);
+    void setFieldType(String fieldType);
 
     Boolean getRequired();
 

@@ -3,7 +3,6 @@ package com.meta.core.dao;
 import com.meta.core.entity.FieldEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -33,7 +32,7 @@ public interface MetaFieldDao<T extends FieldEntity> extends JpaRepository<T, St
      */
     default <S extends T> S saveField(S entity){
         //@Transient字段无法在生命周期中, 这里模拟生命周期调用下
-        entity.pre();
+        entity.writeMetaAttr();
         return save(entity);
     }
 }

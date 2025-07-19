@@ -2,9 +2,11 @@ package com.meta.core.entity;
 
 import com.meta.core.JsonConverter;
 import com.meta.core.MetaDefinition;
+import com.meta.util.JSONUtil;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,16 +32,49 @@ public abstract class MetaEntity<T> extends BaseEntity implements MetaDefinition
     private String description;
 
     @Convert(converter = JsonConverter.class)
-    @Column(columnDefinition = "json")
-    private Map attr = new HashMap();
+    @Column(name = "meta_attr",columnDefinition = "json")
+    private Map metaAttr = new HashMap();
 
-    public void pre(){
-        System.out.println("PrePersist");
+    @Override
+    public void writeMetaAttr() {
+        Class cls = getClass();
+        while (cls != MetaEntity.class) {
+            Field[] declaredFields = cls.getDeclaredFields();
+            for (Field declaredField : declaredFields) {
+                Transient annotation = declaredField.getAnnotation(Transient.class);
+                if (annotation != null) {
+                    declaredField.setAccessible(true);
+                    try {
+                        getMetaAttr().put(declaredField.getName(), declaredField.get(this));
+                    } catch (IllegalAccessException e) {
+                        throw new IllegalStateException("元数据写入异常", e);
+                    }
+                }
+            }
+            cls = cls.getSuperclass();
+        }
     }
 
     @PostLoad
-    public void post(){
-        System.out.println("PostLoad");
+    public void readMetaAttr() {
+        Class cls = getClass();
+        while (cls != MetaEntity.class) {
+            Field[] declaredFields = cls.getDeclaredFields();
+            for (Field declaredField : declaredFields) {
+                Transient annotation = declaredField.getAnnotation(Transient.class);
+                if (annotation != null) {
+                    declaredField.setAccessible(true);
+                    try {
+                        Object value = getMetaAttr().get(declaredField.getName());
+                        Object json2Value = JSONUtil.objToBean(value, declaredField.getType());
+                        declaredField.set(this, json2Value);
+                    } catch (IllegalAccessException e) {
+                        throw new IllegalStateException("元数据读取异常", e);
+                    }
+                }
+            }
+            cls = cls.getSuperclass();
+        }
     }
 
     public String getCode() {
@@ -75,12 +110,12 @@ public abstract class MetaEntity<T> extends BaseEntity implements MetaDefinition
         this.description = description;
     }
 
-    public Map getAttr() {
-        return attr;
+    public Map getMetaAttr() {
+        return metaAttr;
     }
 
-    public void setAttr(Map attr) {
-        this.attr = attr;
+    public void setMetaAttr(Map metaAttr) {
+        this.metaAttr = metaAttr;
     }
 
 }
