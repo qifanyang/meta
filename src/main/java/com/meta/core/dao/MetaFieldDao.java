@@ -14,10 +14,10 @@ public interface MetaFieldDao<T extends FieldEntity> extends JpaRepository<T, St
     List<T> findByNameContaining(String keyword);
 
     //查询某模型下所有字段，未删除
-    List<T> findByModelIdAndDeletedFalse(String modelId, Pageable pageable);
+    Page<T> findPageByModelIdAndDeletedFalse(String modelId, Pageable pageable);
 
     //
-    Page<T> findByTenantId(String tenantId, Pageable pageable);
+    Page<T> findPageByTenantId(String tenantId, Pageable pageable);
     /**
      * 不能重写, 使用自定义方法
      * org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor.CrudMethodMetadataPopulatingMethodInterceptor#invoke(org.aopalliance.intercept.MethodInvocation)

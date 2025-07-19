@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -95,8 +96,8 @@ public class TestMock {
         mailFieldDao.saveField(mailFieldEntity);
 
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
-        Pageable pageable = PageRequest.of(0, 10, sort); // 第1页，每页10条
-        mailFieldDao.findByModelIdAndDeletedFalse("221962642707845120", pageable);
+        Pageable pageable = PageRequest.of(0, 3, sort); // 第1页，每页10条
+        Page<MailFieldEntity> page = mailFieldDao.findPageByModelIdAndDeletedFalse("221962642707845120", pageable);
 
         String sql = "select * from meta_field where id = :id";
         Map<String, Object> parameters = new HashMap<>();
