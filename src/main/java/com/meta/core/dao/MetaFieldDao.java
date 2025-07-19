@@ -10,6 +10,9 @@ import java.util.List;
 
 @NoRepositoryBean
 public interface MetaFieldDao<T extends FieldEntity> extends JpaRepository<T, String> {
+
+    Class<T> getEntityType();
+
     List<T> findByNameContaining(String keyword);
 
     //查询某模型下所有字段，未删除

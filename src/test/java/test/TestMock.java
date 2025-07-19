@@ -2,6 +2,7 @@ package test;
 
 
 import com.meta.MetaApplication;
+import com.meta.core.FieldService;
 import com.meta.core.FieldType;
 import com.meta.core.MailField;
 import com.meta.core.dao.FieldDao;
@@ -141,6 +142,14 @@ public class TestMock {
         List<FieldEntity> fieldEntities = nativeQueryUtils.queryList(sql, parameters, FieldEntity.class);
         System.out.println();
 
+    }
+
+    @Autowired
+    private FieldService fieldService;
+    @Test
+    public void testFieldService(){
+        List<MailFieldEntity> mailFieldEntities = fieldService.fieldList(MailFieldEntity.class);
+        System.out.println();
     }
 
 }
