@@ -10,6 +10,9 @@ import java.util.Map;
 
 @Entity
 @Table(name = "meta_field")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "field_class")
+@DiscriminatorValue("FieldEntity") //不指定使用类名
 public class FieldEntity extends MetaEntity<FieldEntity> implements FieldDefinition {
 
     @Column(name = "model_id")

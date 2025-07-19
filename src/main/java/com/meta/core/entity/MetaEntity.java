@@ -33,8 +33,6 @@ public abstract class MetaEntity<T> extends BaseEntity implements MetaDefinition
     @Column(columnDefinition = "json")
     private Map attr = new HashMap();
 
-    @PrePersist
-    @PreUpdate
     public void pre(){
         System.out.println("PrePersist");
     }
