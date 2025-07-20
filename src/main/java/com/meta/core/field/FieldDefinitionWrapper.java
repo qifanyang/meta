@@ -4,7 +4,7 @@ import com.meta.core.MetaDefinitionWrapper;
 
 import java.util.Map;
 
-public class FieldDefinitionWrapper<T> extends MetaDefinitionWrapper implements FieldDefinition {
+public class FieldDefinitionWrapper<T> extends MetaDefinitionWrapper<T> implements FieldDefinition<T> {
 
     private FieldDefinition definition;
 

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @MappedSuperclass
-public abstract class MetaEntity extends BaseEntity implements MetaDefinition {
+public abstract class MetaEntity<T> extends BaseEntity implements MetaDefinition<T> {
 
     /**
      * fieldEntity叫fieldId, modelEntity叫modelId, 统一叫法就叫code

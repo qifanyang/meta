@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 @Entity
 @DiscriminatorValue("MailFieldEntity")
-public class MailFieldEntity extends FieldEntity implements MailFieldDefinition {
+public class MailFieldEntity extends FieldEntity<MailFieldEntity> implements MailFieldDefinition<MailFieldEntity> {
 
     //子类需要控制新建字段, 但是可以通过pre()和post()方法放到attr中
     @Transient //使用该注解, 属性不参数jpa生命周期
@@ -41,5 +41,10 @@ public class MailFieldEntity extends FieldEntity implements MailFieldDefinition 
 
     public void setMyDto(MyDTO myDto) {
         this.myDto = myDto;
+    }
+
+    @Override
+    public MailFieldEntity meta() {
+        return super.meta();
     }
 }

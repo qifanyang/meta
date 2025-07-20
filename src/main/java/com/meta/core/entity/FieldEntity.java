@@ -12,7 +12,7 @@ import java.util.Map;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "field_class")
 @DiscriminatorValue("FieldEntity") //不指定使用类名
-public class FieldEntity extends MetaEntity implements FieldDefinition {
+public class FieldEntity<T> extends MetaEntity<T> implements FieldDefinition<T> {
 
     @Column(name = "model_id")
     private String modelId;
@@ -160,10 +160,5 @@ public class FieldEntity extends MetaEntity implements FieldDefinition {
     @Override
     public void setStyles(Map<String, Object> styles) {
         this.styles = styles;
-    }
-
-    @Override
-    public FieldEntity meta() {
-        return this;
     }
 }

@@ -14,6 +14,10 @@ package com.meta.core;
  */
 public interface Meta<T> {
 
+    /**
+     * 返回元数据entity
+     * @return
+     */
      default T meta(){
          return (T) this;
      }

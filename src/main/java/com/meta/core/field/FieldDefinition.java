@@ -4,7 +4,7 @@ import com.meta.core.MetaDefinition;
 
 import java.util.Map;
 
-public interface FieldDefinition extends MetaDefinition {
+public interface FieldDefinition<T> extends MetaDefinition<T> {
 
     String getModelId();
 

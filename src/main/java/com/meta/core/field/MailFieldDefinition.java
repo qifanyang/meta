@@ -3,7 +3,7 @@ package com.meta.core.field;
 import com.meta.core.dto.MyDTO;
 import com.meta.core.field.FieldDefinition;
 
-public interface MailFieldDefinition extends FieldDefinition {
+public interface MailFieldDefinition<T> extends FieldDefinition<T> {
     String getSender();
 
     void setSender(String sender);

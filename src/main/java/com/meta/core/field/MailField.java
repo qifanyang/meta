@@ -7,7 +7,7 @@ import com.meta.util.IdGenerator;
 /**
  * 扩展FieldDefinition 示例
  */
-public class MailField extends FieldDefinitionWrapper<MailFieldEntity> implements MailFieldDefinition {
+public class MailField extends FieldDefinitionWrapper<MailFieldEntity> implements MailFieldDefinition<MailFieldEntity> {
 
     public MailField(){
         this(new MailFieldEntity());
