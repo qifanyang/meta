@@ -9,6 +9,10 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 
+/**
+ * 通用字段查询
+ * @param <T>
+ */
 @NoRepositoryBean
 public interface MetaFieldDao<T extends FieldEntity> extends JpaRepository<T, String> {
 

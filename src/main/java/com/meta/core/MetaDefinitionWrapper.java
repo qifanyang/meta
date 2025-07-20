@@ -3,7 +3,7 @@ package com.meta.core;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public class MetaDefinitionWrapper<T> implements MetaDefinition {
+public class MetaDefinitionWrapper<T> implements MetaDefinition<T> {
 
     private MetaDefinition definition;
 

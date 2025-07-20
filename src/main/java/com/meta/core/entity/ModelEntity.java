@@ -24,9 +24,4 @@ public class ModelEntity extends MetaEntity implements ModelDefinition {
         this.dataTable = dataTable;
     }
 
-    @Override
-    public Object meta() {
-        return null;
-    }
-
 }

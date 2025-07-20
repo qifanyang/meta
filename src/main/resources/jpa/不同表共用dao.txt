@@ -1,0 +1,17 @@
+模型运行时数据存储
+1.提供默认存储表 meta_runtime_data
+2.分表存储
+
+实现:
+1.定义BaseModelDataEntity 包含默认存储结构, 使用@MappedSuperclass
+2.创建默认存储表实体, ModelDataEntity 继承 BaseModelDataEntity
+2.1 ModelDataEntity @Table(name = "meta_runtime_data")
+
+3.创建默认自定义实体, 比如:MailModelDataEntity 继承 BaseModelDataEntity
+3.1 MailDataEntity @Table(name = "mail_data")
+
+创建ModelDataDao
+public interface ModelDataDao extends JpaRepository<BaseModelDataEntity, String> {}
+
+该dao可以保存查询BaseModelDataEntity子实体
+

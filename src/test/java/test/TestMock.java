@@ -6,7 +6,6 @@ import com.meta.core.MetaFieldManager;
 import com.meta.core.FieldType;
 import com.meta.core.model.ModelBean;
 import com.meta.core.dao.FieldDao;
-import com.meta.core.dao.MailFieldDao;
 import com.meta.core.dao.ModelDao;
 import com.meta.core.dto.MyDTO;
 import com.meta.core.entity.FieldEntity;
@@ -48,9 +47,6 @@ public class TestMock {
 
     @Autowired
     private FieldDao fieldDao;
-
-    @Autowired
-    private MailFieldDao mailFieldDao;
 
     @Autowired
     private NativeQueryUtils nativeQueryUtils;
@@ -95,11 +91,11 @@ public class TestMock {
         mailFieldEntity.setSender("yang");
         mailFieldEntity.setReceiver("gong");
 
-        mailFieldDao.saveEntity(mailFieldEntity);
+        fieldDao.saveEntity(mailFieldEntity);
 
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
         Pageable pageable = PageRequest.of(0, 3, sort); // 第1页，每页10条
-        Page<MailFieldEntity> page = mailFieldDao.findPageByModelIdAndDeletedFalse("221962642707845120", pageable);
+        Page<FieldEntity> page = fieldDao.findPageByModelIdAndDeletedFalse("221962642707845120", pageable);
 
     }
 
@@ -127,11 +123,13 @@ public class TestMock {
         myDTO.setName("DTO");
         mailFieldEntity.setMyDto(myDTO);
 
-        mailFieldDao.saveEntity(mailFieldEntity.meta());
+        fieldDao.save(mailFieldEntity.meta());
+//        mailFieldDao.saveEntity(mailFieldEntity.meta());
 
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
         Pageable pageable = PageRequest.of(0, 3, sort); // 第1页，每页10条
-        Page<MailFieldEntity> page = mailFieldDao.findPageByModelIdAndDeletedFalse("221962642707845120", pageable);
+        Page<FieldEntity> page = fieldDao.findPageByModelIdAndDeletedFalse("221962642707845120", pageable);
+//        Page<MailFieldEntity> page = mailFieldDao.findPageByModelIdAndDeletedFalse("221962642707845120", pageable);
 
     }
 

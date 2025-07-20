@@ -1,0 +1,8 @@
+Entity对应数据库表, Bean为充血模型
+
+数据库采用mongo,转换为json存储, 没有问题
+但是采用关系数据库和JPA, 会有Entity托管问题
+
+模型采用BaseModelDataEntity, 分开创建表共享Dao
+
+但是字段

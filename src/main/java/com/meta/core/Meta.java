@@ -14,7 +14,9 @@ package com.meta.core;
  */
 public interface Meta<T> {
 
-     T meta();
+     default T meta(){
+         return (T) this;
+     }
 
     default Meta<?> visit() {
         return this;
