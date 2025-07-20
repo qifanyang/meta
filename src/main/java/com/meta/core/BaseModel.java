@@ -1,7 +1,6 @@
 package com.meta.core;
 
 import com.meta.core.field.FieldBean;
-import com.meta.core.model.ModelBean;
 import com.meta.core.surpport.GroovyUtil;
 
 import javax.script.ScriptException;
@@ -19,7 +18,7 @@ import java.util.Map;
  * <p>
  * 子类命名规则: 模型名+Model 或 模块名+模型名+Model, 名字区分度很高可以不加模块名
  */
-public abstract class BaseModel<T extends ModelData> extends ModelBean<List<? extends FieldBean>> {
+public abstract class BaseModel<T extends ModelData> {
 
     private Module module;
 

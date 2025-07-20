@@ -1,9 +1,9 @@
 package com.meta.core.model;
 
-import com.meta.core.BaseMetaBean;
+import com.meta.core.MetaDefinitionWrapper;
 
 
-public class ModelDefinitionWrapper<T> extends BaseMetaBean implements ModelDefinition{
+public class ModelDefinitionWrapper<T> extends MetaDefinitionWrapper implements ModelDefinition{
 
     private ModelDefinition definition;
 
@@ -15,10 +15,6 @@ public class ModelDefinitionWrapper<T> extends BaseMetaBean implements ModelDefi
         this.definition = definition;
     }
 
-    public T getEntity(){
-        return (T) definition;
-    }
-
     @Override
     public String getDataTable() {
         return definition.getDataTable();
@@ -28,8 +24,6 @@ public class ModelDefinitionWrapper<T> extends BaseMetaBean implements ModelDefi
     public void setDataTable(String dataTable) {
         definition.setDataTable(dataTable);
     }
-
-
 
     @Override
     public T meta() {

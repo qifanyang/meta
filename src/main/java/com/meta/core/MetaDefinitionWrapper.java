@@ -3,17 +3,17 @@ package com.meta.core;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public class BaseMetaBean implements MetaDefinition {
+public class MetaDefinitionWrapper<T> implements MetaDefinition {
 
     private MetaDefinition definition;
 
-    public BaseMetaBean(MetaDefinition definition) {
+    public MetaDefinitionWrapper(MetaDefinition definition) {
         this.definition = definition;
     }
 
     @Override
-    public Object meta() {
-        return null;
+    public T meta() {
+        return (T) definition;
     }
 
     @Override

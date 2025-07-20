@@ -42,12 +42,12 @@ public interface MetaDefinition<T> extends BaseEntityDefinition, Meta<T> {
     void setMetaAttr(Map metaAttr);
 
     /**
-     * 写入数据到metaAttr中
+     * 写入使用Transient数据到metaAttr中,
      */
     default void writeMetaAttr(){};
 
     /**
-     * 读取数据到metaAttr中
+     * 读取数据到设置到使用Transient的对应属性
      */
     default void readMetaAttr(){};
 

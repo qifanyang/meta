@@ -40,7 +40,7 @@ public interface MetaFieldDao<T extends FieldEntity> extends JpaRepository<T, St
      * @param <S>
      * @return
      */
-    default <S extends T> S saveField(S entity){
+    default <S extends T> S saveEntity(S entity){
         //@Transient字段无法在生命周期中, 这里模拟生命周期调用下
         entity.writeMetaAttr();
         return save(entity);

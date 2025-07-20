@@ -1,12 +1,10 @@
 package com.meta.core.field;
 
-import com.meta.core.BaseMetaBean;
-import com.meta.core.field.FieldDefinition;
+import com.meta.core.MetaDefinitionWrapper;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 
-public class FieldDefinitionWrapper<T> extends BaseMetaBean implements FieldDefinition {
+public class FieldDefinitionWrapper<T> extends MetaDefinitionWrapper implements FieldDefinition {
 
     private FieldDefinition definition;
 

@@ -4,7 +4,7 @@ package test;
 import com.meta.MetaApplication;
 import com.meta.core.MetaFieldManager;
 import com.meta.core.FieldType;
-import com.meta.core.ModelBean2;
+import com.meta.core.model.ModelBean;
 import com.meta.core.dao.FieldDao;
 import com.meta.core.dao.MailFieldDao;
 import com.meta.core.dao.ModelDao;
@@ -79,7 +79,7 @@ public class TestMock {
         field.setName("姓名");
         field.setFieldType(FieldType.STRING.name());
         field.setId(fieldId);
-        fieldDao.saveField(field);
+        fieldDao.saveEntity(field);
 
         Optional<FieldEntity> byId = fieldDao.findById(fieldId);
         System.out.println("");
@@ -95,7 +95,7 @@ public class TestMock {
         mailFieldEntity.setSender("yang");
         mailFieldEntity.setReceiver("gong");
 
-        mailFieldDao.saveField(mailFieldEntity);
+        mailFieldDao.saveEntity(mailFieldEntity);
 
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
         Pageable pageable = PageRequest.of(0, 3, sort); // 第1页，每页10条
@@ -107,7 +107,7 @@ public class TestMock {
     @Test
     public void testAddMailField(){
         String modelId = "221962642707845120";
-        ModelBean2 modelEntity = new ModelBean2();
+        ModelBean modelEntity = new ModelBean();
         modelEntity.setId(modelId);
         modelEntity.setName("测试模型字段");
         modelEntity.setTenantId("1");
@@ -127,7 +127,7 @@ public class TestMock {
         myDTO.setName("DTO");
         mailFieldEntity.setMyDto(myDTO);
 
-        mailFieldDao.saveField(mailFieldEntity.meta());
+        mailFieldDao.saveEntity(mailFieldEntity.meta());
 
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
         Pageable pageable = PageRequest.of(0, 3, sort); // 第1页，每页10条
