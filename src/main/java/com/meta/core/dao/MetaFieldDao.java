@@ -1,6 +1,7 @@
 package com.meta.core.dao;
 
 import com.meta.core.entity.FieldEntity;
+import org.springframework.core.GenericTypeResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,13 @@ import java.util.List;
 @NoRepositoryBean
 public interface MetaFieldDao<T extends FieldEntity> extends JpaRepository<T, String> {
 
-    Class<T> getEntityType();
+    default Class<T> getEntityType(){
+        Class<?> entityClass = GenericTypeResolver.resolveTypeArgument(this.getClass(), MetaFieldDao.class);
+        if (entityClass == null) {
+            throw new IllegalStateException("Unable to resolve entity class for " + this.getClass().getName());
+        }
+        return (Class<T>) entityClass;
+    }
 
     List<T> findByNameContaining(String keyword);
 

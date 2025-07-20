@@ -7,8 +7,4 @@ import com.meta.core.entity.MailFieldEntity;
  */
 public interface MailFieldDao extends MetaFieldDao<MailFieldEntity> {
 
-    @Override
-    default Class<MailFieldEntity> getEntityType(){
-        return MailFieldEntity.class;
-    }
 }
