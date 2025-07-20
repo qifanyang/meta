@@ -2,9 +2,9 @@ package com.meta.core;
 
 import java.util.List;
 
-public class Module extends AbstractMeta<List<Model>>{
+public class Module extends AbstractMeta<List<BaseModel>>{
     @Override
-    public List<Model> meta() {
+    public List<BaseModel> meta() {
         return null;
     }
 }

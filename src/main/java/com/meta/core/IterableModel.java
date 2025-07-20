@@ -1,5 +1,7 @@
 package com.meta.core;
 
+import com.meta.core.field.FieldBean;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +11,7 @@ import java.util.function.Consumer;
  * 多次执行的模型
  * 场景1:后台管理系统需要批量生成数据使用
  */
-public class IterableModel extends Model{
+public class IterableModel extends BaseModel {
 
     //新建可迭代模型
     //1.配置要迭代的数据(数据源, 单个模型[过滤条件], sql(过滤条件))

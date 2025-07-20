@@ -1,5 +1,7 @@
 package com.meta.core;
 
+import com.meta.core.field.FieldBean;
+
 import java.util.*;
 
 /**
@@ -12,7 +14,7 @@ public class ModelData {
     /**
      * 引用的model
      */
-    private transient Model model;
+    private transient BaseModel model;
 
     /**
      * 模型字段+自定义等字段
@@ -31,11 +33,11 @@ public class ModelData {
      */
     private Map<String, String> displays = new HashMap<>();
 
-    public Model getModel() {
+    public BaseModel getModel() {
         return model;
     }
 
-    public void setModel(Model model) {
+    public void setModel(BaseModel model) {
         this.model = model;
     }
 

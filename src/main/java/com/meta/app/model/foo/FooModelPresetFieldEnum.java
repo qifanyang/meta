@@ -1,6 +1,6 @@
 package com.meta.app.model.foo;
 
-import com.meta.core.FieldBean;
+import com.meta.core.field.FieldBean;
 import com.meta.core.Meta;
 import com.meta.core.PresetMeta;
 import com.meta.core.entity.FieldEntity;

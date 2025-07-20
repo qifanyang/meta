@@ -4,14 +4,14 @@ import com.meta.core.dao.MetaFieldDao;
 import com.meta.core.entity.MetaEntity;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class FieldService {
+@Component
+public class MetaFieldManager {
 
     @Autowired
     private List<MetaFieldDao> fieldDaoList;
@@ -25,19 +25,17 @@ public class FieldService {
         }
     }
 
-    public List<MetaFieldDao> getFieldDaoList() {
-        return fieldDaoList;
+    public <T> MetaFieldDao metaFieldDao(Class<T> cls){
+        return fieldDaoMap.get(cls);
     }
-
-    public void setFieldDaoList(List<MetaFieldDao> fieldDaoList) {
-        this.fieldDaoList = fieldDaoList;
-    }
-
 
     public <T> List<T> fieldList(Class<T> cls){
         MetaFieldDao metaFieldDao = fieldDaoMap.get(cls);
         return metaFieldDao.findAll();
     }
+
+
+    //根据模型查找字段
 
 
 }

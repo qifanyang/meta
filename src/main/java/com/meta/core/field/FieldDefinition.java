@@ -1,11 +1,10 @@
-package com.meta.core;
+package com.meta.core.field;
 
-import jakarta.persistence.Transient;
+import com.meta.core.MetaDefinition;
 
-import java.lang.reflect.Field;
 import java.util.Map;
 
-public interface FieldDefinition extends MetaDefinition{
+public interface FieldDefinition extends MetaDefinition {
 
     String getModelId();
 

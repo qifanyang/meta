@@ -1,15 +1,12 @@
 package com.meta.core;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meta.util.JSONUtil;
 import jakarta.persistence.AttributeConverter;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonConverter implements AttributeConverter<Map, String> {
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
+public class ColumnMapConverter implements AttributeConverter<Map, String> {
 
     @Override
     public String convertToDatabaseColumn(Map attribute) {

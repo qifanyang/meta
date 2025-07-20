@@ -1,20 +1,21 @@
-package com.meta.core;
+package com.meta.core.field;
 
+import com.meta.core.BaseMetaBean;
+import com.meta.core.field.FieldDefinition;
+
+import java.time.LocalDateTime;
 import java.util.Map;
 
-public class FieldDefinitionWrapper implements FieldDefinition{
+public class FieldDefinitionWrapper<T> extends BaseMetaBean implements FieldDefinition {
 
     private FieldDefinition definition;
 
     public FieldDefinitionWrapper(FieldDefinition definition) {
+        super(definition);
         if (definition == null){
-            throw new IllegalArgumentException("FieldDefinition不能为空");
+            throw new IllegalArgumentException("FieldDefinition must not be null");
         }
         this.definition = definition;
-    }
-
-    public FieldDefinition getDefinition(){
-        return definition;
     }
 
     @Override
@@ -59,22 +60,22 @@ public class FieldDefinitionWrapper implements FieldDefinition{
 
     @Override
     public String getExpression() {
-        return null;
+        return definition.getExpression();
     }
 
     @Override
     public void setExpression(String expression) {
-
+        definition.setExpression(expression);
     }
 
     @Override
     public Map<String, Object> getOptions() {
-        return null;
+        return definition.getOptions();
     }
 
     @Override
     public void setOptions(Map<String, Object> options) {
-
+        definition.setOptions(options);
     }
 
     @Override
@@ -128,57 +129,7 @@ public class FieldDefinitionWrapper implements FieldDefinition{
     }
 
     @Override
-    public Object meta() {
-        return null;
-    }
-
-    @Override
-    public String getCode() {
-        return null;
-    }
-
-    @Override
-    public void setCode(String code) {
-
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public void setName(String name) {
-
-    }
-
-    @Override
-    public String getTag() {
-        return definition.getTag();
-    }
-
-    @Override
-    public void setTag(String tag) {
-        definition.setTag(tag);
-    }
-
-    @Override
-    public Map getMetaAttr() {
-        return definition.getMetaAttr();
-    }
-
-    @Override
-    public void setMetaAttr(Map metaAttr) {
-        definition.setMetaAttr(metaAttr);
-    }
-
-    @Override
-    public void writeMetaAttr() {
-        definition.writeMetaAttr();
-    }
-
-    @Override
-    public void readMetaAttr() {
-        definition.readMetaAttr();
+    public T meta() {
+        return (T) definition;
     }
 }

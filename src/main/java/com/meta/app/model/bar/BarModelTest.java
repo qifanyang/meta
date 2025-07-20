@@ -1,6 +1,6 @@
 package com.meta.app.model.bar;
 
-import com.meta.core.FieldBean;
+import com.meta.core.field.FieldBean;
 
 import java.util.List;
 import java.util.Map;

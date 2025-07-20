@@ -1,6 +1,6 @@
 package com.meta.core.entity;
 
-import com.meta.core.JsonConverter;
+import com.meta.core.ColumnMapConverter;
 import com.meta.core.MetaDefinition;
 import com.meta.util.JSONUtil;
 import jakarta.persistence.*;
@@ -11,8 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @MappedSuperclass
-public abstract class MetaEntity<T> extends BaseEntity implements MetaDefinition {
+public abstract class MetaEntity extends BaseEntity implements MetaDefinition {
 
+    /**
+     * fieldEntity叫fieldId, modelEntity叫modelId, 统一叫法就叫code
+     */
     @Comment("英文编码,模型应用内唯一,字段模型内唯一(不强制全局唯一)")
     @Column
     private String code;
@@ -31,7 +34,7 @@ public abstract class MetaEntity<T> extends BaseEntity implements MetaDefinition
     @Column
     private String description;
 
-    @Convert(converter = JsonConverter.class)
+    @Convert(converter = ColumnMapConverter.class)
     @Column(name = "meta_attr",columnDefinition = "json")
     private Map metaAttr = new HashMap();
 

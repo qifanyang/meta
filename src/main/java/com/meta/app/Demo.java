@@ -1,7 +1,7 @@
 package com.meta.app;
 
 import com.meta.app.model.foo.FooModel;
-import com.meta.core.FieldBean;
+import com.meta.core.field.FieldBean;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ public class Demo {
 
         //创建model实例, 可以使用单例, 动态元数据涉访问持久层, 可以使用cache提高性能
         FooModel fooModel = new FooModel();
+
 
         //获取model字段列表
         List<FieldBean> meta = fooModel.meta();

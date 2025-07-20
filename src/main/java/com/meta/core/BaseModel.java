@@ -1,10 +1,13 @@
 package com.meta.core;
 
+import com.meta.core.field.FieldBean;
+import com.meta.core.model.ModelBean;
 import com.meta.core.surpport.GroovyUtil;
 
 import javax.script.ScriptException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,13 +19,15 @@ import java.util.Map;
  * <p>
  * 子类命名规则: 模型名+Model 或 模块名+模型名+Model, 名字区分度很高可以不加模块名
  */
-public abstract class Model<T extends ModelData> extends AbstractMeta<List<FieldBean>> {
+public abstract class BaseModel<T extends ModelData> extends ModelBean<List<? extends FieldBean>> {
 
     private Module module;
 
-    public static ModelData runModel(Class<? extends Model> modelCls, Map<String, Object> params) {
+    private List<? extends FieldBean> fields = new ArrayList<>();
+
+    public static ModelData runModel(Class<? extends BaseModel> modelCls, Map<String, Object> params) {
         ModelData modelData = createModelData(modelCls);
-        Model model = modelData.getModel();
+        BaseModel model = modelData.getModel();
         if (model == null) {
             model = instantiateClass(modelCls);
             modelData.setModel(model);
@@ -36,9 +41,9 @@ public abstract class Model<T extends ModelData> extends AbstractMeta<List<Field
      *
      * @return ModelData 模型运行时数据对象
      */
-    public static <D extends ModelData> D runModel(Class<? extends Model> modelCls, Class<D> modelDataCls, Map<String, Object> params) {
+    public static <D extends ModelData> D runModel(Class<? extends BaseModel> modelCls, Class<D> modelDataCls, Map<String, Object> params) {
         ModelData modelData = createModelData(modelCls);
-        Model model = modelData.getModel();
+        BaseModel model = modelData.getModel();
         if (model == null) {
             //缓存model到modelData
             model = instantiateClass(modelCls);
@@ -48,7 +53,7 @@ public abstract class Model<T extends ModelData> extends AbstractMeta<List<Field
         return (D) modelData;
     }
 
-    private static void doRun(Model model, ModelData modelData, Map<String, Object> params) {
+    private static void doRun(BaseModel model, ModelData modelData, Map<String, Object> params) {
         List<FieldBean> meta = model.meta();
         if (meta == null) {
             return;
@@ -59,7 +64,7 @@ public abstract class Model<T extends ModelData> extends AbstractMeta<List<Field
             if (field.getExpression() != null && !field.getExpression().isBlank()) {
                 fieldValue = model.scriptRunner().eval(params, field.getExpression());
             } else if (field.getAssociatedModel() != null) {
-                Class<? extends Model> associatedModel = field.getAssociatedModel();
+                Class<? extends BaseModel> associatedModel = field.getAssociatedModel();
                 fieldValue = runModel(associatedModel, params);
             }
             modelData.addValue(field.getCode(), fieldValue);
@@ -74,7 +79,7 @@ public abstract class Model<T extends ModelData> extends AbstractMeta<List<Field
      * @return
      */
     @SuppressWarnings("unchecked")
-    private static ModelData createModelData(Class<? extends Model> cls) {
+    private static ModelData createModelData(Class<? extends BaseModel> cls) {
         Type genericSuperclass = cls.getGenericSuperclass();
         if (genericSuperclass instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) genericSuperclass;
@@ -117,7 +122,6 @@ public abstract class Model<T extends ModelData> extends AbstractMeta<List<Field
         };
     }
 
-    @Override
     public List<FieldBean> meta() {
         return null;
     }

@@ -3,7 +3,7 @@ package com.meta.app.model.foo;
 import com.meta.app.model.foo.field.FooAField;
 import com.meta.app.model.foo.field.FooBField;
 import com.meta.app.model.foo.field.FooModelField;
-import com.meta.core.FieldBean;
+import com.meta.core.field.FieldBean;
 import com.meta.core.PresetMeta;
 import com.meta.core.entity.FieldEntity;
 

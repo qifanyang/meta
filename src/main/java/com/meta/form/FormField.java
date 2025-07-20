@@ -1,7 +1,5 @@
 package com.meta.form;
 
-import com.meta.core.FieldBean;
-
 import java.util.Map;
 
 /**

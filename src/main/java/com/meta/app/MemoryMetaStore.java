@@ -1,6 +1,6 @@
 package com.meta.app;
 
-import com.meta.core.FieldBean;
+import com.meta.core.field.FieldBean;
 import com.meta.core.MetaStore;
 
 import java.util.List;

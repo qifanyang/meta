@@ -1,8 +1,10 @@
 package com.meta.core;
 
+import com.meta.core.entity.BaseEntityDefinition;
+
 import java.util.Map;
 
-public interface MetaDefinition extends Meta {
+public interface MetaDefinition<T> extends BaseEntityDefinition, Meta<T> {
 
     /**
      * field编码代表字段变量名, 在模型内code一定唯一, 跨模型不一定唯一
@@ -42,11 +44,11 @@ public interface MetaDefinition extends Meta {
     /**
      * 写入数据到metaAttr中
      */
-    void writeMetaAttr();
+    default void writeMetaAttr(){};
 
     /**
      * 读取数据到metaAttr中
      */
-    void readMetaAttr();
+    default void readMetaAttr(){};
 
 }

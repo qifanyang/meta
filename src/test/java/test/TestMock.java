@@ -2,9 +2,9 @@ package test;
 
 
 import com.meta.MetaApplication;
-import com.meta.core.FieldService;
+import com.meta.core.MetaFieldManager;
 import com.meta.core.FieldType;
-import com.meta.core.MailField;
+import com.meta.core.ModelBean2;
 import com.meta.core.dao.FieldDao;
 import com.meta.core.dao.MailFieldDao;
 import com.meta.core.dao.ModelDao;
@@ -12,6 +12,7 @@ import com.meta.core.dto.MyDTO;
 import com.meta.core.entity.FieldEntity;
 import com.meta.core.entity.MailFieldEntity;
 import com.meta.core.entity.ModelEntity;
+import com.meta.core.field.MailField;
 import com.meta.util.IdGenerator;
 import com.meta.util.NativeQueryUtils;
 import org.junit.Test;
@@ -106,14 +107,14 @@ public class TestMock {
     @Test
     public void testAddMailField(){
         String modelId = "221962642707845120";
-        ModelEntity modelEntity = new ModelEntity();
+        ModelBean2 modelEntity = new ModelBean2();
         modelEntity.setId(modelId);
         modelEntity.setName("测试模型字段");
         modelEntity.setTenantId("1");
-        modelDao.save(modelEntity);
+        modelDao.save(modelEntity.meta());
 
         String mailFieldId = IdGenerator.nextId();
-        MailFieldEntity mailFieldEntity = new MailFieldEntity();
+        MailField mailFieldEntity = new MailField();
         mailFieldEntity.setTenantId("1");
         mailFieldEntity.setModelId(modelId);
         mailFieldEntity.setCode("name");
@@ -126,7 +127,7 @@ public class TestMock {
         myDTO.setName("DTO");
         mailFieldEntity.setMyDto(myDTO);
 
-        mailFieldDao.saveField(mailFieldEntity);
+        mailFieldDao.saveField(mailFieldEntity.meta());
 
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
         Pageable pageable = PageRequest.of(0, 3, sort); // 第1页，每页10条
@@ -145,7 +146,7 @@ public class TestMock {
     }
 
     @Autowired
-    private FieldService fieldService;
+    private MetaFieldManager fieldService;
     @Test
     public void testFieldService(){
         List<MailFieldEntity> mailFieldEntities = fieldService.fieldList(MailFieldEntity.class);

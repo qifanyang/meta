@@ -1,6 +1,7 @@
 package com.meta.app.model.foo;
 
 import com.meta.core.*;
+import com.meta.core.field.FieldBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * 业务模型(静态元数据+动态元数据)
  */
-public class FooModel extends Model<FooData> {
+public class FooModel extends BaseModel<FooData> {
 
     /**
      * 预置源可以有多个

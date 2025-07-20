@@ -1,7 +1,7 @@
 package com.meta.core.entity;
 
 
-import com.meta.core.FieldDefinition;
+import com.meta.core.field.FieldDefinition;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
 
@@ -12,7 +12,7 @@ import java.util.Map;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "field_class")
 @DiscriminatorValue("FieldEntity") //不指定使用类名
-public class FieldEntity extends MetaEntity<FieldEntity> implements FieldDefinition {
+public class FieldEntity extends MetaEntity implements FieldDefinition {
 
     @Column(name = "model_id")
     private String modelId;
