@@ -13,7 +13,6 @@ public class ModelBean extends ModelDefinitionWrapper<ModelEntity>{
 
     public ModelBean(){
         this(new ModelEntity());
-
     }
 
     public ModelBean(ModelEntity entity){
@@ -23,6 +22,10 @@ public class ModelBean extends ModelDefinitionWrapper<ModelEntity>{
 
     public void addField(FieldBean fieldBean) {
         fields.add(fieldBean);
+    }
+
+    public void addFields(List<FieldBean> fieldBeans) {
+        fields.addAll(fieldBeans);
     }
 
     public List<FieldBean> getFields() {

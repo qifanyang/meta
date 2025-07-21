@@ -17,6 +17,9 @@ public class FieldEntity<T> extends MetaEntity<T> implements FieldDefinition<T> 
     @Column(name = "model_id")
     private String modelId;
 
+    @Column(name = "model_code")
+    private String modelCode;
+
     @Comment("字段类型")
     @Column(name = "field_type")
     private String fieldType;
@@ -60,6 +63,14 @@ public class FieldEntity<T> extends MetaEntity<T> implements FieldDefinition<T> 
     @Override
     public void setModelId(String modelId) {
         this.modelId = modelId;
+    }
+
+    public String getModelCode() {
+        return modelCode;
+    }
+
+    public void setModelCode(String modelCode) {
+        this.modelCode = modelCode;
     }
 
     @Override

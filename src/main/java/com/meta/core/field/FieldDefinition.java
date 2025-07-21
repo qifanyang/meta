@@ -10,6 +10,10 @@ public interface FieldDefinition<T> extends MetaDefinition<T> {
 
     void setModelId(String modelId);
 
+    String getModelCode();
+
+    void setModelCode(String modelCode);
+
     String getFieldType();
 
     void setFieldType(String fieldType);

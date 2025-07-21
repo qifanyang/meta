@@ -27,6 +27,16 @@ public class FieldDefinitionWrapper<T> extends MetaDefinitionWrapper<T> implemen
     }
 
     @Override
+    public String getModelCode() {
+        return definition.getModelCode();
+    }
+
+    @Override
+    public void setModelCode(String modelCode) {
+        definition.setModelCode(modelCode);
+    }
+
+    @Override
     public String getFieldType() {
         return definition.getFieldType();
     }

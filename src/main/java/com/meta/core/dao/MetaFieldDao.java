@@ -25,6 +25,7 @@ public interface MetaFieldDao<T extends FieldEntity> extends JpaRepository<T, St
     }
 
     List<T> findByNameContaining(String keyword);
+    List<T> findByModelCode(String code);
 
     //查询某模型下所有字段，未删除
     Page<T> findPageByModelIdAndDeletedFalse(String modelId, Pageable pageable);

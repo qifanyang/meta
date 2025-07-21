@@ -34,6 +34,11 @@ public class MetaFieldManager {
         return metaFieldDao.findAll();
     }
 
+    public <T> List<T> fieldList(String modelCode, Class<T> cls){
+        MetaFieldDao metaFieldDao = fieldDaoMap.get(cls);
+        return metaFieldDao.findByModelCode(modelCode);
+    }
+
 
     //根据模型查找字段
 

@@ -5,6 +5,8 @@ import com.meta.core.entity.FieldEntity;
 import com.meta.util.IdGenerator;
 import jakarta.persistence.Transient;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<FieldEntity> {
@@ -26,6 +28,20 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
         meta().setExpression("a+b");
     }
 
+    public static FieldBean of(){
+        return new FieldBean();
+    }
+
+    public static FieldBean of(FieldEntity fieldEntity){
+        return new FieldBean(fieldEntity);
+    }
+
+    public static List<FieldBean> of(List<FieldEntity> fieldEntities){
+        List<FieldBean> fieldBeans = new ArrayList<>();
+        fieldEntities.forEach(entity -> fieldBeans.add(of(entity)));
+        return fieldBeans;
+    }
+
     public static FieldBean of(String code, String name, String fieldType){
         FieldBean fb = new FieldBean();
         fb.setCode(code);
@@ -34,6 +50,10 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
         return fb;
     }
 
+    @Override
+    public FieldEntity meta() {
+        return super.meta();
+    }
 
     public Class<? extends BaseModel> getAssociatedModel() {
         return associatedModel;

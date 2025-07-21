@@ -22,6 +22,14 @@ public interface Meta<T> {
          return (T) this;
      }
 
+    /**
+     * 是否是预置数据
+     * @return
+     */
+     default boolean isPreset(){
+         return false;
+     }
+
     default Meta<?> visit() {
         return this;
     }
