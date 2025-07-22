@@ -9,12 +9,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * 模型运行时数据基类, 继承该类可扩展数据表
+ */
 @MappedSuperclass
 public class BaseModelDataEntity extends BaseEntity {
 
     @Column(name = "model_id")
     private String modelId;
+
+    @Column(name = "model_code")
+    private String modelCode;
 
     /**
      * 模型字段+自定义等字段
@@ -45,6 +50,14 @@ public class BaseModelDataEntity extends BaseEntity {
 
     public void setModelId(String modelId) {
         this.modelId = modelId;
+    }
+
+    public String getModelCode() {
+        return modelCode;
+    }
+
+    public void setModelCode(String modelCode) {
+        this.modelCode = modelCode;
     }
 
     public List<FieldEntity> getFields() {

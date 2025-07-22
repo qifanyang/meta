@@ -73,7 +73,7 @@ public class TestMock {
         field.setModelId(modelId);
         field.setCode("name");
         field.setName("姓名");
-        field.setFieldType(FieldType.STRING.name());
+        field.setFieldType(FieldType.TEXT.name());
         field.setId(fieldId);
         fieldDao.saveEntity(field);
 
@@ -86,7 +86,7 @@ public class TestMock {
         mailFieldEntity.setModelId(modelId);
         mailFieldEntity.setCode("name");
         mailFieldEntity.setName("姓名");
-        mailFieldEntity.setFieldType(FieldType.STRING.name());
+        mailFieldEntity.setFieldType(FieldType.TEXT.name());
         mailFieldEntity.setId(mailFieldId);
         mailFieldEntity.setSender("yang");
         mailFieldEntity.setReceiver("gong");
@@ -115,7 +115,7 @@ public class TestMock {
         mailFieldEntity.setModelId(modelId);
         mailFieldEntity.setCode("name");
         mailFieldEntity.setName("姓名");
-        mailFieldEntity.setFieldType(FieldType.STRING.name());
+        mailFieldEntity.setFieldType(FieldType.TEXT.name());
         mailFieldEntity.setId(mailFieldId);
         mailFieldEntity.setSender("yang");
         mailFieldEntity.setReceiver("gong");

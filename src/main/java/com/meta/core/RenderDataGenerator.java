@@ -11,7 +11,7 @@ public class RenderDataGenerator {
     private static final Map<FieldType, ControlType> fieldControlMap = new HashMap<>();
 
     static {
-        fieldControlMap.put(FieldType.STRING, ControlType.INPUT_TEXT);
+        fieldControlMap.put(FieldType.TEXT, ControlType.INPUT_TEXT);
 //        fieldControlMap.put(FieldType.TEXTAREA, ControlType.TEXTAREA);
 //        fieldControlMap.put(FieldType.NUMBER, ControlType.INPUT_NUMBER);
 //        fieldControlMap.put(FieldType.BOOLEAN, ControlType.CHECKBOX);
@@ -58,7 +58,7 @@ public class RenderDataGenerator {
         fields.add(new FieldDefinition11(
                 "username",
                 Map.of("en", "User Name", "zh", "用户名"),
-                FieldType.STRING,
+                FieldType.TEXT,
                 true,
                 "",
                 null,
@@ -73,7 +73,7 @@ public class RenderDataGenerator {
         fields.add(new FieldDefinition11(
                 "gender",
                 Map.of("en", "Gender", "zh", "性别"),
-                FieldType.STRING,
+                FieldType.RADIO,
                 true,
                 "male",
                 Map.of(

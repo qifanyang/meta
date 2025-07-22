@@ -35,8 +35,8 @@ public class TestPresetModel {
     public void testCreateModelAndField(){
 
         SalaryArchiveModel modelBean = new SalaryArchiveModel();
-        modelBean.addField(FieldBean.of("name", "姓名", FieldType.STRING.name()));
-        FieldBean ageField = FieldBean.of("age", "年龄", FieldType.INTEGER.name());
+        modelBean.addField(FieldBean.of("name", "姓名", FieldType.TEXT.name()));
+        FieldBean ageField = FieldBean.of("age", "年龄", FieldType.NUMBER.name());
         ageField.setModelId(modelBean.getId());
         ageField.setModelCode(modelBean.getCode());
         modelBean.addField(ageField);

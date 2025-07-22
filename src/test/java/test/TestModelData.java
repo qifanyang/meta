@@ -31,7 +31,7 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MetaApplication.class)
 @AutoConfigureMockMvc
-public class TestMailModel {
+public class TestModelData {
 
     @Autowired
     private ModelDao modelDao;
@@ -54,8 +54,8 @@ public class TestMailModel {
         modelBean.setCode("person_model");
         modelBean.setName("人员模型");
         modelBean.setDataTable("person");
-        modelBean.addField(FieldBean.of("name", "姓名", FieldType.STRING.name()));
-        modelBean.addField(FieldBean.of("age", "年龄", FieldType.INTEGER.name()));
+        modelBean.addField(FieldBean.of("name", "姓名", FieldType.TEXT.name()));
+        modelBean.addField(FieldBean.of("age", "年龄", FieldType.NUMBER.name()));
         modelDao.save(modelBean.meta());
 
 

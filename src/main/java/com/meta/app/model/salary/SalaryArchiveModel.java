@@ -28,14 +28,6 @@ public class SalaryArchiveModel extends ModelBean {
         setCode(CODE);
         setName("薪酬档案");
         setId(IdGenerator.nextId());
-        //新建的时候需要添加预置字段, 从数据库加载的时候追加新增的预置字段
-//        List<FieldBean> fields = getFields();
-//        Map<String, FieldBean> fieldBeanMap = fields.stream().collect(Collectors.toMap(FieldBean::getId, Function.identity(), (existing, replacement) -> existing));
-//        for (FieldBean presetField : getPresetFields()) {
-//            if (fieldBeanMap.containsKey(presetField.getCode())){
-//                addField(presetField);
-//            }
-//        }
     }
 
     @Override
@@ -45,14 +37,22 @@ public class SalaryArchiveModel extends ModelBean {
 
     @Override
     public List<FieldBean> getFields() {
-        return FieldBean.of(fieldManager.fieldList(CODE, FieldEntity.class));
+        List<FieldBean> fieldBeanList = FieldBean.of(fieldManager.fieldList(CODE, FieldEntity.class));
+        Map<String, FieldBean> fieldBeanMap = fieldBeanList.stream().collect(Collectors.toMap(FieldBean::getId, Function.identity(), (existing, replacement) -> existing));
+        //从数据库加载的时候追加新增的预置字段
+        for (FieldBean presetField : getPresetFields()) {
+            if (fieldBeanMap.containsKey(presetField.getCode())) {
+                addField(presetField);
+            }
+        }
+        return fieldBeanList;
     }
 
     @Override
     public List<FieldBean> getPresetFields() {
         List<FieldBean> presetFields = new ArrayList<>();
-        presetFields.add(FieldBean.of("age", "年龄", FieldType.INTEGER.name()));
-        presetFields.add(FieldBean.of("age", "年龄", FieldType.INTEGER.name()));
+        presetFields.add(FieldBean.of("age", "年龄", FieldType.NUMBER.name()));
+        presetFields.add(FieldBean.of("age", "年龄", FieldType.NUMBER.name()));
         for (FieldBean presetField : presetFields) {
             presetField.setModelId(getId());
             presetField.setModelCode(getCode());
