@@ -5,10 +5,9 @@ import com.meta.core.BaseModel;
 import com.meta.core.ScriptRunner;
 import com.meta.core.dao.ModelDataDao;
 import com.meta.core.entity.FieldEntity;
-import com.meta.core.entity.BaseModelDataEntity;
 import com.meta.core.entity.ModelDataEntity;
 import com.meta.core.field.FieldBean;
-import com.meta.core.FieldType;
+import com.meta.core.field.FieldType;
 import com.meta.core.model.ModelBean;
 import com.meta.core.dao.ModelDao;
 import com.meta.core.model.ext.MailModel;
@@ -77,6 +76,7 @@ public class TestModelData {
 //                fieldValue = runModel(associatedModel, params);
                 }
                 modelDataEntity.getFieldValues().put(field.getCode(), fieldValue);
+                modelDataEntity.getFieldDisplays().put(field.getCode(), field.formatToDisplay(fieldValue));
             }
             modelDataDao.save(modelDataEntity);
         }

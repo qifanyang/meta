@@ -1,8 +1,11 @@
-package com.meta.core;
+package com.meta.core.field;
+
+import com.meta.core.ConversionContext;
+import com.meta.core.field.handler.FieldDataException;
 
 import java.util.Map;
 
-public interface FieldTypeStrategy<T> {
+public interface FieldTypeHandler<T> {
 
 
     /**
@@ -36,11 +39,13 @@ public interface FieldTypeStrategy<T> {
     T parseFromUntyped(Object rawValue, ConversionContext context) throws FieldDataException;
 
     /**
-     * 将Java类型 T 的值格式化为用于UI显示的字符串.
+     * 将Java类型value的值格式化为用于UI显示的字符串.
+     * value使用Object, 数据转换使用FieldType的DataType来转换数据
+     * DataType扮演convert<Object, T>角色
      * @param value 内部存储的值.
      * @return 用于显示的字符串.
      */
-    String formatForDisplay(T value, ConversionContext context);
+    String formatForDisplay(Object value, ConversionContext context);
 
     /**
      * 根据字段元数据验证值的有效性.

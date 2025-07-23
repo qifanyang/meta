@@ -1,12 +1,11 @@
 package com.meta.app.model.salary;
 
-import com.meta.core.FieldType;
+import com.meta.core.field.FieldType;
 import com.meta.core.MetaFieldManager;
 import com.meta.core.entity.FieldEntity;
 import com.meta.core.field.FieldBean;
 import com.meta.core.model.ModelBean;
 import com.meta.util.IdGenerator;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

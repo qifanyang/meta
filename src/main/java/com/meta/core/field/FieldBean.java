@@ -62,4 +62,8 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
     public void setAssociatedModel(Class<? extends BaseModel> associatedModel) {
         this.associatedModel = associatedModel;
     }
+
+    public String formatToDisplay(Object value){
+        return FieldType.valueOf(getFieldType()).formatForDisplay(value, null);
+    }
 }

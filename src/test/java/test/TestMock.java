@@ -3,7 +3,7 @@ package test;
 
 import com.meta.MetaApplication;
 import com.meta.core.MetaFieldManager;
-import com.meta.core.FieldType;
+import com.meta.core.field.FieldType;
 import com.meta.core.model.ModelBean;
 import com.meta.core.dao.FieldDao;
 import com.meta.core.dao.ModelDao;

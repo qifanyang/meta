@@ -1,0 +1,8 @@
+HTML控件	     低代码类型ID	Java 存储类型 T	备注
+<input type="password">	PASSWORD	String	类似TEXT，但在UI上屏蔽。
+<textarea>	TEXT_AREA	String	类似TEXT，UI渲染为多行。
+<input type="email">	EMAIL	String	TEXT的特化，内置Email格式校验。
+<input type="checkbox">	BOOLEAN	Boolean	存储 true/false。
+<input type="checkbox" name="...[]">	MULTI_SELECT	List<Long>	存储选中的ID列表，存储时可转为JSON字符串或存入关联表。
+<input type="radio">	SINGLE_SELECT	Long / String	与下拉选择器逻辑一致。
+<input type="file">	FILE	String / JSON	存储文件URL或包含文件名、大小、URL的JSON对象。

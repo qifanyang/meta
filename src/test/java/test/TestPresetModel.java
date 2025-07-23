@@ -3,11 +3,10 @@ package test;
 
 import com.meta.MetaApplication;
 import com.meta.app.model.salary.SalaryArchiveModel;
-import com.meta.core.FieldType;
+import com.meta.core.field.FieldType;
 import com.meta.core.dao.FieldDao;
 import com.meta.core.dao.ModelDao;
 import com.meta.core.field.FieldBean;
-import com.meta.core.model.ModelBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
