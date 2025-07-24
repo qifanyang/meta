@@ -1,8 +1,70 @@
-元数据定义
-元数据存储
-根据元数据创建运行时数据
+元数据定义 ok
+元数据存储 ok
+根据元数据创建运行时数据 ok
+
+自定义模型, 执行模型,
+模型运行时触发其它模型执行, 可以只有运行时数据, 因为元数据可以来至于创建它的模型
+模型可以触发创建1~N个运行时数据, 运行数据关系可以是一对一, 一对多
+
+模型(主模型)X模型1X模型2
+
+简易算薪模型
+人员档案模型, 人员字段:姓名,身份证,电话
+薪酬档案模型, 薪酬字段:基本工资
+考勤模型,   考勤字段: 工作日天数, 请假天数
+社保模型,  社保字段: 养老保险金额, 公积金金额 ....等等
+薪酬方案模型, 方案字段: 引用上面所有字段,
+自定义字段: 本期收入 = 基本工资 - (基本工资/工作日天数)*请假天数
+          应发工资 = 本期收入 - 养老保险金额 - 公积金金额 - 个税
+          个税 = 累计收入%税率 - 速算扣除
+
+除薪酬方案外, 其他模型是一一对应, 薪酬方案是元数据, 其它模型用的是运行时数据
+所以模型执行过程如下
+输入: 模型元数据+其它模型运行时数据
+输出: 1~N模型运行时数据, 输出模型运行时数据存在模型个数和每个模型的运行时数据条数
+
+输入一条其它模型运行时数据, 产生一条当前模型元数据的运行时数据
+对于创建多少其他运行时数据, 可以在模型元数据中定义
+
+比如执行薪酬方案, 遍历每条薪酬档案, 执行薪酬方案模型,
+创建工资汇总表(按照收入类型, 即薪酬方案收入类型-正常薪金,年终奖,裁员一次性补偿金,一般劳务报酬)
+创建工资表(薪酬方案的运行时数据, 一条数据, 定义数据对象, 迭代执行需要累计数据)
+创建人员工资(薪酬档案每个人一条数据, 内容为薪酬方案运行时数据)
+
+需要一个执行计划
+依赖的运行时数据要先准备好
+主数据: 薪酬档案 , 其它数据: 人员档案, 使用LEFT JOIN 联表查询 薪酬方案-薪酬档案关联表
+迭代数据: 查询出来的哪些数据参与模型执行, 所有人员参与(全员算薪)
+Runner.builder()
+.mainModel(SalaryArchive.CODE) code可以动态查询数据库
+.joinModel(PersonArchive.CODE)
+.joinModel(SalaryArchiveSalaryTemplateRelation.CODE)
+.conditions();
+
+List<Map<String, Object>> dataList = LinkedList();
+dataList.forEach(params ->
+    SalaryTemplatePersonData data = SalaryTemplateData();
+    SalaryTemplate.getFields().forEach( field ->
+       Object fieldValue = scriptRunner().eval(params, field.getExpression())
+       data.getFieldValues().put(field.getCode(), fieldValue);
+       data.getFieldDisplays().put(field.getCode(), field.formatToDisplay(fieldValue));
+    )
+    SalaryTemplatePersonDataDao.save(data);
+    //工资表迭代
+    SalaryTemplateData (SalaryTemplatePersonData) 唯一key, year+month+templateId
+    //
+    SalarySummaryData 唯一key year+month 没有则创建, 有则复用, 数字累计
+    SalarySummaryData field key=year+month+id
+    SalarySummaryData 触发执行, 参数SalaryTemplatePersonData, key=year+month+id
+    SalarySummaryData 定义field执行
+    工资合计=工资合计+本期收入
+    计薪人数=计薪人数+1
+
+)
 
 
-chat gpt
-低代码平台和动态表单如何创建对应的表
+
+
+
+
 

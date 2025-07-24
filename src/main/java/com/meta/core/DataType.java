@@ -66,6 +66,7 @@ public enum DataType {
             return super.convert(data);
         }
     },
+    MODEL(Object.class),
     ;
 
     private Class<?> javaType;

@@ -34,6 +34,7 @@ public enum FieldType implements FieldTypeHandler {
 //    USER_PICKER(String.class, "UserPicker", true),
 //    DEPT_PICKER(String.class, "DeptPicker", true)
     //RELATIONAL 关联关系字段, 可以引用另一个模型中的字段或动态生成
+    //关联字段, 需要根据对应模型处理,
       ;
 
     private final DataType dataType;         // Java存储类型（内部值）
