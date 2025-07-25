@@ -7,7 +7,6 @@ import jakarta.persistence.Transient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<FieldEntity> {
 
@@ -43,10 +42,15 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
     }
 
     public static FieldBean of(String code, String name, String fieldType){
+        return of(code, name, fieldType, null);
+    }
+
+    public static FieldBean of(String code, String name, String fieldType, String exp){
         FieldBean fb = new FieldBean();
         fb.setCode(code);
         fb.setName(name);
         fb.setFieldType(fieldType);
+        fb.setExpression(exp);
         return fb;
     }
 

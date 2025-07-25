@@ -1,0 +1,16 @@
+使用模型名字Xxx举例
+
+1.新建模型XxxModel extends ModelBean
+2.定义模型CODE 使用常量 public static final String CODE = "meta_xxx";
+3.定义预置字段 重写方法List<FieldBean> getPresetFields()
+4.构造方法, 模型名等
+public XxxModel(){
+    setCode(CODE);
+    setName("薪酬档案");
+    setId(IdGenerator.nextId());
+}
+5.注入到spring container @Component(XxxModel.CODE)
+6.运行模型
+XxxModel xxxModel = new XxxModel(); 或者使用Autowired xxxModel
+Map<String, Object> params = new HashMap<>();
+ModelDataEntity modelData = xxxMode.run(params);

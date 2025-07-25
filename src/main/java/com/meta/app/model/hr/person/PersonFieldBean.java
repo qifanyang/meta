@@ -1,4 +1,4 @@
-package com.meta.app.model.person;
+package com.meta.app.model.hr.person;
 
 import com.meta.core.field.FieldBean;
 

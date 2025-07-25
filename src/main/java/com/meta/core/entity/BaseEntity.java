@@ -10,7 +10,7 @@ public abstract class BaseEntity implements BaseEntityDefinition {
 
     @Id
     @Column(length = 32, updatable = false)
-    private String id;
+    private String id = IdGenerator.nextId();
 
     @Column(name = "tenant_id", nullable = false, length = 50)
     private String tenantId = "1";

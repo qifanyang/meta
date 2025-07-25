@@ -1,4 +1,4 @@
-package com.meta.app.model.salary;
+package com.meta.app.model.hr.salary;
 
 import com.meta.core.field.FieldType;
 import com.meta.core.MetaFieldManager;
@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 
 @Component(SalaryArchiveModel.CODE)
 public class SalaryArchiveModel extends ModelBean {
+    public static final String CODE = "meta_salary_archive";
 
     @Autowired
     private MetaFieldManager fieldManager;
 
-    public static final String CODE = "meta_salary_archive";
 
     public SalaryArchiveModel(){
         setCode(CODE);
@@ -50,12 +50,8 @@ public class SalaryArchiveModel extends ModelBean {
     @Override
     public List<FieldBean> getPresetFields() {
         List<FieldBean> presetFields = new ArrayList<>();
-        presetFields.add(FieldBean.of("age", "年龄", FieldType.NUMBER.name()));
-        presetFields.add(FieldBean.of("age", "年龄", FieldType.NUMBER.name()));
-        for (FieldBean presetField : presetFields) {
-            presetField.setModelId(getId());
-            presetField.setModelCode(getCode());
-        }
+        presetFields.add(FieldBean.of("wage", "基本工资", FieldType.NUMBER.name()));
+        copy2Field(presetFields);
         return presetFields;
     }
 }

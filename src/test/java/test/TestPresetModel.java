@@ -2,7 +2,7 @@ package test;
 
 
 import com.meta.MetaApplication;
-import com.meta.app.model.salary.SalaryArchiveModel;
+import com.meta.app.model.hr.salary.SalaryArchiveModel;
 import com.meta.core.field.FieldType;
 import com.meta.core.dao.FieldDao;
 import com.meta.core.dao.ModelDao;

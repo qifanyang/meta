@@ -1,5 +1,6 @@
 package com.meta.core.model;
 
+import com.meta.core.entity.ModelDataEntity;
 import com.meta.core.entity.ModelEntity;
 import com.meta.core.field.FieldBean;
 import com.meta.util.IdGenerator;
@@ -30,5 +31,12 @@ public class ModelBean extends ModelDefinitionWrapper<ModelEntity>{
 
     public List<FieldBean> getFields() {
         return fields;
+    }
+
+    protected void copy2Field(List<FieldBean> fieldList){
+        for (FieldBean fieldBean : fieldList) {
+            fieldBean.setModelId(getId());
+            fieldBean.setModelCode(getCode());
+        }
     }
 }

@@ -1,13 +1,12 @@
 package test;
 
 import com.meta.MetaApplication;
-import com.meta.core.BaseModel;
 import com.meta.core.ScriptRunner;
 import com.meta.core.dao.ModelDataDao;
-import com.meta.core.entity.FieldEntity;
 import com.meta.core.entity.ModelDataEntity;
 import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
+import com.meta.core.model.ModelRunOptions;
 import com.meta.core.model.ModelBean;
 import com.meta.core.dao.ModelDao;
 import com.meta.core.model.ext.MailModel;
@@ -21,7 +20,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.script.ScriptException;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,64 +37,35 @@ public class TestModelData {
     private ModelDataDao modelDataDao;
 
     @Test
-    public void testAddPersonModel(){
+    public void testAddModelData(){
 
-        //创建业务模型类或从数据库查询
-
-        //创建业务模型字段或从数据库查询
-        //1.创建业务模型自动构建预置字段,
-        //2.查询自动合并新增的预置字段, 删除的用户自己控制
-
-        //保存模型自动保存模型字段
 
         ModelBean modelBean = new ModelBean();
-        modelBean.setCode("person_model");
-        modelBean.setName("人员模型");
+        modelBean.setCode("mail_model");
+        modelBean.setName("邮件模型");
+        //TODO 模型执行数据表, 这里还得设计, 运行时设置class?
+        //但是低代码构建时只能设置dataTableName
         modelBean.setDataTable("person");
         modelBean.addField(FieldBean.of("name", "姓名", FieldType.TEXT.name()));
         modelBean.addField(FieldBean.of("age", "年龄", FieldType.NUMBER.name()));
         modelDao.save(modelBean.meta());
-
 
         //模型运行时产生的数据, 可以存储在通用模型表,
         // 也可以根据model上的dataTable指定特定表(对应表一定要存在, Entity创建对应表)
         //1.统一存储
         {
             Map<String, Object> params = Map.of("a", 1, "b", 2);
-            ModelDataEntity modelDataEntity = new ModelDataEntity();
-            modelDataEntity.setModelId(modelBean.getId());
-            List<FieldBean> fields = modelBean.getFields();
-            for (FieldBean field : fields) {
-                modelDataEntity.getFields().add((FieldEntity) field.meta());
-                Object fieldValue = null;
-                if (field.getExpression() != null && !field.getExpression().isBlank()) {
-                    fieldValue = scriptRunner().eval(params, field.getExpression());
-                } else if (field.getAssociatedModel() != null) {
-                    Class<? extends BaseModel> associatedModel = field.getAssociatedModel();
-//                fieldValue = runModel(associatedModel, params);
-                }
-                modelDataEntity.getFieldValues().put(field.getCode(), fieldValue);
-                modelDataEntity.getFieldDisplays().put(field.getCode(), field.formatToDisplay(fieldValue));
-            }
+            ModelDataEntity modelDataEntity = modelBean.run(params);
             modelDataDao.save(modelDataEntity);
         }
         //2.可扩展模型存储, 数据表独立
         {
+            ModelRunOptions options = new ModelRunOptions();
+            options.setDataEntityClass(MailModelDataEntity.class);
+
             Map<String, Object> params = Map.of("a", 1, "b", 2);
-            MailModelDataEntity mailModelData = new MailModelDataEntity();
-            mailModelData.setModelId(modelBean.getId());
-            List<FieldBean> fields = modelBean.getFields();
-            for (FieldBean field : fields) {
-                mailModelData.getFields().add((FieldEntity) field.meta());
-                Object fieldValue = null;
-                if (field.getExpression() != null && !field.getExpression().isBlank()) {
-                    fieldValue = scriptRunner().eval(params, field.getExpression());
-                } else if (field.getAssociatedModel() != null) {
-                    Class<? extends BaseModel> associatedModel = field.getAssociatedModel();
-//                fieldValue = runModel(associatedModel, params);
-                }
-                mailModelData.getFieldValues().put(field.getCode(), fieldValue);
-            }
+
+            ModelDataEntity mailModelData = modelBean.run(params, options);
 
             modelDataDao.save(mailModelData);
         }

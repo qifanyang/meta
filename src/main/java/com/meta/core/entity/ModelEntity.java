@@ -14,7 +14,7 @@ public class ModelEntity extends MetaEntity implements ModelDefinition {
 
     @Comment("模型对应的数据表名,用作数据路由")
     @Column(name = "data_table")
-    private String dataTable = ModelDataEntity.TABLE_NAME;
+    private String dataTable = GenericModelDataEntity.TABLE_NAME;
 
     public String getDataTable() {
         return dataTable;
