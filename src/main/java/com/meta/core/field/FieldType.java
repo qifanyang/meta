@@ -2,10 +2,7 @@ package com.meta.core.field;
 
 import com.meta.core.ConversionContext;
 import com.meta.core.DataType;
-import com.meta.core.field.handler.FieldDataException;
-import com.meta.core.field.handler.NumberFieldType;
-import com.meta.core.field.handler.SingleSelectFieldType;
-import com.meta.core.field.handler.TextFieldType;
+import com.meta.core.field.handler.*;
 
 import java.util.Map;
 
@@ -27,7 +24,7 @@ public enum FieldType implements FieldTypeHandler {
 //    MULTI_SELECT(List.class, "MultiSelect", true),
     RADIO("单选",DataType.STRING, "RadioGroup", true),
     DATE("日期", DataType.DATE, "DatePicker", false),
-    MODEL("模型", DataType.MODEL, "Table", false),
+    MODEL("模型", DataType.MODEL, "Table", false, new ModelFieldType()),
 //    DATETIME(LocalDateTime.class, "DateTimePicker", false),
 //    FILE(List.class, "FileUpload", false),
 //    PHONE(String.class, "PhoneInput", false),

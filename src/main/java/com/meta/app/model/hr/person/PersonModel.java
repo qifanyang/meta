@@ -22,7 +22,7 @@ public class PersonModel extends ModelBean {
     public List<FieldBean> getPresetFields() {
         List<FieldBean> presetFields = new ArrayList<>();
         presetFields.add(FieldBean.of("name", "姓名", FieldType.TEXT.name()));
-        presetFields.add(FieldBean.of("idNumber", "身份证", FieldType.TEXT.name()));
+        presetFields.add(FieldBean.of("idNumber", "身份证", FieldType.TEXT.name() ));
         presetFields.add(FieldBean.of("phone", "电话", FieldType.TEXT.name()));
         copy2Field(presetFields);
         return presetFields;

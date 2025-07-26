@@ -31,21 +31,6 @@ public class TestPresetModel {
     private SalaryArchiveModel salaryArchiveModel;
 
     @Test
-    public void testCreateModelAndField(){
-
-        SalaryArchiveModel modelBean = new SalaryArchiveModel();
-        modelBean.addField(FieldBean.of("name", "姓名", FieldType.TEXT.name()));
-        FieldBean ageField = FieldBean.of("age", "年龄", FieldType.NUMBER_DECIMAL.name());
-        ageField.setModelId(modelBean.getId());
-        ageField.setModelCode(modelBean.getCode());
-        modelBean.addField(ageField);
-        modelDao.save(modelBean.meta());
-
-        fieldDao.saveEntity(ageField.meta());
-
-    }
-
-    @Test
     public void testLoadModelField(){
 
         List<FieldBean> fields = salaryArchiveModel.getFields();

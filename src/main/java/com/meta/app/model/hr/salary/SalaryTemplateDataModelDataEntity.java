@@ -25,11 +25,10 @@ public class SalaryTemplateDataModelDataEntity extends ModelDataEntity {
     @Override
     public void updateSpecificFieldValue(FieldBean fieldBean, Object fieldValue) {
         switch (fieldBean.getCode()){
-            case "year": setYear((BigDecimal) fieldValue);
-            case "month": setMonth((BigDecimal) fieldValue);
-            case "personCount": setPersonCount((BigDecimal) fieldValue);
-            case "payableTotal": setPayableTotal((BigDecimal) fieldValue);
-            break;
+            case "year" -> setYear((BigDecimal) fieldValue);
+            case "month" -> setMonth((BigDecimal) fieldValue);
+            case "personCount" -> setPersonCount((BigDecimal) fieldValue);
+            case "payableTotal"-> setPayableTotal((BigDecimal) fieldValue);
         }
     }
 

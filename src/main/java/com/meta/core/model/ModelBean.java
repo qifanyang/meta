@@ -10,8 +10,6 @@ import java.util.List;
 
 public class ModelBean extends ModelDefinitionWrapper<ModelEntity>{
 
-    private List<FieldBean> fields = new ArrayList<>();
-
     public ModelBean(){
         this(new ModelEntity());
     }
@@ -21,16 +19,8 @@ public class ModelBean extends ModelDefinitionWrapper<ModelEntity>{
         meta().setId(IdGenerator.nextId());
     }
 
-    public void addField(FieldBean fieldBean) {
-        fields.add(fieldBean);
-    }
-
-    public void addFields(List<FieldBean> fieldBeans) {
-        fields.addAll(fieldBeans);
-    }
-
     public List<FieldBean> getFields() {
-        return fields;
+        return getPresetFields();
     }
 
     protected void copy2Field(List<FieldBean> fieldList){

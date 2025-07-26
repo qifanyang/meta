@@ -45,9 +45,6 @@ public class TestModelData {
         modelBean.setName("邮件模型");
         //但是低代码构建时只能设置dataTableName
         modelBean.setDataTable(MailModelDataEntity.TABLE_NAME);
-        modelBean.addField(FieldBean.of("name", "姓名", FieldType.TEXT.name()));
-        modelBean.addField(FieldBean.of("age", "年龄", FieldType.NUMBER_DECIMAL.name()));
-        modelDao.save(modelBean.meta());
 
         //模型运行时产生的数据, 可以存储在通用模型表,
         // 也可以根据model上的dataTable指定特定表(对应表一定要存在, Entity创建对应表)

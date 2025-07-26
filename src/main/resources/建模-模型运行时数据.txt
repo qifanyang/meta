@@ -19,3 +19,6 @@ public class SalaryTemplateDataModelDataEntity extends ModelDataEntity {
     @Column
     private Integer month;
 }
+
+对应模型实体dao类, SalaryTemplateDataModelDataDao
+保存关联模型使用ModelDataHelper工具类

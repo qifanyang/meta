@@ -31,13 +31,12 @@ public class SalarySummaryDataModelDataEntity extends ModelDataEntity {
         //字段抽出为枚举后统一处理
         //低代码动态构建则使用反射处理
         switch (fieldBean.getCode()){
-            case "year": setYear((BigDecimal) fieldValue);
-            case "month": setMonth((BigDecimal) fieldValue);
-            case "personCount": setPersonCount((BigDecimal) fieldValue);
-            case "payableTotal": setPayableTotal((BigDecimal) fieldValue);
-            case "incomeType": setIncomeType((BigDecimal) fieldValue);
-            case "taxAgent": setTaxAgent((String) fieldValue);
-                break;
+            case "year" -> setYear((BigDecimal) fieldValue);
+            case "month" -> setMonth((BigDecimal) fieldValue);
+            case "personCount" -> setPersonCount((BigDecimal) fieldValue);
+            case "payableTotal"-> setPayableTotal((BigDecimal) fieldValue);
+            case "incomeType"-> setIncomeType((BigDecimal) fieldValue);
+            case "taxAgent"-> setTaxAgent((String) fieldValue);
         }
     }
 

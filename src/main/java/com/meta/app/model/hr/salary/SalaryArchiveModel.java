@@ -40,8 +40,8 @@ public class SalaryArchiveModel extends ModelBean {
         Map<String, FieldBean> fieldBeanMap = fieldBeanList.stream().collect(Collectors.toMap(FieldBean::getId, Function.identity(), (existing, replacement) -> existing));
         //从数据库加载的时候追加新增的预置字段
         for (FieldBean presetField : getPresetFields()) {
-            if (fieldBeanMap.containsKey(presetField.getCode())) {
-                addField(presetField);
+            if (!fieldBeanMap.containsKey(presetField.getCode())) {
+                fieldBeanList.add(presetField);
             }
         }
         return fieldBeanList;
@@ -50,7 +50,7 @@ public class SalaryArchiveModel extends ModelBean {
     @Override
     public List<FieldBean> getPresetFields() {
         List<FieldBean> presetFields = new ArrayList<>();
-        presetFields.add(FieldBean.of("wage", "基本工资", FieldType.NUMBER_DECIMAL.name()));
+        presetFields.add(FieldBean.of("wage", "基本工资", FieldType.NUMBER_DECIMAL.name(), "wage"));
         copy2Field(presetFields);
         return presetFields;
     }

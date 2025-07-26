@@ -20,8 +20,8 @@ public class SocialModel extends ModelBean {
     @Override
     public List<FieldBean> getPresetFields() {
         List<FieldBean> presetFields = new ArrayList<>();
-        presetFields.add(FieldBean.of("pi", "养老保险", FieldType.NUMBER_DECIMAL.name()));
-        presetFields.add(FieldBean.of("fund", "公积金", FieldType.NUMBER_DECIMAL.name()));
+        presetFields.add(FieldBean.of("pi", "养老保险", FieldType.NUMBER_DECIMAL.name(), "88"));
+        presetFields.add(FieldBean.of("fund", "公积金", FieldType.NUMBER_DECIMAL.name(), "99"));
         copy2Field(presetFields);
         return presetFields;
     }

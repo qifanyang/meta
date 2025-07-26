@@ -83,7 +83,12 @@ public enum DataType {
             return super.convert(data);
         }
     },
-    MODEL(Object.class),
+    MODEL(Object.class){
+        @Override
+        public Object convert(Object data) {
+            return data;
+        }
+    },
     ;
 
     private Class<?> javaType;
@@ -104,6 +109,6 @@ public enum DataType {
 
     public String display(Object data){
         Object value = convert(data);
-        return Objects.toString(data, "");
+        return Objects.toString(value, "");
     }
 }

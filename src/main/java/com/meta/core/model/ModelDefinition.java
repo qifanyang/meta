@@ -10,10 +10,13 @@ import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.surpport.GroovyUtil;
 import com.meta.util.AppContext;
+import com.meta.util.RepositoryLocator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Table;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.metamodel.EntityType;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.util.Assert;
 
 import javax.script.ScriptException;
@@ -41,21 +44,24 @@ public interface ModelDefinition extends MetaDefinition {
                 modelData.getFields().add(field.meta());
             }
             Object fieldValue = null;
-            if (field.getExpression() != null && !field.getExpression().isBlank()) {
-                fieldValue = scriptRunner().eval(params, field.getExpression());
-            } else if (field.getFieldType().equals(FieldType.MODEL.name())) {
+            if (field.getFieldType().equals(FieldType.MODEL.name())) {
                 ModelBean relationModelBean = AppContext.getBean(field.getCode(), ModelBean.class);
-                Assert.isTrue(relationModelBean == null, "关联模型实例不存在, modelCode = " + field.getCode());
+                Assert.isTrue(relationModelBean != null, "关联模型实例不存在, modelCode = " + field.getCode());
                 ModelRunOptions relationRunOptions = new ModelRunOptions();
                 relationRunOptions.setUniqueCodes(field.getUniqueCodes());
-                ModelDataEntity relationModelData = relationModelBean.run(modelData.getFieldValues(), relationRunOptions);
+
+                ModelDataEntity relationModelData = relationModelBean.run(params, relationRunOptions);
                 fieldValue = relationModelData.getId();
-                relationModelData.getRelationModelData().put(field.getCode(), relationModelData);
-            }
-            String formatToValue = field.formatToValue(fieldValue);
+                modelData.getRelationModelData().put(field.getCode(), relationModelData);
+            }else if (field.getExpression() != null && !field.getExpression().isBlank()) {
+                 fieldValue = scriptRunner().eval(params, field.getExpression());
+             }
+            Object formatToValue = field.formatToValue(fieldValue);
             modelData.updateSpecificFieldValue(field, formatToValue);
             modelData.getFieldValues().put(field.getCode(), formatToValue);
             modelData.getFieldDisplays().put(field.getCode(), field.formatToDisplay(fieldValue));
+            //TODO 计算后的值放入上下文 这里要重新设计上下文, 存在重复的code 要更新上下文?
+            params.put(field.getCode(), formatToValue);
         }
         return modelData;
     }
@@ -69,30 +75,6 @@ public interface ModelDefinition extends MetaDefinition {
         if (dataTable == null || dataTable.isEmpty()){
             throw new IllegalStateException("创建模型数据实体失败, 未指定数据表, 请检查模型dataTable值");
         }
-        ModelDataEntity dataEntity = null;
-        if (options.getUniqueCodes() != null) {
-            //指定了model查询unique codes, 表明是要先查询关联数据, 而不是直接创建新的数据
-            ModelDataDao modelDataDao = AppContext.getBean(ModelDataDao.class);
-            List<ModelDataEntity> existModelData = modelDataDao.findAll((root, query, cb) -> {
-                List<Predicate> predicates = new ArrayList<>();
-                params.forEach((key, value) -> {
-                    if (value != null) {
-                        if (value instanceof String) {
-                            predicates.add(cb.like(root.get(key), "%" + value + "%"));
-                        } else {
-                            predicates.add(cb.equal(root.get(key), value));
-                        }
-                    }
-                });
-                return cb.and(predicates.toArray(new Predicate[0]));
-            });
-            Assert.isTrue(existModelData != null && existModelData.size() > 1, String.format("uniqueCodes指定的modelData不唯一, modelMode = %s", getCode()));
-            dataEntity = existModelData.get(0);
-        }
-        if (dataEntity != null){
-            //查询到对应modelData, 不新创建直接返回
-            return dataEntity;
-        }
         Class<? extends ModelDataEntity> dataEntityClass = null;
         Set<EntityType<?>> entities = AppContext.getBean(EntityManager.class).getMetamodel().getEntities();
         for (EntityType<?> entity : entities) {
@@ -105,6 +87,30 @@ public interface ModelDefinition extends MetaDefinition {
         if (dataEntityClass == null) {
             throw new IllegalStateException("创建模型数据实体失败, 无模型数据实体Class, 请检查模型dataTable值");
         }
+        ModelDataEntity dataEntity = null;
+        if (options.getUniqueCodes() != null) {
+            //指定了model查询unique codes, 表明是要先查询关联数据, 而不是直接创建新的数据
+            JpaRepository<? extends ModelDataEntity, String> modelDataDao = AppContext.getBean(RepositoryLocator.class).getRepository(dataEntityClass);
+            List<ModelDataEntity> existModelData = ((JpaSpecificationExecutor)modelDataDao).findAll((root, query, cb) -> {
+                List<Predicate> predicates = new ArrayList<>();
+                for (String code : options.getUniqueCodes()) {
+                    Object value = params.get(code);
+                    if (value instanceof String) {
+                        predicates.add(cb.like(root.get(code), "%" + value + "%"));
+                    } else {
+                        predicates.add(cb.equal(root.get(code), value));
+                    }
+                }
+                return cb.and(predicates.toArray(new Predicate[0]));
+            });
+            Assert.isTrue(existModelData != null && existModelData.size() < 2, String.format("uniqueCodes指定的modelData不唯一, modelMode = %s", getCode()));
+            dataEntity = existModelData.size() == 1 ? existModelData.get(0) : null;
+        }
+        if (dataEntity != null){
+            //查询到对应modelData, 不新创建直接返回
+            return dataEntity;
+        }
+
         try {
             dataEntity = dataEntityClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {

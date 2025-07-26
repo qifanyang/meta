@@ -42,7 +42,7 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
     }
 
     public static FieldBean of(String code, String name, String fieldType){
-        return of(code, name, fieldType, null);
+        return of(code, name, fieldType, code);
     }
 
     public static FieldBean of(String code, String name, String fieldType, String exp){
@@ -71,7 +71,7 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
         return FieldType.valueOf(getFieldType()).formatForDisplay(value, null);
     }
 
-    public String formatToValue(Object value){
+    public Object formatToValue(Object value){
         return FieldType.valueOf(getFieldType()).getDataType().convert(value);
     }
 
