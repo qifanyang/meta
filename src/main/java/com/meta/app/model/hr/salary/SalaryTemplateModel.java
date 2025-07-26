@@ -40,10 +40,10 @@ public class SalaryTemplateModel extends ModelBean {
         presetFields.addAll(attendanceModel.getPresetFields());
         presetFields.addAll(salaryArchiveModel.getPresetFields());
 
-        presetFields.add(FieldBean.of("payable", "本期收入", FieldType.NUMBER.name(), "wage - (wage/workDays)*leaveDays"));
-        presetFields.add(FieldBean.of("grandPayable", "累计收入", FieldType.NUMBER.name(), "10000"));
-        presetFields.add(FieldBean.of("tax", "个税", FieldType.NUMBER.name(), "grandTax * 0.1"));
-        presetFields.add(FieldBean.of("realWage", "应发工资", FieldType.NUMBER.name(), "payable - pi - fund - tax"));
+        presetFields.add(FieldBean.of("payable", "本期收入", FieldType.NUMBER_DECIMAL.name(), "wage - (wage/workDays)*leaveDays"));
+        presetFields.add(FieldBean.of("grandPayable", "累计收入", FieldType.NUMBER_DECIMAL.name(), "10000"));
+        presetFields.add(FieldBean.of("tax", "个税", FieldType.NUMBER_DECIMAL.name(), "grandTax * 0.1"));
+        presetFields.add(FieldBean.of("realWage", "应发工资", FieldType.NUMBER_DECIMAL.name(), "payable - pi - fund - tax"));
 
         //模型执行触发创建其它模型数据(先使用默认数据表, 一般使用单独的表)
         FieldBean salaryTemplateDataField = FieldBean.of(SalaryTemplateDataModel.CODE, "工资表", FieldType.MODEL.name());

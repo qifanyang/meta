@@ -21,8 +21,8 @@ public class AttendanceModel extends ModelBean {
     @Override
     public List<FieldBean> getPresetFields() {
         List<FieldBean> presetFields = new ArrayList<>();
-        presetFields.add(FieldBean.of("workDays", "工作天数", FieldType.NUMBER.name()));
-        presetFields.add(FieldBean.of("leaveDays", "请假天数", FieldType.NUMBER.name()));
+        presetFields.add(FieldBean.of("workDays", "工作天数", FieldType.NUMBER_DECIMAL.name()));
+        presetFields.add(FieldBean.of("leaveDays", "请假天数", FieldType.NUMBER_DECIMAL.name()));
         copy2Field(presetFields);
         return presetFields;
     }

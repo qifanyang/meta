@@ -1,0 +1,21 @@
+模型运行时数据设计
+
+建模时会指定模型运行时的数据表,默认为GenericModelDataEntity.TABLE_NAME
+可以为模型指定新的运行时数据表 通过新建的模型ModelBean.setDataTable(Xxx.TABLE_NAME)
+
+指定新的模型运行时表时, 需要新建模型数据表Xxx, 继承ModelDataEntity, 指定新的表明
+新的模型数据表字段采用ModelDataEntity定义的通用字段, 可以新加模型的特有字段
+
+示例: 工资表运行时数据, 其中模型是SalaryTemplateDataModel (模型设计,见预置模型设计.txt)
+@Entity
+@Table(name = SalaryTemplateDataModelDataEntity.TABLE_NAME)
+public class SalaryTemplateDataModelDataEntity extends ModelDataEntity {
+    public static final String TABLE_NAME = "salary_template_data";
+
+    //高频字段, 不仅在fieldValues中冗余存储, 单独一列方法查询检索
+    @Column
+    private Integer year;
+
+    @Column
+    private Integer month;
+}

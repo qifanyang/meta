@@ -3,6 +3,7 @@ package com.meta.core.model;
 import com.meta.core.BaseModel;
 import com.meta.core.MetaDefinition;
 import com.meta.core.ScriptRunner;
+import com.meta.core.dao.ModelDataDao;
 import com.meta.core.entity.ModelDataEntity;
 import com.meta.core.entity.ModelEntity;
 import com.meta.core.field.FieldBean;
@@ -11,14 +12,12 @@ import com.meta.core.surpport.GroovyUtil;
 import com.meta.util.AppContext;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Table;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.util.Assert;
 
 import javax.script.ScriptException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public interface ModelDefinition extends MetaDefinition {
 
@@ -53,7 +52,9 @@ public interface ModelDefinition extends MetaDefinition {
                 fieldValue = relationModelData.getId();
                 relationModelData.getRelationModelData().put(field.getCode(), relationModelData);
             }
-            modelData.getFieldValues().put(field.getCode(), fieldValue);
+            String formatToValue = field.formatToValue(fieldValue);
+            modelData.updateSpecificFieldValue(field, formatToValue);
+            modelData.getFieldValues().put(field.getCode(), formatToValue);
             modelData.getFieldDisplays().put(field.getCode(), field.formatToDisplay(fieldValue));
         }
         return modelData;
@@ -71,9 +72,25 @@ public interface ModelDefinition extends MetaDefinition {
         ModelDataEntity dataEntity = null;
         if (options.getUniqueCodes() != null) {
             //指定了model查询unique codes, 表明是要先查询关联数据, 而不是直接创建新的数据
-            //
+            ModelDataDao modelDataDao = AppContext.getBean(ModelDataDao.class);
+            List<ModelDataEntity> existModelData = modelDataDao.findAll((root, query, cb) -> {
+                List<Predicate> predicates = new ArrayList<>();
+                params.forEach((key, value) -> {
+                    if (value != null) {
+                        if (value instanceof String) {
+                            predicates.add(cb.like(root.get(key), "%" + value + "%"));
+                        } else {
+                            predicates.add(cb.equal(root.get(key), value));
+                        }
+                    }
+                });
+                return cb.and(predicates.toArray(new Predicate[0]));
+            });
+            Assert.isTrue(existModelData != null && existModelData.size() > 1, String.format("uniqueCodes指定的modelData不唯一, modelMode = %s", getCode()));
+            dataEntity = existModelData.get(0);
         }
         if (dataEntity != null){
+            //查询到对应modelData, 不新创建直接返回
             return dataEntity;
         }
         Class<? extends ModelDataEntity> dataEntityClass = null;

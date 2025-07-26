@@ -10,7 +10,7 @@ import java.util.Map;
 public class NumberFieldType implements FieldTypeHandler<BigDecimal> {
     @Override
     public String getTypeId() {
-        return FieldType.NUMBER.getTypeId();
+        return FieldType.NUMBER_DECIMAL.getTypeId();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class NumberFieldType implements FieldTypeHandler<BigDecimal> {
         if (value == null){
             return "";
         }
-        return FieldType.NUMBER.getDataType().display(value);
+        return FieldType.NUMBER_DECIMAL.getDataType().display(value);
     }
 
     @Override

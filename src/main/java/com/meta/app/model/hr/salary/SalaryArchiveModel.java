@@ -50,7 +50,7 @@ public class SalaryArchiveModel extends ModelBean {
     @Override
     public List<FieldBean> getPresetFields() {
         List<FieldBean> presetFields = new ArrayList<>();
-        presetFields.add(FieldBean.of("wage", "基本工资", FieldType.NUMBER.name()));
+        presetFields.add(FieldBean.of("wage", "基本工资", FieldType.NUMBER_DECIMAL.name()));
         copy2Field(presetFields);
         return presetFields;
     }

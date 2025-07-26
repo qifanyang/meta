@@ -70,4 +70,9 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
     public String formatToDisplay(Object value){
         return FieldType.valueOf(getFieldType()).formatForDisplay(value, null);
     }
+
+    public String formatToValue(Object value){
+        return FieldType.valueOf(getFieldType()).getDataType().convert(value);
+    }
+
 }

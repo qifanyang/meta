@@ -22,11 +22,11 @@ public class SalaryTemplateDataModel extends ModelBean {
     @Override
     public List<FieldBean> getPresetFields() {
         List<FieldBean> presetFields = new ArrayList<>();
-        presetFields.add(FieldBean.of("year", "年", FieldType.NUMBER.name()));
-        presetFields.add(FieldBean.of("month", "月", FieldType.NUMBER.name()));
-        presetFields.add(FieldBean.of("personCount", "算薪人数", FieldType.NUMBER.name()));
-        presetFields.add(FieldBean.of("payableTotal", "本期收入合计", FieldType.NUMBER.name()));
-        presetFields.add(FieldBean.of("realWageTotal", "应发工资合计", FieldType.NUMBER.name()));
+        presetFields.add(FieldBean.of("year", "年", FieldType.NUMBER_DECIMAL.name()));
+        presetFields.add(FieldBean.of("month", "月", FieldType.NUMBER_DECIMAL.name()));
+        presetFields.add(FieldBean.of("personCount", "算薪人数", FieldType.NUMBER_DECIMAL.name()));
+        presetFields.add(FieldBean.of("payableTotal", "本期收入合计", FieldType.NUMBER_DECIMAL.name()));
+        presetFields.add(FieldBean.of("realWageTotal", "应发工资合计", FieldType.NUMBER_DECIMAL.name()));
         copy2Field(presetFields);
         return presetFields;
     }

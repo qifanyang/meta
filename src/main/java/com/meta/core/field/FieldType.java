@@ -20,7 +20,8 @@ public enum FieldType implements FieldTypeHandler {
 
     TEXT("单行文本", DataType.STRING, "TextInput", false, new TextFieldType()),
 //    TEXTAREA(String.class, "Textarea", false),
-    NUMBER("数字",DataType.NUMBER, "NumberInput", false, new NumberFieldType()),
+    NUMBER_DECIMAL("数字",DataType.NUMBER_DECIMAL, "NumberInput", false, new NumberFieldType()),
+    NUMBER_INTEGER("整数",DataType.NUMBER_DECIMAL, "NumberInput", false, new NumberFieldType()),
 //    BOOLEAN(Boolean.class, "Checkbox", false),
     SINGLE_SELECT("下拉框",DataType.STRING, "Select", true, new SingleSelectFieldType()),
 //    MULTI_SELECT(List.class, "MultiSelect", true),

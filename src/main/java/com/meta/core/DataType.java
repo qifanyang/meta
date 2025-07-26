@@ -19,7 +19,7 @@ public enum DataType {
             return (data == null || "null".equals(data.toString().trim())) ? null : data.toString();
         }
     },
-    NUMBER(BigDecimal.class){
+    NUMBER_DECIMAL(BigDecimal.class){
         @Override
         public BigDecimal convert(Object data) {
             if (data == null){
@@ -40,6 +40,23 @@ public enum DataType {
         public String display(Object data) {
             BigDecimal value = convert(data);
             return value == null ? "" : value.toPlainString();
+        }
+    },
+    NUMBER_INTEGER(Integer.class){
+        @Override
+        public Integer convert(Object data) {
+            if (data == null){
+                return null;
+            }
+            if (data instanceof Integer i){
+                return i;
+            }else{
+                String str = data.toString().trim();
+                if(!str.isBlank() && !"null".equals(str)) {
+                    return Integer.valueOf(str);
+                }
+            }
+            return null;
         }
     },
     BOOLEAN(Boolean.class){

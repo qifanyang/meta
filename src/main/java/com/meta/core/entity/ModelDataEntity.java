@@ -2,6 +2,8 @@ package com.meta.core.entity;
 
 import com.meta.core.ColumnListConverter;
 import com.meta.core.ColumnMapConverter;
+import com.meta.core.field.FieldBean;
+import com.meta.core.model.ModelDefinition;
 import jakarta.persistence.*;
 
 import java.util.LinkedHashMap;
@@ -98,5 +100,11 @@ public class ModelDataEntity extends BaseEntity {
 
     public void setRelationModelData(Map<String, ModelDataEntity> relationModelData) {
         this.relationModelData = relationModelData;
+    }
+
+
+    //ModelData 为定义definition, 通用方法先放到这里
+    public void updateSpecificFieldValue(FieldBean fieldBean, Object fieldValue){
+
     }
 }
