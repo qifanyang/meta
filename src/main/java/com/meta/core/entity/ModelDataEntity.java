@@ -44,6 +44,14 @@ public class ModelDataEntity extends BaseEntity {
     @Column(name = "field_displays", columnDefinition = "json")
     private Map<String, String> fieldDisplays = new LinkedHashMap<>();
 
+    /**
+     * 当前模型关联创建或更新的其它模型数据
+     * key : field code
+     * value: 关联模型数据实体
+     */
+    @Transient
+    private Map<String, ModelDataEntity> relationModelData = new LinkedHashMap<>();
+
     public String getModelId() {
         return modelId;
     }
@@ -82,5 +90,13 @@ public class ModelDataEntity extends BaseEntity {
 
     public void setFieldDisplays(Map<String, String> fieldDisplays) {
         this.fieldDisplays = fieldDisplays;
+    }
+
+    public Map<String, ModelDataEntity> getRelationModelData() {
+        return relationModelData;
+    }
+
+    public void setRelationModelData(Map<String, ModelDataEntity> relationModelData) {
+        this.relationModelData = relationModelData;
     }
 }

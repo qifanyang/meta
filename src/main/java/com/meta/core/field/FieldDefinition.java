@@ -2,6 +2,7 @@ package com.meta.core.field;
 
 import com.meta.core.MetaDefinition;
 
+import java.util.List;
 import java.util.Map;
 
 public interface FieldDefinition<T> extends MetaDefinition<T> {
@@ -53,4 +54,13 @@ public interface FieldDefinition<T> extends MetaDefinition<T> {
     Map<String, Object> getStyles();
 
     void setStyles(Map<String, Object> styles) ;
+
+    /**
+     * 当字段fieldType为model时, 以下code组合表示唯一查询
+     * 为什么不用id值, id值对业务是不可提前知道的, 但是根据年月可以查询是否有数据
+     * @return
+     */
+    List<String> getUniqueCodes();
+
+    void setUniqueCodes(List<String> uniqueCodes);
 }

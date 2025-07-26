@@ -2,6 +2,7 @@ package com.meta.core.field;
 
 import com.meta.core.MetaDefinitionWrapper;
 
+import java.util.List;
 import java.util.Map;
 
 public class FieldDefinitionWrapper<T> extends MetaDefinitionWrapper<T> implements FieldDefinition<T> {
@@ -134,6 +135,16 @@ public class FieldDefinitionWrapper<T> extends MetaDefinitionWrapper<T> implemen
     @Override
     public void setStyles(Map<String, Object> styles) {
 
+    }
+
+    @Override
+    public List<String> getUniqueCodes() {
+        return definition.getUniqueCodes();
+    }
+
+    @Override
+    public void setUniqueCodes(List<String> uniqueCodes) {
+        definition.setUniqueCodes(uniqueCodes);
     }
 
     @Override

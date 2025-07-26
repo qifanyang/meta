@@ -26,6 +26,7 @@ public enum FieldType implements FieldTypeHandler {
 //    MULTI_SELECT(List.class, "MultiSelect", true),
     RADIO("单选",DataType.STRING, "RadioGroup", true),
     DATE("日期", DataType.DATE, "DatePicker", false),
+    MODEL("模型", DataType.MODEL, "Table", false),
 //    DATETIME(LocalDateTime.class, "DateTimePicker", false),
 //    FILE(List.class, "FileUpload", false),
 //    PHONE(String.class, "PhoneInput", false),

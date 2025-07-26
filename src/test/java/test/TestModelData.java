@@ -43,9 +43,8 @@ public class TestModelData {
         ModelBean modelBean = new ModelBean();
         modelBean.setCode("mail_model");
         modelBean.setName("邮件模型");
-        //TODO 模型执行数据表, 这里还得设计, 运行时设置class?
         //但是低代码构建时只能设置dataTableName
-        modelBean.setDataTable("person");
+        modelBean.setDataTable(MailModelDataEntity.TABLE_NAME);
         modelBean.addField(FieldBean.of("name", "姓名", FieldType.TEXT.name()));
         modelBean.addField(FieldBean.of("age", "年龄", FieldType.NUMBER.name()));
         modelDao.save(modelBean.meta());

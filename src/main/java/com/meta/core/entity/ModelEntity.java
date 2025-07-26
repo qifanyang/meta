@@ -5,6 +5,9 @@ import com.meta.core.model.ModelDefinition;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
 
+/**
+ * 模型数据不会太多, 字段也较固定, 不用扩展表
+ */
 @Entity
 @Table(name = "meta_model")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

@@ -5,6 +5,7 @@ import com.meta.core.field.FieldDefinition;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
 
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -54,6 +55,9 @@ public class FieldEntity<T> extends MetaEntity<T> implements FieldDefinition<T> 
 
     @Transient
     private Map<String, String> label; //标签（多语言支持）
+
+    @Transient
+    private List<String> uniqueCodes;
 
     @Override
     public String getModelId() {
@@ -171,5 +175,13 @@ public class FieldEntity<T> extends MetaEntity<T> implements FieldDefinition<T> 
     @Override
     public void setStyles(Map<String, Object> styles) {
         this.styles = styles;
+    }
+
+    public List<String> getUniqueCodes() {
+        return uniqueCodes;
+    }
+
+    public void setUniqueCodes(List<String> uniqueCodes) {
+        this.uniqueCodes = uniqueCodes;
     }
 }
