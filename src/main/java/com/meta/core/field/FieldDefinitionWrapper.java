@@ -148,6 +148,16 @@ public class FieldDefinitionWrapper<T> extends MetaDefinitionWrapper<T> implemen
     }
 
     @Override
+    public List<String> getDependentVariables() {
+        return definition.getDependentVariables();
+    }
+
+    @Override
+    public void setDependentVariables(List<String> dependentVariables) {
+        definition.setDependentVariables(dependentVariables);
+    }
+
+    @Override
     public T meta() {
         return (T) definition;
     }

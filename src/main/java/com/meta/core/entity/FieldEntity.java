@@ -36,6 +36,9 @@ public class FieldEntity<T> extends MetaEntity<T> implements FieldDefinition<T> 
     private String expression;
 
     @Transient
+    private List<String> dependentVariables; // 表达式中解析出的所有依赖变量名
+
+    @Transient
     private Map<String, Object> options;// 静态选项（针对 ENUM 和 MULTI_SELECT）
 
     @Transient
@@ -183,5 +186,13 @@ public class FieldEntity<T> extends MetaEntity<T> implements FieldDefinition<T> 
 
     public void setUniqueCodes(List<String> uniqueCodes) {
         this.uniqueCodes = uniqueCodes;
+    }
+
+    public List<String> getDependentVariables() {
+        return dependentVariables;
+    }
+
+    public void setDependentVariables(List<String> dependentVariables) {
+        this.dependentVariables = dependentVariables;
     }
 }

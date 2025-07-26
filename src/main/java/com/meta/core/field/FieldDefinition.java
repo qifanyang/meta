@@ -63,4 +63,8 @@ public interface FieldDefinition<T> extends MetaDefinition<T> {
     List<String> getUniqueCodes();
 
     void setUniqueCodes(List<String> uniqueCodes);
+
+    List<String> getDependentVariables();
+
+    void setDependentVariables(List<String> dependentVariables);
 }
