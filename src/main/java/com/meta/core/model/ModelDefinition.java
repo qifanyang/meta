@@ -52,6 +52,7 @@ public interface ModelDefinition extends MetaDefinition {
 
                 ModelDataEntity relationModelData = relationModelBean.run(params, relationRunOptions);
                 fieldValue = relationModelData.getId();
+                //关联模型数据执行后 单独存储. 外部主模型数据负责保存
                 modelData.getRelationModelData().put(field.getCode(), relationModelData);
             }else if (field.getExpression() != null && !field.getExpression().isBlank()) {
                  fieldValue = scriptRunner().eval(params, field.getExpression());

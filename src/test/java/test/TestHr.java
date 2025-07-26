@@ -63,13 +63,7 @@ public class TestHr {
         params.put("payableTotal", 0);
         params.put("realWageTotal", 0);
         ModelDataEntity modelData = salaryTemplateModel.run(params);
-        modelDataDao.save(modelData);
-
-        Map<String, ModelDataEntity> relationModelData = modelData.getRelationModelData();
-        for (Map.Entry<String, ModelDataEntity> entry : relationModelData.entrySet()) {
-            ModelDataEntity value = entry.getValue();
-            modelDataHelper.saveEntity(value);
-        }
+        modelDataHelper.saveEntity(modelData);
         System.out.println();
     }
 

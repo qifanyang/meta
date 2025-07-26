@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 
 @Component
@@ -27,7 +28,14 @@ public class ModelDataHelper {
         @SuppressWarnings("unchecked")
         Class<T> entityClass = (Class<T>) entity.getClass();
         JpaRepository<T, Long> repository = repositoryLocator.getRepository(entityClass);
-        return repository.save(entity);
+        T saved = repository.save(entity);
+        //关联模型存储
+        Map<String, ModelDataEntity> relationModelData = entity.getRelationModelData();
+        for (Map.Entry<String, ModelDataEntity> entry : relationModelData.entrySet()) {
+            ModelDataEntity value = entry.getValue();
+            saveEntity(value);
+        }
+        return saved;
     }
 
     /**
