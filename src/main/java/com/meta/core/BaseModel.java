@@ -114,7 +114,7 @@ public abstract class BaseModel<T extends ModelData> {
     public ScriptRunner scriptRunner() {
         return (bindings, script) -> {
             try {
-                return GroovyUtil.run(bindings, script, "");
+                return GroovyUtil.run(bindings, script);
             } catch (ScriptException e) {
                 throw new IllegalStateException(e);
             }

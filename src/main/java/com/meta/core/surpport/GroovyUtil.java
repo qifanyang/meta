@@ -1,13 +1,11 @@
 package com.meta.core.surpport;
 
+import com.meta.core.model.ModelDefinition;
 import com.meta.util.SHAUtil;
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
-import groovy.util.GroovyScriptEngine;
 import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl;
 
 import javax.script.*;
-import java.io.StringReader;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,16 +15,14 @@ public class GroovyUtil {
     private static GroovyScriptEngineImpl scriptEngine = (GroovyScriptEngineImpl) scriptEngineManager.getEngineByName("groovy");
     private static Map<String, CompiledScript> scriptCache = new ConcurrentHashMap<>();
 
-    public static Object run(Map<String, Object> params, String script, String importer) throws ScriptException {
-        importer = (importer == null || importer.isBlank()) ? "static import com.meta.app.model.hr.salary.MathFunctions.*;\n" : importer;
+    public static Object run(Map<String, Object> params, String script) throws ScriptException {
         Bindings binding = new SimpleBindings(params);
-        String allScript = appendPrefix(importer, script);
+        String finalScript = prependStaticImports((List<Class<?>>) params.get(ModelDefinition.keyBuiltInFunctions), script);
         // 为本次执行创建新的 SimpleScriptContext 实例
-        SimpleScriptContext scriptContext = new SimpleScriptContext();
-        String scriptSHA1 = SHAUtil.SHA1(allScript);
+        String scriptSHA1 = SHAUtil.SHA1(finalScript);
         CompiledScript compiledScript = scriptCache.get(scriptSHA1);
         if (compiledScript == null) {
-            compiledScript = scriptEngine.compile(new StringReader(allScript));
+            compiledScript = scriptEngine.compile(finalScript);
             scriptCache.put(scriptSHA1, compiledScript);
         }
         return compiledScript.eval(binding);
@@ -44,12 +40,14 @@ public class GroovyUtil {
 //        return result;
     }
 
-    private static String appendPrefix(String importer, String script) {
-        if (importer == null || importer.isBlank()) {
+    private static String prependStaticImports(List<Class<?>> builtInFunctions, String script) {
+        if (builtInFunctions == null || builtInFunctions.isEmpty()){
             return script;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(importer);
+        for (Class<?> function : builtInFunctions) {
+            sb.append("import static ").append(function.getName()).append(".*\n");
+        }
         sb.append(script);
         return sb.toString();
     }

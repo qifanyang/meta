@@ -83,7 +83,7 @@ public class TestModelData {
     public ScriptRunner scriptRunner() {
         return (bindings, script) -> {
             try {
-                return GroovyUtil.run(bindings, script, "");
+                return GroovyUtil.run(bindings, script);
             } catch (ScriptException e) {
                 throw new IllegalStateException(e);
             }

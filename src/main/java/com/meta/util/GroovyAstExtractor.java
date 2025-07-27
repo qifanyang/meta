@@ -114,11 +114,11 @@ public class GroovyAstExtractor {
 //                }
             }
 
-            System.out.println("--- AST Analysis Results ---");
-            System.out.println("Declared Variables (Top-level/Field-like): " + declaredVariables);
-            System.out.println("Used Variables (including arguments, local & top-level): " + usedVariables);
-            System.out.println("Defined Functions: " + definedFunctions);
-            System.out.println("Called Functions: " + calledFunctions);
+//            System.out.println("--- AST Analysis Results ---");
+//            System.out.println("Declared Variables (Top-level/Field-like): " + declaredVariables);
+//            System.out.println("Used Variables (including arguments, local & top-level): " + usedVariables);
+//            System.out.println("Defined Functions: " + definedFunctions);
+//            System.out.println("Called Functions: " + calledFunctions);
 
             usedVariables.remove("args");//main方法参数
             usedVariables.remove("this");

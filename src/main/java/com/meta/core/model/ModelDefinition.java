@@ -1,14 +1,13 @@
 package com.meta.core.model;
 
+import com.meta.core.BuiltInFunctions;
 import com.meta.core.MetaDefinition;
 import com.meta.core.ScriptRunner;
 import com.meta.core.entity.ModelDataEntity;
 import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.surpport.GroovyUtil;
-import com.meta.util.AppContext;
-import com.meta.util.FieldBeanSorterDFS;
-import com.meta.util.RepositoryLocator;
+import com.meta.util.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Table;
 import jakarta.persistence.criteria.Predicate;
@@ -21,10 +20,22 @@ import javax.script.ScriptException;
 import java.util.*;
 
 public interface ModelDefinition extends MetaDefinition {
+    /**
+     * 每个模块应该有自己的函数
+     */
+    String keyBuiltInFunctions = "key_built_in_functions";
 
     String getDataTable();
 
     void setDataTable(String dataTable);
+
+    /**
+     * 返回模块内置函数, 脚本执行import static 静态方法
+     * @return
+     */
+    default List<Class<? extends BuiltInFunctions>> builtInFunctions(){
+        return List.of(MathFunctions.class, StringUtils.class);
+    }
 
     default ModelDataEntity run(Map<String, Object> params){
         return run(params, ModelRunOptions.DEFAULT);
@@ -35,6 +46,12 @@ public interface ModelDefinition extends MetaDefinition {
         //copy 模型属性
         modelData.setModelId(getId());
         modelData.setModelCode(getCode());
+
+        //注册内置函数,放到params中
+        List<Class<? extends BuiltInFunctions>> builtInFunctions = builtInFunctions();
+        if (!builtInFunctions.isEmpty()){
+            params.put(keyBuiltInFunctions, builtInFunctions);
+        }
 
         List<FieldBean> fields = FieldBeanSorterDFS.sortFieldBeans(getFields(), true);
         for (FieldBean field : fields) {
@@ -123,7 +140,7 @@ public interface ModelDefinition extends MetaDefinition {
     default ScriptRunner scriptRunner() {
         return (bindings, script) -> {
             try {
-                return GroovyUtil.run(bindings, script, "");
+                return GroovyUtil.run(bindings, script);
             } catch (ScriptException e) {
                 throw new IllegalStateException(e);
             }
