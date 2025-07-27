@@ -1,11 +1,8 @@
 package com.meta.core.model;
 
-import com.meta.core.BaseModel;
 import com.meta.core.MetaDefinition;
 import com.meta.core.ScriptRunner;
-import com.meta.core.dao.ModelDataDao;
 import com.meta.core.entity.ModelDataEntity;
-import com.meta.core.entity.ModelEntity;
 import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.surpport.GroovyUtil;
@@ -126,7 +123,7 @@ public interface ModelDefinition extends MetaDefinition {
     default ScriptRunner scriptRunner() {
         return (bindings, script) -> {
             try {
-                return GroovyUtil.run(bindings, script);
+                return GroovyUtil.run(bindings, script, "");
             } catch (ScriptException e) {
                 throw new IllegalStateException(e);
             }

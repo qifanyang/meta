@@ -52,6 +52,7 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
         fb.setName(name);
         fb.setFieldType(fieldType);
         fb.setExpression(exp);
+        fb.setDependentVariables(GroovyAstExtractor.parseVariables(exp));
         return fb;
     }
 

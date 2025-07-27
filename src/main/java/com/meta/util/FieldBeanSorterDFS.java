@@ -21,8 +21,8 @@ public class FieldBeanSorterDFS {
      * @return 排序后的 FieldBean 列表
      * @throws CircularDependencyException 如果检测到不允许的循环依赖，会立即抛出
      */
-    public static List<FieldBean> sortFieldBeans(List<FieldBean> fieldBeans, boolean allowSelfLoop) throws CircularDependencyException {
-        if (fieldBeans == null || fieldBeans.isEmpty()) {
+    public static List<FieldBean> sortFieldBeans(List<FieldBean> allFieldBeans, boolean allowSelfLoop) throws CircularDependencyException {
+        if (allFieldBeans == null || allFieldBeans.isEmpty()) {
             return Collections.emptyList();
         }
 
@@ -31,8 +31,15 @@ public class FieldBeanSorterDFS {
         // 也就是说，如果 A 依赖 B，那么 graph.get(A) 会包含 B
         Map<String, Set<String>> graph = new HashMap<>();
 
+        List<FieldBean> noDependentFields = new LinkedList<>();
+        List<FieldBean> fieldBeans = new LinkedList<>();
         // 1. 初始化所有 FieldBean 的映射和图结构
-        for (FieldBean fb : fieldBeans) {
+        for (FieldBean fb : allFieldBeans) {
+            if (fb.getDependentVariables() == null || fb.getDependentVariables().isEmpty()){
+                noDependentFields.add(fb);
+                continue;
+            }
+            fieldBeans.add(fb);
             fieldBeanMap.put(fb.getCode(), fb);
             graph.put(fb.getCode(), new HashSet<>()); // 初始化为空依赖集合
         }
@@ -42,6 +49,7 @@ public class FieldBeanSorterDFS {
         for (FieldBean currentBean : fieldBeans) {
             String currentId = currentBean.getCode();
             List<String> dependentVariables = currentBean.getDependentVariables();
+
             for (String depVar : dependentVariables) {
                 // 确保依赖的变量确实是另一个 FieldBean 的ID
                 if (fieldBeanMap.containsKey(depVar)) {
@@ -84,6 +92,10 @@ public class FieldBeanSorterDFS {
                 remainingNodes.remove(fb.getCode());
             }
             throw new CircularDependencyException("Circular dependency detected involving nodes: " + remainingNodes);
+        }
+
+        for (FieldBean noDependentField : noDependentFields) {
+            sortedList.add(0, noDependentField);
         }
 
         return sortedList;

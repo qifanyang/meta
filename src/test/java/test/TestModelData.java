@@ -4,8 +4,6 @@ import com.meta.MetaApplication;
 import com.meta.core.ScriptRunner;
 import com.meta.core.dao.ModelDataDao;
 import com.meta.core.entity.ModelDataEntity;
-import com.meta.core.field.FieldBean;
-import com.meta.core.field.FieldType;
 import com.meta.core.model.ModelRunOptions;
 import com.meta.core.model.ModelBean;
 import com.meta.core.dao.ModelDao;
@@ -85,7 +83,7 @@ public class TestModelData {
     public ScriptRunner scriptRunner() {
         return (bindings, script) -> {
             try {
-                return GroovyUtil.run(bindings, script);
+                return GroovyUtil.run(bindings, script, "");
             } catch (ScriptException e) {
                 throw new IllegalStateException(e);
             }
