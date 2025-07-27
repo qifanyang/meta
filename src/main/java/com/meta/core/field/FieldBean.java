@@ -2,6 +2,7 @@ package com.meta.core.field;
 
 import com.meta.core.BaseModel;
 import com.meta.core.entity.FieldEntity;
+import com.meta.util.GroovyAstExtractor;
 import com.meta.util.IdGenerator;
 import jakarta.persistence.Transient;
 
@@ -60,7 +61,8 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
         fb.setName(name);
         fb.setFieldType(fieldType);
         fb.setExpression(exp);
-        fb.setDependentVariables(dependentVariables);
+//        fb.setDependentVariables(dependentVariables);
+        fb.setDependentVariables(GroovyAstExtractor.parseVariables(exp));
         return fb;
     }
 

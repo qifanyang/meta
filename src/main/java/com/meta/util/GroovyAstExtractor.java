@@ -5,17 +5,10 @@ import org.codehaus.groovy.control.CompilationUnit;
 import org.codehaus.groovy.control.SourceUnit;
 import org.codehaus.groovy.ast.expr.VariableExpression;
 import org.codehaus.groovy.ast.expr.MethodCallExpression;
-import org.codehaus.groovy.ast.MethodNode;
 import org.codehaus.groovy.ast.ClassNode;
-import org.codehaus.groovy.ast.stmt.ExpressionStatement;
-import org.codehaus.groovy.ast.GroovyCodeVisitor;
-import org.codehaus.groovy.ast.expr.Expression;
-import org.codehaus.groovy.ast.ASTNode;
 import org.codehaus.groovy.ast.CodeVisitorSupport;
-import java.util.HashSet;
-import java.util.Set;
-import java.io.StringReader;
-import java.util.List;
+
+import java.util.*;
 
 public class GroovyAstExtractor {
 
@@ -38,9 +31,21 @@ public class GroovyAstExtractor {
             
             // 外部函数调用，通常在低代码中是内置函数
             SUM(1, 2)
-            //IF(temp_var > 0, other_var, 0)
+            IF(temp_var > 0, other_var, 0)
             """;
 
+        System.out.println(parseVariables(scriptText));;
+    }
+
+    /**
+     * 返回表达式中的变量, 包含被调用函数的参数
+     * @param scriptText
+     * @return
+     */
+    public static List<String> parseVariables(String scriptText) {
+        if (scriptText == null || scriptText.isBlank()){
+            return Collections.emptyList();
+        }
         Set<String> declaredVariables = new HashSet<>();
         Set<String> usedVariables = new HashSet<>();
         Set<String> definedFunctions = new HashSet<>();
@@ -85,27 +90,28 @@ public class GroovyAstExtractor {
                     });
                 });
 
+                //上面已经你遍历过run方法, 不单独找Declared Variables 了
                 // 遍历脚本的顶级语句，查找变量和函数调用
                 // Script.run() 方法的体, 上面已经
-                if (classNode.getName().endsWith("myscript")) { // 脚本通常编译成一个匿名内部类
-                    if (classNode.getMethods("run") != null && !classNode.getMethods("run").isEmpty()) {
-                        classNode.getMethods("run").get(0).getCode().visit(new CodeVisitorSupport() {
-                            @Override
-                            public void visitVariableExpression(VariableExpression expression) {
-                                declaredVariables.add(expression.getName());
-                                super.visitVariableExpression(expression);
-                            }
-
-                            @Override
-                            public void visitMethodCallExpression(MethodCallExpression call) {
-                                if (call.getMethodAsString() != null) {
-                                    calledFunctions.add(call.getMethodAsString());
-                                }
-                                super.visitMethodCallExpression(call);
-                            }
-                        });
-                    }
-                }
+//                if (classNode.getName().endsWith("myscript")) { // 脚本通常编译成一个匿名内部类
+//                    if (classNode.getMethods("run") != null && !classNode.getMethods("run").isEmpty()) {
+//                        classNode.getMethods("run").get(0).getCode().visit(new CodeVisitorSupport() {
+//                            @Override
+//                            public void visitVariableExpression(VariableExpression expression) {
+//                                declaredVariables.add(expression.getName());
+//                                super.visitVariableExpression(expression);
+//                            }
+//
+//                            @Override
+//                            public void visitMethodCallExpression(MethodCallExpression call) {
+//                                if (call.getMethodAsString() != null) {
+//                                    calledFunctions.add(call.getMethodAsString());
+//                                }
+//                                super.visitMethodCallExpression(call);
+//                            }
+//                        });
+//                    }
+//                }
             }
 
             System.out.println("--- AST Analysis Results ---");
@@ -114,9 +120,11 @@ public class GroovyAstExtractor {
             System.out.println("Defined Functions: " + definedFunctions);
             System.out.println("Called Functions: " + calledFunctions);
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            usedVariables.remove("args");//main方法参数
+            usedVariables.remove("this");
+            return new LinkedList<>(usedVariables);
+        }catch (Exception e){
+            throw new IllegalArgumentException("解析脚本参数异常, script = " + scriptText, e);
         }
     }
 }

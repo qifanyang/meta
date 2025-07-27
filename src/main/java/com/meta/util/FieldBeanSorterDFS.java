@@ -21,7 +21,7 @@ public class FieldBeanSorterDFS {
      * @return 排序后的 FieldBean 列表
      * @throws CircularDependencyException 如果检测到不允许的循环依赖，会立即抛出
      */
-    public List<FieldBean> sortFieldBeans(List<FieldBean> fieldBeans, boolean allowSelfLoop) throws CircularDependencyException {
+    public static List<FieldBean> sortFieldBeans(List<FieldBean> fieldBeans, boolean allowSelfLoop) throws CircularDependencyException {
         if (fieldBeans == null || fieldBeans.isEmpty()) {
             return Collections.emptyList();
         }
@@ -98,7 +98,7 @@ public class FieldBeanSorterDFS {
      * @param sortedList 拓扑排序结果列表
      * @throws CircularDependencyException 如果检测到循环依赖，会立即抛出
      */
-    private void dfsVisit(String nodeId,
+    private static void dfsVisit(String nodeId,
                           Map<String, FieldBean> fieldBeanMap,
                           Map<String, Set<String>> graph,
                           Map<String, NodeState> states,
@@ -136,7 +136,7 @@ public class FieldBeanSorterDFS {
     }
 
     // 自定义异常类
-    public static class CircularDependencyException extends Exception {
+    public static class CircularDependencyException extends RuntimeException {
         public CircularDependencyException(String message) {
             super(message);
         }

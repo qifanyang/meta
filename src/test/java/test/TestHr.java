@@ -65,6 +65,8 @@ public class TestHr {
         ModelDataEntity modelData = salaryTemplateModel.run(params);
         modelDataHelper.saveEntity(modelData);
         System.out.println();
+
+
     }
 
 

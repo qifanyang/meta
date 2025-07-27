@@ -10,6 +10,7 @@ import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.surpport.GroovyUtil;
 import com.meta.util.AppContext;
+import com.meta.util.FieldBeanSorterDFS;
 import com.meta.util.RepositoryLocator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Table;
@@ -38,7 +39,7 @@ public interface ModelDefinition extends MetaDefinition {
         modelData.setModelId(getId());
         modelData.setModelCode(getCode());
 
-        List<FieldBean> fields = getFields();
+        List<FieldBean> fields = FieldBeanSorterDFS.sortFieldBeans(getFields(), true);
         for (FieldBean field : fields) {
             if (options.isCopyFields()){
                 modelData.getFields().add(field.meta());
