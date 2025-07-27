@@ -34,18 +34,18 @@ public class SalaryArchiveModel extends ModelBean {
         return true;
     }
 
-    @Override
-    public List<FieldBean> getFields() {
-        List<FieldBean> fieldBeanList = FieldBean.of(fieldManager.fieldList(CODE, FieldEntity.class));
-        Map<String, FieldBean> fieldBeanMap = fieldBeanList.stream().collect(Collectors.toMap(FieldBean::getId, Function.identity(), (existing, replacement) -> existing));
-        //从数据库加载的时候追加新增的预置字段
-        for (FieldBean presetField : getPresetFields()) {
-            if (!fieldBeanMap.containsKey(presetField.getCode())) {
-                fieldBeanList.add(presetField);
-            }
-        }
-        return fieldBeanList;
-    }
+//    @Override
+//    public List<FieldBean> getFields() {
+//        List<FieldBean> fieldBeanList = FieldBean.of(fieldManager.fieldList(CODE, FieldEntity.class));
+//        Map<String, FieldBean> fieldBeanMap = fieldBeanList.stream().collect(Collectors.toMap(FieldBean::getId, Function.identity(), (existing, replacement) -> existing));
+//        //从数据库加载的时候追加新增的预置字段
+//        for (FieldBean presetField : getPresetFields()) {
+//            if (!fieldBeanMap.containsKey(presetField.getCode())) {
+//                fieldBeanList.add(presetField);
+//            }
+//        }
+//        return fieldBeanList;
+//    }
 
     @Override
     public List<FieldBean> getPresetFields() {

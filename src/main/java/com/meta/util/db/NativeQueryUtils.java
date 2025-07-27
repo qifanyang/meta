@@ -1,4 +1,4 @@
-package com.meta.util;
+package com.meta.util.db;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

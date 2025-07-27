@@ -8,6 +8,7 @@ import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.surpport.GroovyUtil;
 import com.meta.util.*;
+import com.meta.util.db.RepositoryLocator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Table;
 import jakarta.persistence.criteria.Predicate;

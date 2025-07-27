@@ -16,6 +16,7 @@ public class PersonModel extends ModelBean {
     public PersonModel(){
         setCode(CODE);
         setName("人员花名册");
+        setDataTable(PersonModelDataEntity.TABLE_NAME);
     }
 
     @Override

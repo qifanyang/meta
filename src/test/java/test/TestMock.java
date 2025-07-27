@@ -13,7 +13,7 @@ import com.meta.core.entity.MailFieldEntity;
 import com.meta.core.entity.ModelEntity;
 import com.meta.core.field.MailField;
 import com.meta.util.IdGenerator;
-import com.meta.util.NativeQueryUtils;
+import com.meta.util.db.NativeQueryUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

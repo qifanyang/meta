@@ -9,7 +9,7 @@ import org.hibernate.annotations.Comment;
  * 模型数据不会太多, 字段也较固定, 不用扩展表
  */
 @Entity
-@Table(name = "meta_model")
+@Table(name = "meta_model", uniqueConstraints = @UniqueConstraint(columnNames = "code"))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "model_class")
 @DiscriminatorValue("ModelEntity") //不指定使用类名

@@ -6,6 +6,7 @@
 指定新的模型运行时表时, 需要新建模型数据表Xxx, 继承ModelDataEntity, 指定新的表明
 新的模型数据表字段采用ModelDataEntity定义的通用字段, 可以新加模型的特有字段
 
+第一步:
 示例: 工资表运行时数据, 其中模型是SalaryTemplateDataModel (模型设计,见预置模型设计.txt)
 @Entity
 @Table(name = SalaryTemplateDataModelDataEntity.TABLE_NAME)
@@ -20,5 +21,10 @@ public class SalaryTemplateDataModelDataEntity extends ModelDataEntity {
     private Integer month;
 }
 
+第二步:
 对应模型实体dao类, SalaryTemplateDataModelDataDao
+实例:
+public interface SalaryTemplateDataModelDataDao extends MetaModelDataDao<SalaryTemplateDataModelDataEntity> {
+}
+
 保存关联模型使用ModelDataHelper工具类

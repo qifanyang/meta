@@ -4,14 +4,13 @@ import com.meta.MetaApplication;
 import com.meta.app.model.hr.salary.SalaryTemplateModel;
 import com.meta.core.dao.ModelDataDao;
 import com.meta.core.entity.ModelDataEntity;
-import com.meta.util.ModelDataHelper;
-import com.meta.util.RepositoryLocator;
+import com.meta.util.db.ModelDataHelper;
+import com.meta.util.db.RepositoryLocator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;

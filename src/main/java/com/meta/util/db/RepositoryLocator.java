@@ -1,4 +1,4 @@
-package com.meta.util;
+package com.meta.util.db;
 
 import com.meta.core.entity.ModelDataEntity;
 import org.springframework.context.ApplicationContext;
