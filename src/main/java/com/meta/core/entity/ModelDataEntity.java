@@ -1,9 +1,8 @@
 package com.meta.core.entity;
 
-import com.meta.core.ColumnListConverter;
-import com.meta.core.ColumnMapConverter;
+import com.meta.core.surpport.ColumnListConverter;
+import com.meta.core.surpport.ColumnMapConverter;
 import com.meta.core.field.FieldBean;
-import com.meta.core.model.ModelDefinition;
 import jakarta.persistence.*;
 
 import java.util.LinkedHashMap;

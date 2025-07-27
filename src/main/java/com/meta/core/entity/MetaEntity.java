@@ -1,6 +1,6 @@
 package com.meta.core.entity;
 
-import com.meta.core.ColumnMapConverter;
+import com.meta.core.surpport.ColumnMapConverter;
 import com.meta.core.MetaDefinition;
 import com.meta.util.JSONUtil;
 import jakarta.persistence.*;

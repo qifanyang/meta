@@ -1,4 +1,4 @@
-package com.meta.core;
+package com.meta.core.surpport;
 
 import com.meta.util.JSONUtil;
 import jakarta.persistence.AttributeConverter;

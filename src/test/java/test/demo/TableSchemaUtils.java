@@ -1,4 +1,4 @@
-package com.meta.app;
+package test.demo;
 
 import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;

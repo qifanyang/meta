@@ -1,4 +1,4 @@
-package com.meta.core;
+package test.demo;
 
 import com.meta.core.field.FieldType;
 

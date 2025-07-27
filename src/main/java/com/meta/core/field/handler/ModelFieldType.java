@@ -1,6 +1,6 @@
 package com.meta.core.field.handler;
 
-import com.meta.core.ConversionContext;
+import com.meta.core.field.ConversionContext;
 import com.meta.core.field.FieldType;
 import com.meta.core.field.FieldTypeHandler;
 

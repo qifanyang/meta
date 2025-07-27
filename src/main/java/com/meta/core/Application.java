@@ -2,9 +2,8 @@ package com.meta.core;
 
 import java.util.List;
 
-public class Application extends AbstractMeta<List<Module>>{
+public class Application{
 
-    @Override
     public List<Module> meta() {
         //静态编码
         //动态创建

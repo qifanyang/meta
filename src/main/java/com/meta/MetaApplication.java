@@ -1,10 +1,8 @@
 package com.meta;
 
 
-import com.meta.app.DynamicSchemaRegistrar;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class MetaApplication {
@@ -13,8 +11,8 @@ public class MetaApplication {
         SpringApplication.run(MetaApplication.class, args);
     }
 
-    @Bean
-    public DynamicSchemaRegistrar dynamicSchemaRegistrar() {
-        return new DynamicSchemaRegistrar();
-    }
+//    @Bean
+//    public DynamicSchemaRegistrar dynamicSchemaRegistrar() {
+//        return new DynamicSchemaRegistrar();
+//    }
 }

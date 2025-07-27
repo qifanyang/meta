@@ -1,6 +1,5 @@
-package com.meta.app;
+package test.demo;
 
-import jakarta.annotation.PostConstruct;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
