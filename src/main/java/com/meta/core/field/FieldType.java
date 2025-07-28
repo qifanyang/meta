@@ -31,7 +31,7 @@ public enum FieldType implements FieldTypeHandler {
 //    RICH_TEXT(String.class, "RichTextEditor", false),
 //    USER_PICKER(String.class, "UserPicker", true),
 //    DEPT_PICKER(String.class, "DeptPicker", true)
-    //RELATIONAL 关联关系字段, 可以引用另一个模型中的字段或动态生成
+    RELATION("引用", DataType.STRING, "", false, new RelationFieldType()) //关联关系字段, 可以引用另一个模型中的字段或动态生成
     //关联字段, 需要根据对应模型处理,
       ;
 
@@ -68,29 +68,29 @@ public enum FieldType implements FieldTypeHandler {
 
     //以下是策略方法, enum实现类似wrapper模式,代理给具体实现,不用注册代理服务
     @Override
-    public String getTypeId() {
-        return handler.getTypeId();
+    public String getTypeId(FieldBean fieldBean) {
+        return handler.getTypeId(fieldBean);
     }
 
     @Override
-    public Class getStorageType() {
-        return handler.getStorageType();
+    public Class getStorageType(FieldBean fieldBean) {
+        return handler.getStorageType(fieldBean);
     }
 
     @Override
-    public Object parseFromString(String input) {
-        return handler.parseFromString(input);
+    public Object parseFromString(String input, FieldBean fieldBean) {
+        return handler.parseFromString(input, fieldBean);
     }
 
     @Override
-    public Object parseFromUntyped(Object rawValue, ConversionContext context) throws FieldDataException {
-        return handler.parseFromUntyped(rawValue,context);
+    public Object parseFromUntyped(Object rawValue, FieldBean fieldBean, ConversionContext context) throws FieldDataException {
+        return handler.parseFromUntyped(rawValue, fieldBean, context);
     }
 
     @Override
-    public String formatForDisplay(Object value, ConversionContext context) {
+    public String formatForDisplay(Object value, FieldBean fieldBean, ConversionContext context) {
         //默认让handler处理, 默认实现统一调用dataType.convert
-        return handler.formatForDisplay(value, context);
+        return handler.formatForDisplay(value, fieldBean, context);
     }
 
     @Override

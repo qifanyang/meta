@@ -35,15 +35,17 @@ public class SalaryTemplateModel extends ModelBean {
     public List<FieldBean> getPresetFields() {
         List<FieldBean> presetFields = new ArrayList<>();
         //引入其他模型字段
-        presetFields.addAll(personModel.getPresetFields());
+        presetFields.addAll(relateFields(personModel.getPresetFields()));
         presetFields.addAll(socialModel.getPresetFields());
         presetFields.addAll(attendanceModel.getPresetFields());
         presetFields.addAll(salaryArchiveModel.getPresetFields());
 
-        presetFields.add(FieldBean.of("payable", "本期收入", FieldType.NUMBER_DECIMAL.name(), "wage - (wage/workDays)*leaveDays"));
-        presetFields.add(FieldBean.of("grandPayable", "累计收入", FieldType.NUMBER_DECIMAL.name(), "10000"));
-        presetFields.add(FieldBean.of("tax", "个税", FieldType.NUMBER_DECIMAL.name(), "SUM(grandTax, 88, 11)"));
-        presetFields.add(FieldBean.of("realWage", "应发工资", FieldType.NUMBER_DECIMAL.name(), "payable - pi - fund - tax"));
+
+        List<FieldBean> fields = new ArrayList<>();
+        fields.add(FieldBean.of("payable", "本期收入", FieldType.NUMBER_DECIMAL.name(), "wage - (wage/workDays)*leaveDays"));
+        fields.add(FieldBean.of("grandPayable", "累计收入", FieldType.NUMBER_DECIMAL.name(), "10000"));
+        fields.add(FieldBean.of("tax", "个税", FieldType.NUMBER_DECIMAL.name(), "SUM(grandTax, 88, 11)"));
+        fields.add(FieldBean.of("realWage", "应发工资", FieldType.NUMBER_DECIMAL.name(), "payable - pi - fund - tax"));
 
 //        presetFields.add(FieldBean.of("payable", "本期收入", FieldType.NUMBER_DECIMAL.name(), "wage - (wage/workDays)*leaveDays"));
 //        presetFields.add(FieldBean.of("grandPayable", "累计收入", FieldType.NUMBER_DECIMAL.name(), "10000"));
@@ -53,12 +55,12 @@ public class SalaryTemplateModel extends ModelBean {
         //模型执行触发创建其它模型数据(先使用默认数据表, 一般使用单独的表)
         FieldBean salaryTemplateDataField = FieldBean.of(SalaryTemplateDataModel.CODE, "工资表", FieldType.MODEL.name());
         salaryTemplateDataField.setUniqueCodes(List.of("year", "month"));
-        presetFields.add(salaryTemplateDataField);
+        fields.add(salaryTemplateDataField);
         FieldBean salarySummaryDataField = FieldBean.of(SalarySummaryDataModel.CODE, "工资表汇总", FieldType.MODEL.name());
         salarySummaryDataField.setUniqueCodes(List.of("year", "month"));
-        presetFields.add(salarySummaryDataField);
-
-        copy2Field(presetFields);
+        fields.add(salarySummaryDataField);
+        copy2Field(fields);
+        presetFields.addAll(fields);
         return presetFields;
     }
 }

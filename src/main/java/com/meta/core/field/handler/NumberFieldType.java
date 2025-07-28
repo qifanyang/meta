@@ -1,6 +1,7 @@
 package com.meta.core.field.handler;
 
 import com.meta.core.field.ConversionContext;
+import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.field.FieldTypeHandler;
 
@@ -9,17 +10,17 @@ import java.util.Map;
 
 public class NumberFieldType implements FieldTypeHandler<BigDecimal> {
     @Override
-    public String getTypeId() {
-        return FieldType.NUMBER_DECIMAL.getTypeId();
+    public String getTypeId(FieldBean fieldBean) {
+        return FieldType.NUMBER_DECIMAL.getTypeId(null);
     }
 
     @Override
-    public Class<BigDecimal> getStorageType() {
+    public Class<BigDecimal> getStorageType(FieldBean fieldBean) {
         return BigDecimal.class;
     }
 
     @Override
-    public BigDecimal parseFromString(String input) {
+    public BigDecimal parseFromString(String input, FieldBean fieldBean) {
         if (input == null || input.trim().isEmpty()) {
             return null;
         }
@@ -31,7 +32,7 @@ public class NumberFieldType implements FieldTypeHandler<BigDecimal> {
     }
 
     @Override
-    public BigDecimal parseFromUntyped(Object rawValue, ConversionContext context) throws FieldDataException {
+    public BigDecimal parseFromUntyped(Object rawValue, FieldBean fieldBean, ConversionContext context) throws FieldDataException {
         if (rawValue == null) {
             return null;
         }
@@ -41,11 +42,11 @@ public class NumberFieldType implements FieldTypeHandler<BigDecimal> {
         if (rawValue instanceof Number) {
             return new BigDecimal(rawValue.toString());
         }
-        return parseFromString(rawValue.toString());
+        return parseFromString(rawValue.toString(), null);
     }
 
     @Override
-    public String formatForDisplay(Object value, ConversionContext context) {
+    public String formatForDisplay(Object value, FieldBean fieldBean, ConversionContext context) {
         if (value == null){
             return "";
         }

@@ -1,6 +1,8 @@
 package com.meta.core.field;
 
 import com.meta.core.entity.FieldEntity;
+import com.meta.core.model.ModelBean;
+import com.meta.util.AppContext;
 import com.meta.util.GroovyAstExtractor;
 import com.meta.util.IdGenerator;
 
@@ -66,11 +68,12 @@ public class FieldBean<T extends FieldEntity> extends FieldDefinitionWrapper<Fie
     }
 
     public String formatToDisplay(Object value){
-        return FieldType.valueOf(getFieldType()).formatForDisplay(value, null);
+        return FieldType.valueOf(getFieldType()).formatForDisplay(value, null, null);
     }
 
     public Object formatToValue(Object value){
-        return FieldType.valueOf(getFieldType()).getDataType().convert(value);
+//        return FieldType.valueOf(getFieldType()).getDataType().convert(value);
+        return FieldType.valueOf(getFieldType()).parseFromUntyped(value, this, null);
     }
 
 }

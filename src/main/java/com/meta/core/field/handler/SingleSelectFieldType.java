@@ -1,6 +1,7 @@
 package com.meta.core.field.handler;
 
 import com.meta.core.field.ConversionContext;
+import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.field.FieldTypeHandler;
 
@@ -10,17 +11,17 @@ import java.util.Optional;
 
 public class SingleSelectFieldType implements FieldTypeHandler<Integer> {
     @Override
-    public String getTypeId() {
-        return FieldType.SINGLE_SELECT.getTypeId();
+    public String getTypeId(FieldBean fieldBean) {
+        return FieldType.SINGLE_SELECT.getTypeId(null);
     }
 
     @Override
-    public Class<Integer> getStorageType() {
+    public Class<Integer> getStorageType(FieldBean fieldBean) {
         return Integer.class;
     }
 
     @Override
-    public Integer parseFromString(String input) {
+    public Integer parseFromString(String input, FieldBean fieldBean) {
         // 表单直接提交ID
         if (input == null || input.trim().isEmpty()) {
             return null;
@@ -29,7 +30,7 @@ public class SingleSelectFieldType implements FieldTypeHandler<Integer> {
     }
 
     @Override
-    public Integer parseFromUntyped(Object rawValue, ConversionContext context) throws FieldDataException {
+    public Integer parseFromUntyped(Object rawValue, FieldBean fieldBean, ConversionContext context) throws FieldDataException {
         if (rawValue == null) {
             return null;
         }
@@ -61,7 +62,7 @@ public class SingleSelectFieldType implements FieldTypeHandler<Integer> {
     }
 
     @Override
-    public String formatForDisplay(Object value, ConversionContext context) {
+    public String formatForDisplay(Object value, FieldBean fieldBean, ConversionContext context) {
         return FieldType.SINGLE_SELECT.getDataType().display(value);
     }
 

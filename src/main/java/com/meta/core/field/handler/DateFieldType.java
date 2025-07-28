@@ -1,6 +1,7 @@
 package com.meta.core.field.handler;
 
 import com.meta.core.field.ConversionContext;
+import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.field.FieldTypeHandler;
 
@@ -13,17 +14,17 @@ public class DateFieldType implements FieldTypeHandler<LocalDate> {
     private static final DateTimeFormatter ISO_DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
 
     @Override
-    public String getTypeId() {
-        return FieldType.DATE.getTypeId();
+    public String getTypeId(FieldBean fieldBean) {
+        return FieldType.DATE.name();
     }
 
     @Override
-    public Class<LocalDate> getStorageType() {
+    public Class<LocalDate> getStorageType(FieldBean fieldBean) {
         return LocalDate.class;
     }
 
     @Override
-    public LocalDate parseFromString(String input) {
+    public LocalDate parseFromString(String input, FieldBean fieldBean) {
         if (input == null || input.trim().isEmpty()) {
             return null;
         }
@@ -35,18 +36,18 @@ public class DateFieldType implements FieldTypeHandler<LocalDate> {
     }
 
     @Override
-    public LocalDate parseFromUntyped(Object rawValue, ConversionContext context) throws FieldDataException {
+    public LocalDate parseFromUntyped(Object rawValue, FieldBean fieldBean, ConversionContext context) throws FieldDataException {
         if (rawValue == null) {
             return null;
         }
         if (rawValue instanceof LocalDate) {
             return (LocalDate) rawValue;
         }
-        return parseFromString(String.valueOf(rawValue));
+        return parseFromString(String.valueOf(rawValue), null);
     }
 
     @Override
-    public String formatForDisplay(Object value, ConversionContext context) {
+    public String formatForDisplay(Object value, FieldBean fieldBean, ConversionContext context) {
         if (value == null){
             return "";
         }

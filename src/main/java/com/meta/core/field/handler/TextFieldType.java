@@ -1,6 +1,7 @@
 package com.meta.core.field.handler;
 
 import com.meta.core.field.ConversionContext;
+import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.field.FieldTypeHandler;
 
@@ -9,22 +10,22 @@ import java.util.Map;
 public class TextFieldType implements FieldTypeHandler<String> {
 
     @Override
-    public String getTypeId() {
-        return FieldType.TEXT.getTypeId();
+    public String getTypeId(FieldBean fieldBean) {
+        return FieldType.TEXT.name();
     }
 
     @Override
-    public Class<String> getStorageType() {
+    public Class<String> getStorageType(FieldBean fieldBean) {
         return String.class;
     }
 
     @Override
-    public String parseFromString(String input) {
+    public String parseFromString(String input, FieldBean fieldBean) {
         return input;
     }
 
     @Override
-    public String parseFromUntyped(Object rawValue, ConversionContext context) throws FieldDataException {
+    public String parseFromUntyped(Object rawValue, FieldBean fieldBean, ConversionContext context) throws FieldDataException {
         if (rawValue == null) {
             return null;
         }
@@ -32,7 +33,7 @@ public class TextFieldType implements FieldTypeHandler<String> {
     }
 
     @Override
-    public String formatForDisplay(Object value, ConversionContext context) {
+    public String formatForDisplay(Object value, FieldBean fieldBean, ConversionContext context) {
         return value == null ? "" : FieldType.TEXT.getDataType().display(value);
     }
 

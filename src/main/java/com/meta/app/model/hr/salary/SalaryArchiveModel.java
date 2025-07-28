@@ -1,5 +1,8 @@
 package com.meta.app.model.hr.salary;
 
+import com.meta.app.model.hr.person.PersonModel;
+import com.meta.core.Association;
+import com.meta.core.ModelAssociation;
 import com.meta.core.field.FieldType;
 import com.meta.core.MetaFieldManager;
 import com.meta.core.entity.FieldEntity;
@@ -16,7 +19,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component(SalaryArchiveModel.CODE)
-public class SalaryArchiveModel extends ModelBean {
+public class SalaryArchiveModel extends ModelBean implements ModelAssociation {
     public static final String CODE = "meta_salary_archive";
 
     @Autowired
@@ -49,9 +52,21 @@ public class SalaryArchiveModel extends ModelBean {
 
     @Override
     public List<FieldBean> getPresetFields() {
+        //关联人员花名册字段, 只存id, 和关联字段元数据, 不存值
+        //然后关联查询
         List<FieldBean> presetFields = new ArrayList<>();
         presetFields.add(FieldBean.of("wage", "基本工资", FieldType.NUMBER_DECIMAL.name(), "wage"));
         copy2Field(presetFields);
         return presetFields;
+    }
+
+    @Override
+    public Association source() {
+        return Association.of(CODE, List.of(PersonModel.CODE+"_id"));
+    }
+
+    @Override
+    public List<Association> target() {
+        return List.of(Association.of(PersonModel.CODE, List.of("id")));
     }
 }
