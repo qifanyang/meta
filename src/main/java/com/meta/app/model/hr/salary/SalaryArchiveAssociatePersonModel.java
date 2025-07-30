@@ -20,7 +20,7 @@ import java.util.List;
 
 //结论
 // 模型可以关联其他多个模型, 需要制定关联字段(可多个)
-// 迭代执行只在一个关联模型上, 其它的关联用作数据拉取
+// 迭代执行只在一个关联模型上, 其它的关联用作数据拉取(比如引用社保数据, 关联字段仍是person_id)
 @Component(SalaryArchiveAssociatePersonModel.CODE)
 public class SalaryArchiveAssociatePersonModel extends ModelBean implements ModelAssociation {
     public static final String CODE = "meta_salary_archive_associate_person";

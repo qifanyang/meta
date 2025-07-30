@@ -1,13 +1,12 @@
 package com.meta.core.model;
 
-import com.meta.core.BuiltInFunctions;
-import com.meta.core.MetaDefinition;
-import com.meta.core.ScriptRunner;
+import com.meta.core.*;
 import com.meta.core.entity.ModelDataEntity;
 import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.surpport.GroovyUtil;
 import com.meta.util.*;
+import com.meta.util.db.ModelDataQuery;
 import com.meta.util.db.RepositoryLocator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Table;
@@ -30,6 +29,9 @@ public interface ModelDefinition extends MetaDefinition {
 
     void setDataTable(String dataTable);
 
+    default List<ModelInput> getInputs(){return null;};
+    default void setInput(List<ModelInput> input){};
+
     /**
      * 返回模块内置函数, 脚本执行import static 静态方法
      * @return
@@ -38,11 +40,31 @@ public interface ModelDefinition extends MetaDefinition {
         return List.of(MathFunctions.class, StringUtils.class);
     }
 
-    default ModelDataEntity run(Map<String, Object> params){
+    default List<ModelDataEntity> run(Map<String, Object> params){
         return run(params, ModelRunOptions.DEFAULT);
     }
 
-    default ModelDataEntity run(Map<String, Object> params, ModelRunOptions options){
+    default List<ModelDataEntity> run(Map<String, Object> params, ModelRunOptions options){
+        List<ModelDataEntity> resultList = new LinkedList<>();
+        List<ModelInput> inputs = getInputs();
+        if (inputs != null){
+            for (ModelInput input : inputs) {
+                //查询模型数据, 模型数据会有多条, 循环执行
+                //TODO 单个模型数据过滤
+                //TODO 模型数据查询缓存, 循环计算时直接获取
+                ModelDataQuery modelDataQuery = new ModelDataQuery();
+                String sql = modelDataQuery.mainModel(input.getModelCode(), "").sql();
+                List<Map> dataList = new ArrayList();
+                for (Map map : dataList) {
+                    params.putAll(map);
+                    ModelDataEntity modelData = doRun(params, options);
+                    resultList.add(modelData);
+                }
+            }
+        }
+        return resultList;
+    }
+    default ModelDataEntity doRun(Map<String, Object> params, ModelRunOptions options){
         ModelDataEntity modelData = instanceModelDataEntity(params, options);
         //copy 模型属性
         modelData.setModelId(getId());
@@ -66,7 +88,7 @@ public interface ModelDefinition extends MetaDefinition {
                 ModelRunOptions relationRunOptions = new ModelRunOptions();
                 relationRunOptions.setUniqueCodes(field.getUniqueCodes());
 
-                ModelDataEntity relationModelData = relationModelBean.run(params, relationRunOptions);
+                ModelDataEntity relationModelData = relationModelBean.doRun(params, relationRunOptions);
                 fieldValue = relationModelData.getId();
                 //关联模型数据执行后 单独存储. 外部主模型数据负责保存
                 modelData.getRelationModelData().put(field.getCode(), relationModelData);

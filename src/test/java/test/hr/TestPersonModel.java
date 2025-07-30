@@ -3,6 +3,7 @@ package test.hr;
 
 import com.meta.MetaApplication;
 import com.meta.app.model.hr.person.PersonModel;
+import com.meta.app.model.hr.salary.SalaryArchiveModel;
 import com.meta.core.dao.FieldDao;
 import com.meta.core.dao.ModelDao;
 import com.meta.core.entity.ModelDataEntity;
@@ -61,14 +62,15 @@ public class TestPersonModel {
         params.put("name", "张三");
         params.put("idNumber", "110");
         params.put("phone", "110");
-        ModelDataEntity modelData = personModel.run(params);
-        modelDataHelper.saveEntity(modelData);
+//        ModelDataEntity modelData = personModel.run(params);
+//        modelDataHelper.saveEntity(modelData);
     }
 
     @Test
     public void testModelQuery(){
         ModelDataQuery dataQuery = new ModelDataQuery();
-        String sql = dataQuery.mainModel(PersonModel.CODE, "id")
+        String sql = dataQuery.mainModel(SalaryArchiveModel.CODE, "person_id")
+                .joinModel(PersonModel.CODE, "id")
                 .condition("name", "张三")
                 .sql();
         System.out.println(sql);

@@ -20,7 +20,7 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MetaApplication.class)
 @AutoConfigureMockMvc
-public class TestHr {
+public class TestHr2 {
 
     @Autowired
     private SalaryTemplateModel salaryTemplateModel;
@@ -62,6 +62,13 @@ public class TestHr {
         params.put("personCount", 0);
         params.put("payableTotal", 0);
         params.put("realWageTotal", 0);
+
+        //1.0要手动填写数据
+        //2.0通过配置的关联数据直接拉取
+        //入口还是salaryTemplateModel.run(params);
+        //还是有部分参数需要通过用户传入, 比如选择年月
+        //执行优先检查有没有关联
+
         List<ModelDataEntity> modelData = salaryTemplateModel.run(params);
         modelData.forEach(modelDataHelper::saveEntity);
         System.out.println();

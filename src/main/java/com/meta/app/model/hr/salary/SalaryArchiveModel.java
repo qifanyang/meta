@@ -29,7 +29,7 @@ public class SalaryArchiveModel extends ModelBean implements ModelAssociation {
     public SalaryArchiveModel(){
         setCode(CODE);
         setName("薪酬档案");
-        setId(IdGenerator.nextId());
+        setDataTable(SalaryArchiveModelDataEntity.TABLE_NAME);
     }
 
     @Override

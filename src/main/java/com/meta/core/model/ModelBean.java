@@ -60,7 +60,7 @@ public class ModelBean extends ModelDefinitionWrapper<ModelEntity> implements Fi
         //源模型引入字段时, 字段类型重置为relation, 这里通过field code在当前模型中寻找目标字段
         List<FieldBean> fields = getFields();
         Optional<FieldBean> optional = fields.stream().filter(i -> i.getCode().equals(fieldBean.getCode())).findAny();
-        return optional.map(i -> FieldType.valueOf(i.getFieldType()).parseFromUntyped(rawValue, i, null)).orElseThrow();
+        return optional.map(i -> FieldType.valueOf(i.getFieldType()).parseFromUntyped(rawValue, i, null)).orElseThrow(()-> new RuntimeException("字段不存在 code :" + fieldBean.getCode()));
     }
 
     @Override

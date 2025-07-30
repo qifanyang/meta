@@ -11,6 +11,11 @@ public class Association {
     private String modelCode;
 
     /**
+     * 关联的列
+     */
+    private String joinKey;
+
+    /**
      * 关联字段code, 可以是多个
      */
     private List<String> fieldCodes;

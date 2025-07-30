@@ -68,12 +68,13 @@ public class ModelDataQuery {
 //                joinMap.put("primaryTableAlias", primaryTableAlias);
 //                joinMap.put("primaryTableField", "id");
 //                joinMap.put("joinedTableField", modelEntry.getValue());
-                JoinConfig joinConfig = new JoinConfig(primaryTable, primaryTableAlias, "id", dataTable, alias, modelEntry.getValue(), "INNER JOIN");
+                JoinConfig joinConfig = new JoinConfig(primaryTable, primaryTableAlias, primaryTableKey, dataTable, alias, modelEntry.getValue(), "INNER JOIN");
                 joinConfigs.add(joinConfig);
             }else{
                 //主表
                 primaryTable = dataTable;
                 primaryTableAlias = alias;
+                primaryTableKey = modelEntry.getValue();
             }
             startJoin = true;
         }

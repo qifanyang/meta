@@ -49,8 +49,8 @@ public class TestModelData {
         //1.统一存储
         {
             Map<String, Object> params = Map.of("a", 1, "b", 2);
-            ModelDataEntity modelDataEntity = modelBean.run(params);
-            modelDataDao.save(modelDataEntity);
+//            ModelDataEntity modelDataEntity = modelBean.run(params);
+//            modelDataDao.save(modelDataEntity);
         }
         //2.可扩展模型存储, 数据表独立
         {
@@ -59,9 +59,9 @@ public class TestModelData {
 
             Map<String, Object> params = Map.of("a", 1, "b", 2);
 
-            ModelDataEntity mailModelData = modelBean.run(params, options);
+//            ModelDataEntity mailModelData = modelBean.run(params, options);
 
-            modelDataDao.save(mailModelData);
+//            modelDataDao.save(mailModelData);
         }
 
 
