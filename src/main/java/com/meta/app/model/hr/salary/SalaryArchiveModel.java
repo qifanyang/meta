@@ -56,6 +56,7 @@ public class SalaryArchiveModel extends ModelBean implements ModelAssociation {
         //然后关联查询
         List<FieldBean> presetFields = new ArrayList<>();
         presetFields.add(FieldBean.of("wage", "基本工资", FieldType.NUMBER_DECIMAL.name(), "wage"));
+        presetFields.add(FieldBean.of("personId", "人员ID", FieldType.TEXT.name()));
         copy2Field(presetFields);
         return presetFields;
     }

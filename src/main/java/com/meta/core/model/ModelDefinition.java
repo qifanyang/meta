@@ -29,7 +29,16 @@ public interface ModelDefinition extends MetaDefinition {
 
     void setDataTable(String dataTable);
 
+    /**
+     * 返回模型输入
+     * 1. 参数map
+     * 2. 模型(可以包含条件用来筛选数据)
+     * 3. 如果涉及数据权限, 需要联表查询person
+     *
+     * @return
+     */
     default List<ModelInput> getInputs(){return null;};
+
     default void setInput(List<ModelInput> input){};
 
     /**
@@ -41,10 +50,10 @@ public interface ModelDefinition extends MetaDefinition {
     }
 
     default List<ModelDataEntity> run(Map<String, Object> params){
-        return run(params, ModelRunOptions.DEFAULT);
+        return run(params, ModelRunContext.DEFAULT);
     }
 
-    default List<ModelDataEntity> run(Map<String, Object> params, ModelRunOptions options){
+    default List<ModelDataEntity> run(Map<String, Object> params, ModelRunContext context){
         List<ModelDataEntity> resultList = new LinkedList<>();
         List<ModelInput> inputs = getInputs();
         if (inputs != null){
@@ -53,18 +62,21 @@ public interface ModelDefinition extends MetaDefinition {
                 //TODO 单个模型数据过滤
                 //TODO 模型数据查询缓存, 循环计算时直接获取
                 ModelDataQuery modelDataQuery = new ModelDataQuery();
-                String sql = modelDataQuery.mainModel(input.getModelCode(), "").sql();
-                List<Map> dataList = new ArrayList();
+                List<Map<String, Object>>  dataList = modelDataQuery.mainModel(input.getModelCode(), "").execute();
+                Object o = context.getCacheMap().get(input.getModelCode());
                 for (Map map : dataList) {
-                    params.putAll(map);
-                    ModelDataEntity modelData = doRun(params, options);
+                    HashMap<String, Object> subParams = new HashMap<>(params);
+                    subParams.putAll(map);
+                    ModelDataEntity modelData = doRun(subParams, context);
                     resultList.add(modelData);
                 }
             }
+        } else {
+            resultList.add(doRun(params, context));
         }
         return resultList;
     }
-    default ModelDataEntity doRun(Map<String, Object> params, ModelRunOptions options){
+    default ModelDataEntity doRun(Map<String, Object> params, ModelRunContext options){
         ModelDataEntity modelData = instanceModelDataEntity(params, options);
         //copy 模型属性
         modelData.setModelId(getId());
@@ -85,7 +97,7 @@ public interface ModelDefinition extends MetaDefinition {
             if (field.getFieldType().equals(FieldType.MODEL.name())) {
                 ModelBean relationModelBean = AppContext.getBean(field.getCode(), ModelBean.class);
                 Assert.isTrue(relationModelBean != null, "关联模型实例不存在, modelCode = " + field.getCode());
-                ModelRunOptions relationRunOptions = new ModelRunOptions();
+                ModelRunContext relationRunOptions = new ModelRunContext();
                 relationRunOptions.setUniqueCodes(field.getUniqueCodes());
 
                 ModelDataEntity relationModelData = relationModelBean.doRun(params, relationRunOptions);
@@ -109,7 +121,7 @@ public interface ModelDefinition extends MetaDefinition {
      * 模型对应运行时数据实体, 可扩展指定额外的数据表, 这里可以是创建实体, 也可能是查询实体
      * @return
      */
-    default ModelDataEntity instanceModelDataEntity(Map<String, Object> params, ModelRunOptions options){
+    default ModelDataEntity instanceModelDataEntity(Map<String, Object> params, ModelRunContext options){
         String dataTable = getDataTable();
         if (dataTable == null || dataTable.isEmpty()){
             throw new IllegalStateException("创建模型数据实体失败, 未指定数据表, 请检查模型dataTable值");

@@ -7,7 +7,6 @@ import com.meta.app.model.hr.salary.SalaryArchiveModel;
 import com.meta.core.dao.FieldDao;
 import com.meta.core.dao.ModelDao;
 import com.meta.core.entity.ModelDataEntity;
-import com.meta.core.field.FieldBean;
 import com.meta.util.db.ModelDataHelper;
 import com.meta.util.db.ModelDataQuery;
 import org.junit.Test;
@@ -24,7 +23,7 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MetaApplication.class)
 @AutoConfigureMockMvc
-public class TestPersonModel {
+public class TestSalaryArchiveModel {
 
     @Autowired
     private ModelDataHelper modelDataHelper;
@@ -36,49 +35,30 @@ public class TestPersonModel {
     private FieldDao fieldDao;
 
     @Autowired
-    private PersonModel personModel;
-
-
-    @Test
-    public void testAddPersonModel(){
-        //添加模型, 模型code应该是唯一, 不能重复添加
-        modelDao.saveEntity(personModel.meta());
-    }
+    private SalaryArchiveModel salaryArchiveModel;
 
     @Test
-    public void testAddPersonModelField(){
-        //保存模型字段
-        List<FieldBean> fields = personModel.getFields();
-        for (FieldBean field : fields) {
-            fieldDao.saveEntity(field.meta());
-        }
-    }
-
-    @Test
-    public void testAddPersonData(){
+    public void testAddSalaryArchiveData(){
         //测试模型执行
         Map<String, Object> params = new HashMap<>();
         //基本信息
-        params.put("name", "李四");
-        params.put("idNumber", "110");
-        params.put("phone", "110");
-        List<ModelDataEntity> dataEntities = personModel.run(params);
+//        params.put("personId", "224871545561026560");
+        params.put("personId", "226735362297434112");
+        params.put("wage", 888);
+
+        List<ModelDataEntity> dataEntities = salaryArchiveModel.run(params);
         for (ModelDataEntity dataEntity : dataEntities) {
             modelDataHelper.saveEntity(dataEntity);
         }
     }
 
-
-
     @Test
-    public void testPersonQuery(){
-        ModelDataQuery dataQuery = new ModelDataQuery();
-        List<Map<String, Object>> dataList = dataQuery.mainModel(PersonModel.CODE, "person_id")
-                .condition("name", "张三")
+    public void testJoinModelQuery(){
+        List<Map<String, Object>> dataList = ModelDataQuery.builder()
+                .mainModel(SalaryArchiveModel.CODE, "person_id")
+                .joinModel(PersonModel.CODE, "id")
+                .condition("name", "张三") //字段名如果有重名, 可扩展指定采用那个模型
                 .execute();
         System.out.println(dataList);
     }
-
-
-
 }

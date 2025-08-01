@@ -14,6 +14,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+import java.util.Map;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MetaApplication.class)
 @AutoConfigureMockMvc
@@ -25,12 +28,12 @@ public class TestModelDataQuery {
     @Test
     public void test(){
         ModelDataQuery dataQuery = new ModelDataQuery();
-        String sql = dataQuery.mainModel(SalaryArchiveModel.CODE, "id")
-                .joinModel(PersonModel.CODE, "id")
-                .joinModel(SocialModel.CODE, "id")
+        List<Map<String, Object>> dataList = dataQuery.mainModel(SalaryArchiveModel.CODE, "id")
+//                .joinModel(PersonModel.CODE, "id")
+//                .joinModel(SocialModel.CODE, "id")
                 .condition("wage", 100)
-                .sql();
-        System.out.println(sql);
+                .execute();
+        System.out.println(dataList);
     }
 
 

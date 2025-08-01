@@ -16,10 +16,17 @@ public class SalaryArchiveModelDataEntity extends ModelDataEntity {
     @Column
     private BigDecimal wage;
 
+    @Column(name = "person_id")
+    private String personId;
+
     @Override
     public void updateSpecificFieldValue(FieldBean fieldBean, Object fieldValue) {
         if (fieldBean.getCode().equals("wage")){
             setWage((BigDecimal) fieldValue);
+        }
+
+        if (fieldBean.getCode().equals("personId")){
+            setPersonId((String) fieldValue);
         }
     }
 
@@ -29,5 +36,13 @@ public class SalaryArchiveModelDataEntity extends ModelDataEntity {
 
     public void setWage(BigDecimal wage) {
         this.wage = wage;
+    }
+
+    public String getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 }

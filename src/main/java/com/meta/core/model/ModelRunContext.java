@@ -3,14 +3,16 @@ package com.meta.core.model;
 import com.meta.core.entity.GenericModelDataEntity;
 import com.meta.core.entity.ModelDataEntity;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 模型执行可选参数
  */
-public class ModelRunOptions {
+public class ModelRunContext {
 
-    public static final ModelRunOptions DEFAULT = new ModelRunOptions();
+    public static final ModelRunContext DEFAULT = new ModelRunContext();
 
     /***
      * 模型数据Class
@@ -24,6 +26,8 @@ public class ModelRunOptions {
      * 用于表示模型唯一标识列, field code
      */
     private List<String> uniqueCodes;
+
+    private Map<String, Object> cacheMap = new HashMap<>();
 
     public Class<? extends ModelDataEntity> getDataEntityClass() {
         return dataEntityClass;
@@ -47,5 +51,13 @@ public class ModelRunOptions {
 
     public void setUniqueCodes(List<String> uniqueCodes) {
         this.uniqueCodes = uniqueCodes;
+    }
+
+    public Map<String, Object> getCacheMap() {
+        return cacheMap;
+    }
+
+    public void setCacheMap(Map<String, Object> cacheMap) {
+        this.cacheMap = cacheMap;
     }
 }

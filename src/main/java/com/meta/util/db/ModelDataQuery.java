@@ -26,7 +26,13 @@ public class ModelDataQuery {
     private Map<String, String> modelKeyMap = new LinkedHashMap<>();
     private Map<String, Object> conditionMap = new LinkedHashMap<>();
 
-    public String sql(){
+    private Map<String, String> aliasMap = new LinkedHashMap<>();
+
+    public static ModelDataQuery builder(){
+        return new ModelDataQuery();
+    }
+
+    public List<Map<String, Object>> execute(){
         LetterSequenceGenerator aliasGenerator = new LetterSequenceGenerator();
         RepositoryLocator repositoryLocator = AppContext.getBean(RepositoryLocator.class);
         EntityColumnNameResolver columnNameResolver = AppContext.getBean(EntityColumnNameResolver.class);
@@ -53,6 +59,7 @@ public class ModelDataQuery {
                     .entity(entityClass);
 
             for (FieldBean field : fields) {
+                aliasMap.put(field.getCode(), alias);
                 Attribute attribute = entityMapping.getAttribute(field.getCode());
                 String colName = ((Field) attribute.getJavaMember()).getAnnotation(Column.class).name();
                 if (colName == null || colName.isEmpty()){
@@ -83,7 +90,7 @@ public class ModelDataQuery {
 //        List<Map<String, Object>> conditions = new ArrayList<>();
         List<QueryCondition> conditions = new ArrayList<>();
         for (Map.Entry<String, Object> conditionEntry : conditionMap.entrySet()) {
-            QueryCondition queryCondition = new QueryCondition("a." + conditionEntry.getKey(), Operator.EQ, conditionEntry.getValue());
+            QueryCondition queryCondition = new QueryCondition(aliasMap.get(conditionEntry.getKey()) + "." + conditionEntry.getKey(), Operator.EQ, conditionEntry.getValue());
             conditions.add(queryCondition);
         }
 
@@ -175,7 +182,24 @@ public class ModelDataQuery {
         String finalSql = sqlBuilder.toString();
         System.out.println("Executing Native SQL:\n" + finalSql);
 
-        return finalSql;
+        // 创建 Query，返回 Tuple 结果集
+        Query query = AppContext.getBean(EntityManager.class).createNativeQuery(finalSql, Tuple.class);
+
+        // 绑定参数
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        // 执行查询并处理结果
+        List<Tuple> resultTuples = query.getResultList();
+        return resultTuples.stream().map(tuple -> {
+            Map<String, Object> row = new LinkedHashMap<>();
+            for (TupleElement<?> element : tuple.getElements()) {
+                // 使用别名作为 Map 的 Key
+                row.put(element.getAlias(), tuple.get(element));
+            }
+            return row;
+        }).collect(Collectors.toList());
     }
 
     /**

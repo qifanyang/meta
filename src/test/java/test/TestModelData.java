@@ -3,8 +3,7 @@ package test;
 import com.meta.MetaApplication;
 import com.meta.core.ScriptRunner;
 import com.meta.core.dao.ModelDataDao;
-import com.meta.core.entity.ModelDataEntity;
-import com.meta.core.model.ModelRunOptions;
+import com.meta.core.model.ModelRunContext;
 import com.meta.core.model.ModelBean;
 import com.meta.core.dao.ModelDao;
 import com.meta.core.model.ext.MailModel;
@@ -54,7 +53,7 @@ public class TestModelData {
         }
         //2.可扩展模型存储, 数据表独立
         {
-            ModelRunOptions options = new ModelRunOptions();
+            ModelRunContext options = new ModelRunContext();
             options.setDataEntityClass(MailModelDataEntity.class);
 
             Map<String, Object> params = Map.of("a", 1, "b", 2);
