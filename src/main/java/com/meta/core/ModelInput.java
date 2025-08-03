@@ -11,12 +11,12 @@ public class ModelInput {
     private String modelCode;
 
     /**
-     * 是否是迭代输入, 一个模型输入只能有一个迭代输入器, 其它的输入为数据选择
+     * 是否是主模型, 一个模型输入只能有一个主输入器, 其它的输入为可选数据
      */
-    private boolean inputIterator;
+    private boolean mainInput;
 
     /**
-     * 关联的列
+     * 关联的列, 不等于空则需要关联主模型
      */
     private String joinKey;
 
@@ -26,7 +26,7 @@ public class ModelInput {
     private List<String> fieldCodes;
 
     /**
-     * 必填数据
+     * 必填输入
      */
     private boolean required;
 
@@ -36,7 +36,7 @@ public class ModelInput {
     private Map<String, Object> conditions;
 
     /**
-     * 如果model code为空, 简单参数
+     * 如果model code为空, 简单参数, 如果有模型输入, 叠加到模型数据之上的用户参数
      */
     private Map<String, Object> params;
 
@@ -88,11 +88,11 @@ public class ModelInput {
         this.params = params;
     }
 
-    public boolean isInputIterator() {
-        return inputIterator;
+    public boolean isMainInput() {
+        return mainInput;
     }
 
-    public void setInputIterator(boolean inputIterator) {
-        this.inputIterator = inputIterator;
+    public void setMainInput(boolean mainInput) {
+        this.mainInput = mainInput;
     }
 }

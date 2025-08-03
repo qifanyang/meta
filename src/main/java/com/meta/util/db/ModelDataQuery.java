@@ -46,7 +46,9 @@ public class ModelDataQuery {
         String joinedTable;
         String joinedTableAlias;
         for (Map.Entry<String, String> modelEntry : modelKeyMap.entrySet()) {
-            ModelBean modelBean = AppContext.getBean(modelEntry.getKey(), ModelBean.class);
+            String modelCode = modelEntry.getKey();
+            String joinKey = modelEntry.getValue();
+            ModelBean modelBean = AppContext.getBean(modelCode, ModelBean.class);
             String dataTable = modelBean.getDataTable();
             EntityManager entityManager = AppContext.getBean(EntityManager.class);
             EntityFinder entityFinder = AppContext.getBean(EntityFinder.class);
@@ -75,7 +77,7 @@ public class ModelDataQuery {
 //                joinMap.put("primaryTableAlias", primaryTableAlias);
 //                joinMap.put("primaryTableField", "id");
 //                joinMap.put("joinedTableField", modelEntry.getValue());
-                JoinConfig joinConfig = new JoinConfig(primaryTable, primaryTableAlias, primaryTableKey, dataTable, alias, modelEntry.getValue(), "INNER JOIN");
+                JoinConfig joinConfig = new JoinConfig(primaryTable, primaryTableAlias, primaryTableKey, dataTable, alias, joinKey, "INNER JOIN");
                 joinConfigs.add(joinConfig);
             }else{
                 //主表

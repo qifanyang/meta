@@ -73,16 +73,19 @@ public interface ModelDefinition extends MetaDefinition {
                 params.putAll(input.getParams());
             } else {
                 hasModelInput = true;
+                //多个params输入, 这里不能跳过
             }
         }
         if (hasModelInput) {
             ModelDataQuery builder = ModelDataQuery.builder();
             for (ModelInput input : inputs) {
                 if (input.getModelCode() != null) {
-                    if (input.isInputIterator()) {
+                    if (input.isMainInput()) {
                         builder.mainModel(input.getModelCode(), input.getJoinKey());
                     } else {
-                        builder.joinModel(input.getModelCode(), input.getJoinKey());
+                        if (input.getJoinKey() != null || !input.getJoinKey().isBlank()){
+                            builder.joinModel(input.getModelCode(), input.getJoinKey());
+                        }
                     }
                 }
             }
