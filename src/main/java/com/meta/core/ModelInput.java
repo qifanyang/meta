@@ -35,6 +35,11 @@ public class ModelInput {
      */
     private Map<String, Object> conditions;
 
+    /**
+     * 如果model code为空, 简单参数
+     */
+    private Map<String, Object> params;
+
     public String getModelCode() {
         return modelCode;
     }
@@ -73,5 +78,21 @@ public class ModelInput {
 
     public void setConditions(Map<String, Object> conditions) {
         this.conditions = conditions;
+    }
+
+    public Map<String, Object> getParams() {
+        return params;
+    }
+
+    public void setParams(Map<String, Object> params) {
+        this.params = params;
+    }
+
+    public boolean isInputIterator() {
+        return inputIterator;
+    }
+
+    public void setInputIterator(boolean inputIterator) {
+        this.inputIterator = inputIterator;
     }
 }

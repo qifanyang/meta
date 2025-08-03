@@ -55,6 +55,7 @@ public class TestHr {
         params.put("grandTax", 10000);
         params.put("year", 2025);
         params.put("month", 7);
+        params.put("personId", "226735362297434112");
 
         //工资表初始化数据
         params.put("incomeType", 0);

@@ -49,33 +49,57 @@ public interface ModelDefinition extends MetaDefinition {
         return List.of(MathFunctions.class, StringUtils.class);
     }
 
-    default List<ModelDataEntity> run(Map<String, Object> params){
-        return run(params, ModelRunContext.DEFAULT);
+    default List<ModelDataEntity> run(List<ModelInput> inputs){
+        return run(inputs, ModelRunContext.DEFAULT);
     }
 
-    default List<ModelDataEntity> run(Map<String, Object> params, ModelRunContext context){
+    default List<ModelDataEntity> run(Map<String, Object> params){
+        ModelInput modelInput = new ModelInput();
+        modelInput.setParams(params);
+        return run(List.of(modelInput), ModelRunContext.DEFAULT);
+    }
+
+    default List<ModelDataEntity> run(List<ModelInput> inputs, ModelRunContext context) {
+        if (inputs == null || inputs.isEmpty()) {
+            throw new IllegalStateException("模型输入不能为空!");
+        }
+        Map<String, Object> params = new LinkedHashMap<>();
         List<ModelDataEntity> resultList = new LinkedList<>();
-        List<ModelInput> inputs = getInputs();
-        if (inputs != null){
+        boolean hasModelInput = false;
+        for (ModelInput input : inputs) {
+            //查询模型数据, 模型数据会有多条, 循环执行
+            //TODO 模型数据查询缓存, 循环计算时直接获取
+            if (input.getModelCode() == null && input.getParams() != null) {
+                params.putAll(input.getParams());
+            } else {
+                hasModelInput = true;
+            }
+        }
+        if (hasModelInput) {
+            ModelDataQuery builder = ModelDataQuery.builder();
             for (ModelInput input : inputs) {
-                //查询模型数据, 模型数据会有多条, 循环执行
-                //TODO 单个模型数据过滤
-                //TODO 模型数据查询缓存, 循环计算时直接获取
-                ModelDataQuery modelDataQuery = new ModelDataQuery();
-                List<Map<String, Object>>  dataList = modelDataQuery.mainModel(input.getModelCode(), "").execute();
-                Object o = context.getCacheMap().get(input.getModelCode());
-                for (Map map : dataList) {
-                    HashMap<String, Object> subParams = new HashMap<>(params);
-                    subParams.putAll(map);
-                    ModelDataEntity modelData = doRun(subParams, context);
-                    resultList.add(modelData);
+                if (input.getModelCode() != null) {
+                    if (input.isInputIterator()) {
+                        builder.mainModel(input.getModelCode(), input.getJoinKey());
+                    } else {
+                        builder.joinModel(input.getModelCode(), input.getJoinKey());
+                    }
                 }
+            }
+            List<Map<String, Object>> dataList = builder.execute();
+//        Object o = context.getCacheMap().get(input.getModelCode());
+            for (Map map : dataList) {
+                HashMap<String, Object> subParams = new HashMap<>(params);
+                subParams.putAll(map);
+                ModelDataEntity modelData = doRun(subParams, context);
+                resultList.add(modelData);
             }
         } else {
             resultList.add(doRun(params, context));
         }
         return resultList;
     }
+
     default ModelDataEntity doRun(Map<String, Object> params, ModelRunContext options){
         ModelDataEntity modelData = instanceModelDataEntity(params, options);
         //copy 模型属性
