@@ -60,9 +60,9 @@ public interface FieldDefinition<T> extends MetaDefinition<T> {
      * 为什么不用id值, id值对业务是不可提前知道的, 但是根据年月可以查询是否有数据
      * @return
      */
-    List<String> getUniqueCodes();
+    List<String> getIdentityCodes();
 
-    void setUniqueCodes(List<String> uniqueCodes);
+    void setIdentityCodes(List<String> identityCodes);
 
     List<String> getDependentVariables();
 

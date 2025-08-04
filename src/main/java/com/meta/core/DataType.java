@@ -23,7 +23,7 @@ public enum DataType {
         @Override
         public BigDecimal convert(Object data) {
             if (data == null){
-                return null;
+                return BigDecimal.ZERO;
             }
             if (data instanceof BigDecimal decimal){
                 return decimal;
@@ -46,7 +46,7 @@ public enum DataType {
         @Override
         public Integer convert(Object data) {
             if (data == null){
-                return null;
+                return Integer.valueOf(0);
             }
             if (data instanceof Integer i){
                 return i;

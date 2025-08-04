@@ -34,7 +34,7 @@ public class NumberFieldType implements FieldTypeHandler<BigDecimal> {
     @Override
     public BigDecimal parseFromUntyped(Object rawValue, FieldBean fieldBean, ConversionContext context) throws FieldDataException {
         if (rawValue == null) {
-            return null;
+            return BigDecimal.ZERO;
         }
         if (rawValue instanceof BigDecimal) {
             return (BigDecimal) rawValue;

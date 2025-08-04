@@ -138,13 +138,13 @@ public class FieldDefinitionWrapper<T> extends MetaDefinitionWrapper<T> implemen
     }
 
     @Override
-    public List<String> getUniqueCodes() {
-        return definition.getUniqueCodes();
+    public List<String> getIdentityCodes() {
+        return definition.getIdentityCodes();
     }
 
     @Override
-    public void setUniqueCodes(List<String> uniqueCodes) {
-        definition.setUniqueCodes(uniqueCodes);
+    public void setIdentityCodes(List<String> identityCodes) {
+        definition.setIdentityCodes(identityCodes);
     }
 
     @Override

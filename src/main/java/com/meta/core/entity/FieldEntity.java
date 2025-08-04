@@ -60,7 +60,7 @@ public class FieldEntity<T> extends MetaEntity<T> implements FieldDefinition<T> 
     private Map<String, String> label; //标签（多语言支持）
 
     @Transient
-    private List<String> uniqueCodes;
+    private List<String> identityCodes;
 
     @Override
     public String getModelId() {
@@ -180,12 +180,12 @@ public class FieldEntity<T> extends MetaEntity<T> implements FieldDefinition<T> 
         this.styles = styles;
     }
 
-    public List<String> getUniqueCodes() {
-        return uniqueCodes;
+    public List<String> getIdentityCodes() {
+        return identityCodes;
     }
 
-    public void setUniqueCodes(List<String> uniqueCodes) {
-        this.uniqueCodes = uniqueCodes;
+    public void setIdentityCodes(List<String> identityCodes) {
+        this.identityCodes = identityCodes;
     }
 
     public List<String> getDependentVariables() {

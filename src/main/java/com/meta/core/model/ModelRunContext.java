@@ -25,7 +25,7 @@ public class ModelRunContext {
     /**
      * 用于表示模型唯一标识列, field code
      */
-    private List<String> uniqueCodes;
+    private List<String> identityCodes;
 
     private Map<String, Object> cacheMap = new HashMap<>();
 
@@ -45,12 +45,12 @@ public class ModelRunContext {
         this.copyFields = copyFields;
     }
 
-    public List<String> getUniqueCodes() {
-        return uniqueCodes;
+    public List<String> getIdentityCodes() {
+        return identityCodes;
     }
 
-    public void setUniqueCodes(List<String> uniqueCodes) {
-        this.uniqueCodes = uniqueCodes;
+    public void setIdentityCodes(List<String> uniqueCodes) {
+        this.identityCodes = uniqueCodes;
     }
 
     public Map<String, Object> getCacheMap() {

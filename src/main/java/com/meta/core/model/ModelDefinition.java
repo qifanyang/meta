@@ -42,6 +42,12 @@ public interface ModelDefinition extends MetaDefinition {
     default void setInput(List<ModelInput> input){};
 
     /**
+     * 预置输出, 自定义输出需要合并 TODO
+     * @return
+     */
+    default List<ModelOutput> getOutputs(){return null;}
+
+    /**
      * 返回模块内置函数, 脚本执行import static 静态方法
      * @return
      */
@@ -89,12 +95,12 @@ public interface ModelDefinition extends MetaDefinition {
                     }
                 }
             }
-            List<Map<String, Object>> dataList = builder.execute();
+            List<Map<String, Object>> inputDataList = builder.execute();
 //        Object o = context.getCacheMap().get(input.getModelCode());
-            for (Map map : dataList) {
-                HashMap<String, Object> subParams = new HashMap<>(params);
-                subParams.putAll(map);
-                ModelDataEntity modelData = doRun(subParams, context);
+            for (Map inputMap : inputDataList) {
+                HashMap<String, Object> inputParams = new HashMap<>(params);
+                inputParams.putAll(inputMap);
+                ModelDataEntity modelData = doRun(inputParams, context);
                 resultList.add(modelData);
             }
         } else {
@@ -122,18 +128,24 @@ public interface ModelDefinition extends MetaDefinition {
             }
             Object fieldValue = null;
             if (field.getFieldType().equals(FieldType.MODEL.name())) {
-                ModelBean relationModelBean = AppContext.getBean(field.getCode(), ModelBean.class);
-                Assert.isTrue(relationModelBean != null, "关联模型实例不存在, modelCode = " + field.getCode());
-                ModelRunContext relationRunOptions = new ModelRunContext();
-                relationRunOptions.setUniqueCodes(field.getUniqueCodes());
-
-                ModelDataEntity relationModelData = relationModelBean.doRun(params, relationRunOptions);
-                fieldValue = relationModelData.getId();
-                //关联模型数据执行后 单独存储. 外部主模型数据负责保存
-                modelData.getRelationModelData().put(field.getCode(), relationModelData);
-            }else if (field.getExpression() != null && !field.getExpression().isBlank()) {
-                 fieldValue = scriptRunner().eval(params, field.getExpression());
-             }
+//                ModelBean relationModelBean = AppContext.getBean(field.getCode(), ModelBean.class);
+//                Assert.isTrue(relationModelBean != null, "关联模型实例不存在, modelCode = " + field.getCode());
+//                ModelRunContext relationRunOptions = new ModelRunContext();
+//                relationRunOptions.setIdentityCodes(field.getIdentityCodes());
+//
+//                ModelDataEntity relationModelData = relationModelBean.doRun(params, relationRunOptions);
+//                fieldValue = relationModelData.getId();
+//                //关联模型数据执行后 单独存储. 外部主模型数据负责保存
+//                modelData.getRelationModelData().put(field.getCode(), relationModelData);
+            } else if (field.getExpression() != null && !field.getExpression().isBlank()) {
+                //自依赖初始化, 使用默认值初始化
+                if (!field.getExpression().equals(field.getCode()) && field.getDependentVariables() != null && field.getDependentVariables().contains(field.getCode())){
+                    //payableTotal = payableTotal + payable, 自依赖,
+                    Object defaultValue = field.formatToValue(field.getDefaultValue());
+                    params.put(field.getCode(), defaultValue);
+                }
+                fieldValue = scriptRunner().eval(params, field.getExpression());
+            }
             Object formatToValue = field.formatToValue(fieldValue);
             modelData.updateSpecificFieldValue(field, formatToValue);
             modelData.getFieldValues().put(field.getCode(), formatToValue);
@@ -141,6 +153,21 @@ public interface ModelDefinition extends MetaDefinition {
             //TODO 计算后的值放入上下文 这里要重新设计上下文, 存在重复的code 要更新上下文?
             params.put(field.getCode(), formatToValue);
         }
+
+        List<ModelOutput> outputs = getOutputs();
+        if (outputs != null){
+            for (ModelOutput output : outputs) {
+                ModelBean relationModelBean = AppContext.getBean(output.getModelCode(), ModelBean.class);
+                Assert.isTrue(relationModelBean != null, "关联模型实例不存在, modelCode = " + output.getModelCode());
+                ModelRunContext subContext = new ModelRunContext();
+                subContext.setIdentityCodes(output.getIdentityCodes());
+
+                ModelDataEntity relationModelData = relationModelBean.doRun(params, subContext);
+                //fieldValue = relationModelData.getId();
+                modelData.getRelationModelData().put(output.getModelCode(), relationModelData);
+            }
+        }
+
         return modelData;
     }
 
@@ -166,12 +193,12 @@ public interface ModelDefinition extends MetaDefinition {
             throw new IllegalStateException("创建模型数据实体失败, 无模型数据实体Class, 请检查模型dataTable值");
         }
         ModelDataEntity dataEntity = null;
-        if (options.getUniqueCodes() != null) {
+        if (options.getIdentityCodes() != null) {
             //指定了model查询unique codes, 表明是要先查询关联数据, 而不是直接创建新的数据
             JpaRepository<? extends ModelDataEntity, String> modelDataDao = AppContext.getBean(RepositoryLocator.class).getRepository(dataEntityClass);
             List<ModelDataEntity> existModelData = ((JpaSpecificationExecutor)modelDataDao).findAll((root, query, cb) -> {
                 List<Predicate> predicates = new ArrayList<>();
-                for (String code : options.getUniqueCodes()) {
+                for (String code : options.getIdentityCodes()) {
                     Object value = params.get(code);
                     if (value instanceof String) {
                         predicates.add(cb.like(root.get(code), "%" + value + "%"));
