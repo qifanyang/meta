@@ -11,9 +11,12 @@ public class Test {
     //TODO 迭代执行, 创建多人工资表详情 1
     //TODO 初始值设定 1 payableTotal = payableTotal + payable , 初始值什么时候设定?
 
-    //TODO 动态建模, 执行动态建模
+    //TODO 动态建模, 执行动态建模, 模型参数化
+    //TODO 只写接口用例 不做UI
+    //TODO 模型设置
 
     //前端
+    //TODO 模型数据展示
     //TODO 编辑器数据结构, 展示结构
     //TODO 表单 结合前端UI
     //TODO 工作流

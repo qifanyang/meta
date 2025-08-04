@@ -1,8 +1,5 @@
 package com.meta.app.model.hr.salary;
 
-import com.meta.app.model.hr.person.PersonModel;
-import com.meta.core.Association;
-import com.meta.core.ModelAssociation;
 import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.model.ModelBean;
@@ -13,7 +10,7 @@ import java.util.List;
 
 
 @Component(SalaryTemplateAssociateArchiveModel.CODE)
-public class SalaryTemplateAssociateArchiveModel extends ModelBean implements ModelAssociation {
+public class SalaryTemplateAssociateArchiveModel extends ModelBean {
     public static final String CODE = "meta_salary_template_associate_archive";
 
     public SalaryTemplateAssociateArchiveModel(){
@@ -30,13 +27,4 @@ public class SalaryTemplateAssociateArchiveModel extends ModelBean implements Mo
         return presetFields;
     }
 
-    @Override
-    public Association source() {
-        return Association.of(CODE, List.of(SalaryArchiveModel.CODE+"_id"));
-    }
-
-    @Override
-    public List<Association> target() {
-        return List.of(Association.of(SalaryArchiveModel.CODE, List.of("id")));
-    }
 }

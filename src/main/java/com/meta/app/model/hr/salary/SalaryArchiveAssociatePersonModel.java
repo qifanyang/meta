@@ -1,12 +1,7 @@
 package com.meta.app.model.hr.salary;
 
-import com.meta.app.model.hr.person.PersonModel;
-import com.meta.core.Association;
-import com.meta.core.ModelAssociation;
 import com.meta.core.model.ModelBean;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 
 //其实薪酬档案本身就是关联模型
@@ -22,7 +17,7 @@ import java.util.List;
 // 模型可以关联其他多个模型, 需要制定关联字段(可多个)
 // 迭代执行只在一个关联模型上, 其它的关联用作数据拉取(比如引用社保数据, 关联字段仍是person_id)
 @Component(SalaryArchiveAssociatePersonModel.CODE)
-public class SalaryArchiveAssociatePersonModel extends ModelBean implements ModelAssociation {
+public class SalaryArchiveAssociatePersonModel extends ModelBean {
     public static final String CODE = "meta_salary_archive_associate_person";
 
     public SalaryArchiveAssociatePersonModel(){
@@ -30,13 +25,4 @@ public class SalaryArchiveAssociatePersonModel extends ModelBean implements Mode
         setName("薪酬档案");
     }
 
-    @Override
-    public Association source() {
-        return Association.of(CODE, List.of(PersonModel.CODE+"_id"));
-    }
-
-    @Override
-    public List<Association> target() {
-        return List.of(Association.of(SalaryArchiveModel.CODE, List.of("id")));
-    }
 }

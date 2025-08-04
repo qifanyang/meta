@@ -1,25 +1,17 @@
 package com.meta.app.model.hr.salary;
 
-import com.meta.app.model.hr.person.PersonModel;
-import com.meta.core.Association;
-import com.meta.core.ModelAssociation;
 import com.meta.core.field.FieldType;
 import com.meta.core.MetaFieldManager;
-import com.meta.core.entity.FieldEntity;
 import com.meta.core.field.FieldBean;
 import com.meta.core.model.ModelBean;
-import com.meta.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component(SalaryArchiveModel.CODE)
-public class SalaryArchiveModel extends ModelBean implements ModelAssociation {
+public class SalaryArchiveModel extends ModelBean {
     public static final String CODE = "meta_salary_archive";
 
     @Autowired
@@ -59,15 +51,5 @@ public class SalaryArchiveModel extends ModelBean implements ModelAssociation {
         presetFields.add(FieldBean.of("personId", "人员ID", FieldType.TEXT.name()));
         copy2Field(presetFields);
         return presetFields;
-    }
-
-    @Override
-    public Association source() {
-        return Association.of(CODE, List.of(PersonModel.CODE+"_id"));
-    }
-
-    @Override
-    public List<Association> target() {
-        return List.of(Association.of(PersonModel.CODE, List.of("id")));
     }
 }
