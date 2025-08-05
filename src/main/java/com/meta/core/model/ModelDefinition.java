@@ -29,23 +29,7 @@ public interface ModelDefinition extends MetaDefinition {
 
     void setDataTable(String dataTable);
 
-    /**
-     * 返回模型输入
-     * 1. 参数map
-     * 2. 模型(可以包含条件用来筛选数据)
-     * 3. 如果涉及数据权限, 需要联表查询person
-     *
-     * @return
-     */
-    default List<ModelInput> getInputs(){return null;};
 
-    default void setInput(List<ModelInput> input){};
-
-    /**
-     * 预置输出, 自定义输出需要合并 TODO
-     * @return
-     */
-    default List<ModelOutput> getOutputs(){return null;}
 
     /**
      * 返回模块内置函数, 脚本执行import static 静态方法
@@ -260,4 +244,35 @@ public interface ModelDefinition extends MetaDefinition {
     default List<FieldBean> getCustomFields(){
         return Collections.emptyList();
     }
+
+    /**
+     * 返回模型输入
+     * 1. 参数map
+     * 2. 模型(可以包含条件用来筛选数据)
+     * 3. 如果涉及数据权限, 需要联表查询person
+     *
+     * @return
+     */
+    default List<ModelInput> getInputs(){return null;};
+
+    /**
+     * 模型预置输入
+     * @return
+     */
+    default List<ModelInput> getPresetInputs(){return null;};
+
+
+    /**
+     * 预置输出, 自定义输出需要合并 TODO
+     * @return
+     */
+    default List<ModelOutput> getOutputs(){return null;}
+
+    /**
+     * 模型预置输出
+     * @return
+     */
+    default List<ModelOutput> getPresetOutputs(){return null;}
+
+
 }

@@ -1,4 +1,4 @@
-package com.meta.core;
+package com.meta.core.model;
 
 import java.util.List;
 import java.util.Map;

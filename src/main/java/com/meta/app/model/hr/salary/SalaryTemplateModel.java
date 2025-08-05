@@ -3,7 +3,7 @@ package com.meta.app.model.hr.salary;
 import com.meta.app.model.hr.attendance.AttendanceModel;
 import com.meta.app.model.hr.person.PersonModel;
 import com.meta.app.model.hr.social.SocialModel;
-import com.meta.core.ModelOutput;
+import com.meta.core.model.ModelOutput;
 import com.meta.core.field.FieldBean;
 import com.meta.core.field.FieldType;
 import com.meta.core.model.ModelBean;

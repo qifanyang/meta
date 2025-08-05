@@ -5,7 +5,7 @@ import com.meta.MetaApplication;
 import com.meta.app.model.hr.person.PersonModel;
 import com.meta.app.model.hr.salary.SalaryArchiveModel;
 import com.meta.app.model.hr.salary.SalaryTemplateModel;
-import com.meta.core.ModelInput;
+import com.meta.core.model.ModelInput;
 import com.meta.core.entity.ModelDataEntity;
 import com.meta.util.db.ModelDataHelper;
 import org.junit.Test;

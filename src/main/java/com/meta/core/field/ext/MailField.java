@@ -1,7 +1,8 @@
-package com.meta.core.field;
+package com.meta.core.field.ext;
 
 import com.meta.core.dto.MyDTO;
 import com.meta.core.entity.MailFieldEntity;
+import com.meta.core.field.FieldDefinitionWrapper;
 import com.meta.util.IdGenerator;
 
 /**

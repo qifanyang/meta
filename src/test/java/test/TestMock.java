@@ -11,7 +11,7 @@ import com.meta.core.dto.MyDTO;
 import com.meta.core.entity.FieldEntity;
 import com.meta.core.entity.MailFieldEntity;
 import com.meta.core.entity.ModelEntity;
-import com.meta.core.field.MailField;
+import com.meta.core.field.ext.MailField;
 import com.meta.util.IdGenerator;
 import com.meta.util.db.NativeQueryUtils;
 import org.junit.Test;

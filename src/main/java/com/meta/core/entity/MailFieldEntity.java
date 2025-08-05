@@ -1,6 +1,6 @@
 package com.meta.core.entity;
 
-import com.meta.core.field.MailFieldDefinition;
+import com.meta.core.field.ext.MailFieldDefinition;
 import com.meta.core.dto.MyDTO;
 import jakarta.persistence.*;
 
